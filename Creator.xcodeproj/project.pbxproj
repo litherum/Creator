@@ -14,6 +14,14 @@
 		C21E618C1AD8BEFE000FC413 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C21E618B1AD8BEFE000FC413 /* Images.xcassets */; };
 		C21E618F1AD8BEFE000FC413 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C21E618D1AD8BEFE000FC413 /* MainMenu.xib */; };
 		C21E619B1AD8BEFE000FC413 /* CreatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21E619A1AD8BEFE000FC413 /* CreatorTests.swift */; };
+		C2C5A1291AD9A529001DFC56 /* VertexShaderNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C5A1281AD9A529001DFC56 /* VertexShaderNode.swift */; };
+		C2C5A12B1AD9A52A001DFC56 /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C5A12A1AD9A52A001DFC56 /* Node.swift */; };
+		C2C5A12D1AD9A52A001DFC56 /* ConstantBufferNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C5A12C1AD9A52A001DFC56 /* ConstantBufferNode.swift */; };
+		C2C5A12F1AD9A52A001DFC56 /* Frame.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C5A12E1AD9A52A001DFC56 /* Frame.swift */; };
+		C2C5A1311AD9A52A001DFC56 /* ConstantFloatNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C5A1301AD9A52A001DFC56 /* ConstantFloatNode.swift */; };
+		C2C5A1331AD9A52A001DFC56 /* FragmentShaderNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C5A1321AD9A52A001DFC56 /* FragmentShaderNode.swift */; };
+		C2C5A1351AD9C6FA001DFC56 /* GraphViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C5A1341AD9C6FA001DFC56 /* GraphViewController.swift */; };
+		C2C5A1391AD9CFE7001DFC56 /* NodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C5A1381AD9CFE7001DFC56 /* NodeView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +46,14 @@
 		C21E61941AD8BEFE000FC413 /* CreatorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CreatorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C21E61991AD8BEFE000FC413 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C21E619A1AD8BEFE000FC413 /* CreatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatorTests.swift; sourceTree = "<group>"; };
+		C2C5A1281AD9A529001DFC56 /* VertexShaderNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VertexShaderNode.swift; sourceTree = "<group>"; };
+		C2C5A12A1AD9A52A001DFC56 /* Node.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
+		C2C5A12C1AD9A52A001DFC56 /* ConstantBufferNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConstantBufferNode.swift; sourceTree = "<group>"; };
+		C2C5A12E1AD9A52A001DFC56 /* Frame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Frame.swift; sourceTree = "<group>"; };
+		C2C5A1301AD9A52A001DFC56 /* ConstantFloatNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConstantFloatNode.swift; sourceTree = "<group>"; };
+		C2C5A1321AD9A52A001DFC56 /* FragmentShaderNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FragmentShaderNode.swift; sourceTree = "<group>"; };
+		C2C5A1341AD9C6FA001DFC56 /* GraphViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphViewController.swift; sourceTree = "<group>"; };
+		C2C5A1381AD9CFE7001DFC56 /* NodeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,8 +96,16 @@
 			isa = PBXGroup;
 			children = (
 				C21E61811AD8BEFE000FC413 /* AppDelegate.swift */,
+				C2C5A1321AD9A52A001DFC56 /* FragmentShaderNode.swift */,
+				C2C5A1301AD9A52A001DFC56 /* ConstantFloatNode.swift */,
+				C2C5A12E1AD9A52A001DFC56 /* Frame.swift */,
+				C2C5A12C1AD9A52A001DFC56 /* ConstantBufferNode.swift */,
+				C2C5A12A1AD9A52A001DFC56 /* Node.swift */,
+				C2C5A1281AD9A529001DFC56 /* VertexShaderNode.swift */,
+				C2C5A1341AD9C6FA001DFC56 /* GraphViewController.swift */,
 				C21E61831AD8BEFE000FC413 /* Document.swift */,
 				C21E61851AD8BEFE000FC413 /* Document.xib */,
+				C2C5A1381AD9CFE7001DFC56 /* NodeView.swift */,
 				C21E618B1AD8BEFE000FC413 /* Images.xcassets */,
 				C21E618D1AD8BEFE000FC413 /* MainMenu.xib */,
 				C21E61881AD8BEFE000FC413 /* Document.xcdatamodeld */,
@@ -215,7 +239,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C2C5A1331AD9A52A001DFC56 /* FragmentShaderNode.swift in Sources */,
+				C2C5A1351AD9C6FA001DFC56 /* GraphViewController.swift in Sources */,
+				C2C5A1311AD9A52A001DFC56 /* ConstantFloatNode.swift in Sources */,
+				C2C5A1291AD9A529001DFC56 /* VertexShaderNode.swift in Sources */,
+				C2C5A12D1AD9A52A001DFC56 /* ConstantBufferNode.swift in Sources */,
+				C2C5A12B1AD9A52A001DFC56 /* Node.swift in Sources */,
 				C21E618A1AD8BEFE000FC413 /* Document.xcdatamodeld in Sources */,
+				C2C5A12F1AD9A52A001DFC56 /* Frame.swift in Sources */,
+				C2C5A1391AD9CFE7001DFC56 /* NodeView.swift in Sources */,
 				C21E61841AD8BEFE000FC413 /* Document.swift in Sources */,
 				C21E61821AD8BEFE000FC413 /* AppDelegate.swift in Sources */,
 			);
@@ -416,6 +448,7 @@
 				C21E61A01AD8BEFE000FC413 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		C21E61A11AD8BEFE000FC413 /* Build configuration list for PBXNativeTarget "CreatorTests" */ = {
 			isa = XCConfigurationList;
@@ -424,6 +457,7 @@
 				C21E61A31AD8BEFE000FC413 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

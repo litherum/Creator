@@ -1,4 +1,35 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model name="untitled.xcdatamodel" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
-    <elements/>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7549" systemVersion="14D131" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="ConstantBufferNode" representedClassName="Creator.ConstantBufferNode" parentEntity="Node" syncable="YES">
+        <attribute name="payload" attributeType="Binary" syncable="YES"/>
+    </entity>
+    <entity name="ConstantFloatNode" representedClassName="Creator.ConstantFloatNode" parentEntity="Node" syncable="YES">
+        <attribute name="payload" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+    </entity>
+    <entity name="FragmentShaderNode" representedClassName="Creator.FragmentShaderNode" parentEntity="Node" syncable="YES">
+        <attribute name="source" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Frame" representedClassName="Creator.Frame" syncable="YES">
+        <relationship name="passes" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Node" inverseName="frame" inverseEntity="Node" syncable="YES"/>
+    </entity>
+    <entity name="Node" representedClassName="Creator.Node" isAbstract="YES" syncable="YES">
+        <attribute name="positionX" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="positionY" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <relationship name="frame" maxCount="1" deletionRule="Nullify" destinationEntity="Frame" inverseName="passes" inverseEntity="Frame" syncable="YES"/>
+        <relationship name="inputs" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Node" inverseName="outputs" inverseEntity="Node" syncable="YES"/>
+        <relationship name="outputs" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Node" inverseName="inputs" inverseEntity="Node" syncable="YES"/>
+    </entity>
+    <entity name="VertexShaderNode" representedClassName="Creator.VertexShaderNode" parentEntity="Node" syncable="YES">
+        <attribute name="source" attributeType="String" syncable="YES"/>
+    </entity>
+    <fetchRequest name="FrameRequest" entity="Frame"/>
+    <fetchRequest name="NodeRequest" entity="Node"/>
+    <elements>
+        <element name="ConstantBufferNode" positionX="-236" positionY="153" width="128" height="60"/>
+        <element name="ConstantFloatNode" positionX="-99" positionY="153" width="128" height="60"/>
+        <element name="FragmentShaderNode" positionX="171" positionY="153" width="128" height="60"/>
+        <element name="Frame" positionX="216" positionY="-18" width="128" height="60"/>
+        <element name="Node" positionX="-63" positionY="-18" width="128" height="120"/>
+        <element name="VertexShaderNode" positionX="36" positionY="153" width="128" height="60"/>
+    </elements>
 </model>

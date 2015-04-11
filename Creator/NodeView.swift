@@ -15,9 +15,6 @@ class NodeView: NSView {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
-    override var intrinsicContentSize: NSSize {
-        return NSMakeSize(CGFloat(100), CGFloat(100))
-    }
     override func drawRect(dirtyRect: NSRect) {
         NSColor.greenColor().set()
         NSBezierPath.fillRect(bounds)

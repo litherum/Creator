@@ -14,28 +14,28 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <customView id="c22-O7-iKe">
-            <rect key="frame" x="0.0" y="-1" width="435" height="166"/>
+        <customView id="c22-O7-iKe" customClass="NodeView" customModule="Creator" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="335" height="166"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CMW-XJ-Yt9">
-                    <rect key="frame" x="-2" y="149" width="439" height="17"/>
+                    <rect key="frame" x="-2" y="149" width="339" height="17"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Title" id="aMp-fA-aFb">
                         <font key="font" metaFont="systemBold"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <stackView orientation="vertical" alignment="centerX" horizontalHuggingPriority="249" verticalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="Rna-Z1-nA8">
-                    <rect key="frame" x="0.0" y="0.0" width="200" height="149"/>
+                <stackView orientation="vertical" alignment="centerX" hasEqualSpacing="YES" horizontalHuggingPriority="249" verticalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="Rna-Z1-nA8">
+                    <rect key="frame" x="0.0" y="0.0" width="150" height="149"/>
                     <constraints>
-                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" placeholder="YES" id="b3Y-Tk-YEz"/>
+                        <constraint firstAttribute="width" constant="150" placeholder="YES" id="9Xy-9c-Liu"/>
                     </constraints>
                 </stackView>
-                <stackView orientation="vertical" alignment="centerX" horizontalHuggingPriority="249" verticalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="mMf-hX-sVb">
-                    <rect key="frame" x="235" y="0.0" width="200" height="149"/>
+                <stackView orientation="vertical" alignment="centerX" hasEqualSpacing="YES" horizontalHuggingPriority="249" verticalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="mMf-hX-sVb">
+                    <rect key="frame" x="185" y="0.0" width="150" height="149"/>
                     <constraints>
-                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" placeholder="YES" id="XF3-Sy-S5b"/>
+                        <constraint firstAttribute="width" constant="150" placeholder="YES" id="kop-6Y-4Ov"/>
                     </constraints>
                 </stackView>
             </subviews>

@@ -22,8 +22,9 @@
 		C2C5A1331AD9A52A001DFC56 /* FragmentShaderNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C5A1321AD9A52A001DFC56 /* FragmentShaderNode.swift */; };
 		C2C5A1351AD9C6FA001DFC56 /* GraphViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C5A1341AD9C6FA001DFC56 /* GraphViewController.swift */; };
 		C2C5A1391AD9CFE7001DFC56 /* NodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C5A1381AD9CFE7001DFC56 /* NodeView.swift */; };
-		C2C5A13B1ADA012A001DFC56 /* NodeView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C2C5A13A1ADA012A001DFC56 /* NodeView.xib */; };
+		C2C5A13B1ADA012A001DFC56 /* NodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C2C5A13A1ADA012A001DFC56 /* NodeViewController.xib */; };
 		C2C5A13D1ADA0DCC001DFC56 /* NodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C5A13C1ADA0DCC001DFC56 /* NodeViewController.swift */; };
+		C2C5A13F1ADA3A5C001DFC56 /* GraphView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C5A13E1ADA3A5C001DFC56 /* GraphView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,8 +57,9 @@
 		C2C5A1321AD9A52A001DFC56 /* FragmentShaderNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FragmentShaderNode.swift; sourceTree = "<group>"; };
 		C2C5A1341AD9C6FA001DFC56 /* GraphViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphViewController.swift; sourceTree = "<group>"; };
 		C2C5A1381AD9CFE7001DFC56 /* NodeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeView.swift; sourceTree = "<group>"; };
-		C2C5A13A1ADA012A001DFC56 /* NodeView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NodeView.xib; sourceTree = "<group>"; };
+		C2C5A13A1ADA012A001DFC56 /* NodeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NodeViewController.xib; sourceTree = "<group>"; };
 		C2C5A13C1ADA0DCC001DFC56 /* NodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeViewController.swift; sourceTree = "<group>"; };
+		C2C5A13E1ADA3A5C001DFC56 /* GraphView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,11 +108,12 @@
 				C2C5A12C1AD9A52A001DFC56 /* ConstantBufferNode.swift */,
 				C2C5A12A1AD9A52A001DFC56 /* Node.swift */,
 				C2C5A1281AD9A529001DFC56 /* VertexShaderNode.swift */,
+				C2C5A13E1ADA3A5C001DFC56 /* GraphView.swift */,
 				C2C5A1341AD9C6FA001DFC56 /* GraphViewController.swift */,
 				C21E61831AD8BEFE000FC413 /* Document.swift */,
 				C21E61851AD8BEFE000FC413 /* Document.xib */,
 				C2C5A13C1ADA0DCC001DFC56 /* NodeViewController.swift */,
-				C2C5A13A1ADA012A001DFC56 /* NodeView.xib */,
+				C2C5A13A1ADA012A001DFC56 /* NodeViewController.xib */,
 				C2C5A1381AD9CFE7001DFC56 /* NodeView.swift */,
 				C21E618B1AD8BEFE000FC413 /* Images.xcassets */,
 				C21E618D1AD8BEFE000FC413 /* MainMenu.xib */,
@@ -227,7 +230,7 @@
 			files = (
 				C21E61871AD8BEFE000FC413 /* Document.xib in Resources */,
 				C21E618C1AD8BEFE000FC413 /* Images.xcassets in Resources */,
-				C2C5A13B1ADA012A001DFC56 /* NodeView.xib in Resources */,
+				C2C5A13B1ADA012A001DFC56 /* NodeViewController.xib in Resources */,
 				C21E618F1AD8BEFE000FC413 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -252,6 +255,7 @@
 				C2C5A1291AD9A529001DFC56 /* VertexShaderNode.swift in Sources */,
 				C2C5A13D1ADA0DCC001DFC56 /* NodeViewController.swift in Sources */,
 				C2C5A12D1AD9A52A001DFC56 /* ConstantBufferNode.swift in Sources */,
+				C2C5A13F1ADA3A5C001DFC56 /* GraphView.swift in Sources */,
 				C2C5A12B1AD9A52A001DFC56 /* Node.swift in Sources */,
 				C21E618A1AD8BEFE000FC413 /* Document.xcdatamodeld in Sources */,
 				C2C5A12F1AD9A52A001DFC56 /* Frame.swift in Sources */,

@@ -8,32 +8,35 @@
 
 import Cocoa
 
-class NodeView: NSView {
+class GraphView: NSView {
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
     }
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
+    override func resizeWithOldSuperviewSize(oldBoundsSize: NSSize) {
+        super.resizeWithOldSuperviewSize(oldBoundsSize)
+    }
     override func setFrameOrigin(newOrigin: NSPoint) {
         super.setFrameOrigin(newOrigin)
-        println("Set NodeView frame origin to \(newOrigin)")
+        println("Set GraphView frame origin to \(newOrigin)")
     }
     override func setFrameSize(newSize: NSSize) {
+        println("Set GraphView frame size to \(newSize)")
         super.setFrameSize(newSize)
-        println("Set NodeView frame size to \(newSize)")
     }
     override func setBoundsOrigin(newOrigin: NSPoint) {
         super.setBoundsOrigin(newOrigin)
-        println("Set NodeView bounds origin to \(newOrigin)")
+        println("Set GraphView bounds origin to \(newOrigin)")
     }
     override func setBoundsSize(newSize: NSSize) {
         super.setBoundsSize(newSize)
-        println("Set NodeView bounds size to \(newSize)")
+        println("Set GraphView bounds size to \(newSize)")
     }
     override func addConstraint(constraint: NSLayoutConstraint) {
         super.addConstraint(constraint)
-        println("Adding constraint to NodeView")
+        println("Adding constraint to GraphView")
     }
 
     /*override func drawRect(dirtyRect: NSRect) {

@@ -28,7 +28,7 @@
                                 <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="a" drawsBackground="YES" id="aMp-fA-aFb">
                                     <font key="font" metaFont="systemBold"/>
                                     <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="selectedMenuItemColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="alternateSelectedControlColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
                             <stackView orientation="vertical" alignment="left" spacing="0.0" horizontalStackHuggingPriority="750" verticalStackHuggingPriority="750" horizontalHuggingPriority="249" verticalHuggingPriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="bFq-j3-UgW" userLabel="Inputs Stack View">
@@ -54,7 +54,7 @@
                         <constraint firstItem="CMW-XJ-Yt9" firstAttribute="leading" secondItem="cxN-dP-H3B" secondAttribute="leading" id="yJx-Mb-Vcm"/>
                     </constraints>
                     <color key="borderColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                    <color key="fillColor" name="selectedControlColor" catalog="System" colorSpace="catalog"/>
+                    <color key="fillColor" name="selectedTextBackgroundColor" catalog="System" colorSpace="catalog"/>
                 </box>
             </subviews>
             <constraints>

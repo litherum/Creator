@@ -9,9 +9,23 @@
 import Cocoa
 
 class GraphViewController: NSViewController {
-    var frame : Frame?
+    lazy var frame : Frame? = self.fetchFrame()
     var managedObjectContext: NSManagedObjectContext!
     var managedObjectModel: AnyObject!
+
+    func fetchFrame() -> Frame? {
+        var frameRequest = managedObjectModel.fetchRequestFromTemplateWithName("FrameRequest", substitutionVariables: [:]) as NSFetchRequest!
+        var error: NSError?
+        let frames = managedObjectContext.executeFetchRequest(frameRequest, error: &error) as! [Frame]!
+        if error != nil {
+            return nil
+        }
+        if frames.count == 0 {
+            return NSEntityDescription.insertNewObjectForEntityForName("Frame", inManagedObjectContext: managedObjectContext) as? Frame
+        } else {
+            return frames[0]
+        }
+    }
 
     func createConstantBufferNode() {
         if let unwrappedFrame = frame {
@@ -25,32 +39,22 @@ class GraphViewController: NSViewController {
     }
 
     func populate() {
-
-        var frameRequest = managedObjectModel.fetchRequestFromTemplateWithName("FrameRequest", substitutionVariables: [:]) as NSFetchRequest!
-        var error: NSError?
-        let frames = managedObjectContext.executeFetchRequest(frameRequest, error: &error) as! [Frame]!
-        if error != nil {
-            return
-        }
-        if frames.count == 0 {
-            frame = NSEntityDescription.insertNewObjectForEntityForName("Frame", inManagedObjectContext: managedObjectContext) as? Frame
-        } else {
-            frame = frames[0]
-        }
-
         var nodeRequest = managedObjectModel.fetchRequestFromTemplateWithName("NodeRequest", substitutionVariables: [:]) as NSFetchRequest!
+        var error: NSError?
         let nodes = managedObjectContext.executeFetchRequest(nodeRequest, error: &error) as! [Node]!
         if error != nil {
             return
         }
         for node in nodes {
-            addView(node)
+            if node.frame == frame {
+                addView(node)
+            }
         }
     }
 
     func addView(node : Node) {
         var newView = NodeView()
-        newView.frame = NSMakeRect(CGFloat(node.positionX), CGFloat(node.positionY), CGFloat(100), CGFloat(100))
+        newView.frame = NSMakeRect(CGFloat(node.positionX), CGFloat(node.positionY), CGFloat(600), CGFloat(600))
         view.subviews.append(newView)
 
         view.addConstraint(NSLayoutConstraint(item: view, attribute: .Trailing, relatedBy: .GreaterThanOrEqual, toItem: newView, attribute: .Trailing, multiplier: CGFloat(1), constant: CGFloat(0)))

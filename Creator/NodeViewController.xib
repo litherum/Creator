@@ -37,11 +37,11 @@
                 <constraint firstAttribute="bottom" secondItem="t9s-ZZ-1JA" secondAttribute="bottom" id="CWX-tk-PyQ"/>
                 <constraint firstItem="CMW-XJ-Yt9" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="GGT-Vu-aM3"/>
                 <constraint firstAttribute="width" relation="greaterThanOrEqual" secondItem="CMW-XJ-Yt9" secondAttribute="width" id="PNd-9m-UpO"/>
+                <constraint firstAttribute="centerX" secondItem="CMW-XJ-Yt9" secondAttribute="centerX" constant="-0.5" id="ZSi-DV-nhZ"/>
                 <constraint firstItem="bFq-j3-UgW" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="ap7-gK-g2I"/>
                 <constraint firstItem="t9s-ZZ-1JA" firstAttribute="leading" secondItem="bFq-j3-UgW" secondAttribute="trailing" constant="40" id="fG1-dz-Myg"/>
                 <constraint firstAttribute="bottom" secondItem="bFq-j3-UgW" secondAttribute="bottom" id="knE-qd-Rfi"/>
                 <constraint firstItem="bFq-j3-UgW" firstAttribute="top" secondItem="CMW-XJ-Yt9" secondAttribute="bottom" id="oal-Gj-Ror"/>
-                <constraint firstItem="CMW-XJ-Yt9" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="rdz-Qg-1LT"/>
                 <constraint firstItem="t9s-ZZ-1JA" firstAttribute="top" secondItem="CMW-XJ-Yt9" secondAttribute="bottom" id="zi1-31-YrQ"/>
             </constraints>
             <point key="canvasLocation" x="830.5" y="455"/>

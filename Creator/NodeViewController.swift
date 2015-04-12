@@ -22,7 +22,6 @@ class NodeViewController: NSViewController {
     }
 
     override func viewDidLoad() {
-    /*
         for i in 0 ..< 2 {
             var foo = NSTextField()
             foo.translatesAutoresizingMaskIntoConstraints = false
@@ -40,6 +39,5 @@ class NodeViewController: NSViewController {
         bar.bezeled = false
         bar.stringValue = "Output"
         outputsView.addView(bar, inGravity: .Center)
-    */
     }
 }

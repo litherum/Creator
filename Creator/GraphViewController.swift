@@ -50,20 +50,31 @@ class GraphViewController: NSViewController {
                 addView(node)
             }
         }
-        println("Ambiguities: \(findViewsWithAmbiguousLayouts())")
+        //println("Ambiguities: \(findViewsWithAmbiguousLayouts())")
     }
 
     func addView(node : Node) {
         let nodeViewController = NodeViewController(nibName: "NodeViewController", bundle: nil) as NodeViewController!
+        (nodeViewController.view as! NodeView).graphViewController = self
         addChildViewController(nodeViewController)
         view.addSubview(nodeViewController.view)
         view.addConstraint(NSLayoutConstraint(item: nodeViewController.view, attribute: .Leading, relatedBy: .Equal, toItem: view, attribute: .Leading, multiplier: 1, constant: CGFloat(node.positionX)))
         view.addConstraint(NSLayoutConstraint(item: nodeViewController.view, attribute: .Top, relatedBy: .Equal, toItem: view, attribute: .Top, multiplier: 1, constant: CGFloat(node.positionY)))
-        println("Ambiguities: \(findViewsWithAmbiguousLayouts())")
+        //println("Ambiguities: \(findViewsWithAmbiguousLayouts())")
     }
 
     override func viewDidLoad() {
-        println("View did load")
+        //println("View did load")
+    }
+
+    override func mouseDown(theEvent: NSEvent) {
+        var hit = view.hitTest(view.superview!.convertPoint(theEvent.locationInWindow, fromView: nil)) as NSView!
+        while hit != view {
+            println("hit \(hit)")
+            hit = hit.superview
+        }
+        
+        println("GraphViewController mousedown")
     }
 
     func findViewsWithAmbiguousLayoutsHelper(v: NSView) -> [NSView] {

@@ -21,23 +21,28 @@ class NodeViewController: NSViewController {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
 
-    override func viewDidLoad() {
-        for i in 0 ..< 2 {
-            var foo = NSTextField()
-            foo.translatesAutoresizingMaskIntoConstraints = false
-            foo.selectable = false
-            foo.drawsBackground = false
-            foo.bezeled = false
-            foo.stringValue = "Input"
-            inputsView.addView(foo, inGravity: .Center)
-        }
+    func addInputView(value: String, alignment: NSTextAlignment, stackView: NSStackView!) {
+        var foo = NSTextField()
+        foo.translatesAutoresizingMaskIntoConstraints = false
+        foo.selectable = false
+        foo.drawsBackground = false
+        foo.bezeled = false
+        foo.alignment = alignment
+        foo.stringValue = value
+        stackView.addView(foo, inGravity: .Center)
+    }
 
-        var bar = NSTextField()
-        bar.translatesAutoresizingMaskIntoConstraints = false
-        bar.selectable = false
-        bar.drawsBackground = false
-        bar.bezeled = false
-        bar.stringValue = "Output"
-        outputsView.addView(bar, inGravity: .Center)
+    override func viewDidLoad() {
+        addInputView("a", alignment: .LeftTextAlignment, stackView: inputsView)
+        addInputView("aa", alignment: .LeftTextAlignment, stackView: inputsView)
+        addInputView("aaa", alignment: .LeftTextAlignment, stackView: inputsView)
+        addInputView("aaaa", alignment: .LeftTextAlignment, stackView: inputsView)
+        addInputView("a", alignment: .RightTextAlignment, stackView: outputsView)
+        addInputView("aa", alignment: .RightTextAlignment, stackView: outputsView)
+        addInputView("aaa", alignment: .RightTextAlignment, stackView: outputsView)
+    }
+
+    override func viewWillAppear() {
+        //view.window?.visualizeConstraints(view.constraints)
     }
 }

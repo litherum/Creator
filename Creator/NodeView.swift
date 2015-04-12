@@ -37,7 +37,7 @@ class NodeView: NSView {
     }
 
     override func drawRect(dirtyRect: NSRect) {
-        NSColor.redColor().set()
-        NSBezierPath.fillRect(bounds)
+        //NSColor.redColor().set()
+        //NSBezierPath.fillRect(bounds)
     }
 }

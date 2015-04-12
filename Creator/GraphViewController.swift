@@ -50,20 +50,35 @@ class GraphViewController: NSViewController {
                 addView(node)
             }
         }
+        println("Ambiguities: \(findViewsWithAmbiguousLayouts())")
     }
 
     func addView(node : Node) {
         let nodeViewController = NodeViewController(nibName: "NodeViewController", bundle: nil) as NodeViewController!
-        view.frame = NSMakeRect(0, 0, NSMaxX(nodeViewController.view.frame), NSMaxY(nodeViewController.view.frame))
         addChildViewController(nodeViewController)
         view.addSubview(nodeViewController.view)
-
-        view.addConstraint(NSLayoutConstraint(item: view, attribute: .Width, relatedBy: .GreaterThanOrEqual, toItem: nil, attribute: .NotAnAttribute, multiplier: CGFloat(1), constant: NSMaxX(nodeViewController.view.frame)))
-        view.addConstraint(NSLayoutConstraint(item: view, attribute: .Height, relatedBy: .GreaterThanOrEqual, toItem: nil, attribute: .NotAnAttribute, multiplier: CGFloat(1), constant: NSMaxY(nodeViewController.view.frame)))
-        println("Success")
+        view.addConstraint(NSLayoutConstraint(item: nodeViewController.view, attribute: .Leading, relatedBy: .Equal, toItem: view, attribute: .Leading, multiplier: 1, constant: CGFloat(node.positionX)))
+        view.addConstraint(NSLayoutConstraint(item: nodeViewController.view, attribute: .Top, relatedBy: .Equal, toItem: view, attribute: .Top, multiplier: 1, constant: CGFloat(node.positionY)))
+        println("Ambiguities: \(findViewsWithAmbiguousLayouts())")
     }
 
     override func viewDidLoad() {
         println("View did load")
+    }
+
+    func findViewsWithAmbiguousLayoutsHelper(v: NSView) -> [NSView] {
+        var result: [NSView] = []
+        if v.hasAmbiguousLayout {
+            result.append(v)
+        }
+        for c in v.subviews {
+            result.extend(findViewsWithAmbiguousLayoutsHelper(c as! NSView))
+        }
+        return result
+    }
+    func findViewsWithAmbiguousLayouts() -> [NSView] {
+        view.updateConstraints()
+        view.layoutSubtreeIfNeeded()
+        return findViewsWithAmbiguousLayoutsHelper(view)
     }
 }

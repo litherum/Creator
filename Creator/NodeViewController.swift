@@ -12,6 +12,7 @@ class NodeViewController: NSViewController {
     @IBOutlet var titleView: NSTextField!
     @IBOutlet var inputsView: NSStackView!
     @IBOutlet var outputsView: NSStackView!
+    var foo : NSTextField!
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -22,20 +23,27 @@ class NodeViewController: NSViewController {
     }
 
     override func viewDidLoad() {
-        var foo = NSTextField()
-        foo.stringValue = "Foo"
+        for i in 0 ..< 5 {
+        foo = NSTextField()
+        foo.translatesAutoresizingMaskIntoConstraints = false
+        foo.selectable = false
+        foo.drawsBackground = false
+        foo.bezeled = false
+        foo.stringValue = "Foo Foo Foo"
         inputsView.addView(foo, inGravity: .Center)
-        //inputsView.addConstraint(NSLayoutConstraint(item: inputsView, attribute: .Leading, relatedBy: .Equal, toItem: foo, attribute: .Leading, multiplier: CGFloat(1), constant: CGFloat(0)))
-        //inputsView.addConstraint(NSLayoutConstraint(item: inputsView, attribute: .Trailing, relatedBy: .Equal, toItem: foo, attribute: .Trailing, multiplier: CGFloat(1), constant: CGFloat(0)))
-        //inputsView.addConstraint(NSLayoutConstraint(item: inputsView, attribute: .Top, relatedBy: .Equal, toItem: foo, attribute: .Top, multiplier: CGFloat(1), constant: CGFloat(0)))
-        //inputsView.addConstraint(NSLayoutConstraint(item: inputsView, attribute: .Bottom, relatedBy: .Equal, toItem: foo, attribute: .Bottom, multiplier: CGFloat(1), constant: CGFloat(0)))
+        }
+        //foo.addConstraint(NSLayoutConstraint(item: foo, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: CGFloat(1), constant: CGFloat(150)))
+        //foo.addConstraint(NSLayoutConstraint(item: foo, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: CGFloat(1), constant: CGFloat(150)))
 
-        var bar = NSTextField()
+        /*var bar = NSTextField()
+        bar.translatesAutoresizingMaskIntoConstraints = false
         bar.stringValue = "Bar"
         outputsView.addView(bar, inGravity: .Center)
-        //outputsView.addConstraint(NSLayoutConstraint(item: outputsView, attribute: .Leading, relatedBy: .Equal, toItem: bar, attribute: .Leading, multiplier: CGFloat(1), constant: CGFloat(0)))
-        //outputsView.addConstraint(NSLayoutConstraint(item: outputsView, attribute: .Trailing, relatedBy: .Equal, toItem: bar, attribute: .Trailing, multiplier: CGFloat(1), constant: CGFloat(0)))
-        //outputsView.addConstraint(NSLayoutConstraint(item: outputsView, attribute: .Top, relatedBy: .Equal, toItem: bar, attribute: .Top, multiplier: CGFloat(1), constant: CGFloat(0)))
-        //outputsView.addConstraint(NSLayoutConstraint(item: outputsView, attribute: .Bottom, relatedBy: .Equal, toItem: bar, attribute: .Bottom, multiplier: CGFloat(1), constant: CGFloat(0)))
+        bar.addConstraint(NSLayoutConstraint(item: bar, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: CGFloat(1), constant: CGFloat(150)))
+        bar.addConstraint(NSLayoutConstraint(item: bar, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: CGFloat(1), constant: CGFloat(150)))*/
     }
+
+    /*override func viewDidAppear() {
+        view.window?.visualizeConstraints(foo.constraints)
+    }*/
 }

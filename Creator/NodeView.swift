@@ -16,28 +16,28 @@ class NodeView: NSView {
         super.init(coder: coder)
     }
     override func setFrameOrigin(newOrigin: NSPoint) {
+        println("Setting NodeView frame origin to \(newOrigin)")
         super.setFrameOrigin(newOrigin)
-        println("Set NodeView frame origin to \(newOrigin)")
     }
     override func setFrameSize(newSize: NSSize) {
+        println("Setting NodeView frame size to \(newSize)")
         super.setFrameSize(newSize)
-        println("Set NodeView frame size to \(newSize)")
     }
     override func setBoundsOrigin(newOrigin: NSPoint) {
+        println("Setting NodeView bounds origin to \(newOrigin)")
         super.setBoundsOrigin(newOrigin)
-        println("Set NodeView bounds origin to \(newOrigin)")
     }
     override func setBoundsSize(newSize: NSSize) {
+        println("Setting NodeView bounds size to \(newSize)")
         super.setBoundsSize(newSize)
-        println("Set NodeView bounds size to \(newSize)")
     }
     override func addConstraint(constraint: NSLayoutConstraint) {
-        super.addConstraint(constraint)
         println("Adding constraint to NodeView")
+        super.addConstraint(constraint)
     }
 
-    /*override func drawRect(dirtyRect: NSRect) {
-        NSColor.greenColor().set()
+    override func drawRect(dirtyRect: NSRect) {
+        NSColor.redColor().set()
         NSBezierPath.fillRect(bounds)
-    }*/
+    }
 }

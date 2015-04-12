@@ -17,6 +17,8 @@ class Document: NSPersistentDocument {
 
     override func windowControllerDidLoadNib(aController: NSWindowController) {
         super.windowControllerDidLoadNib(aController)
+        //aController.window?.visualizeConstraints([])
+
         graphViewController.managedObjectContext = managedObjectContext
         graphViewController.managedObjectModel = managedObjectModel
         graphViewController.populate()

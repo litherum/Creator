@@ -49,13 +49,13 @@ class GraphViewController: NSViewController {
     }
 
     func addView(node : Node) {
-        var newView = NodeView(frame: NSMakeRect(CGFloat(50), CGFloat(30), CGFloat(100), CGFloat(100)))
+        var newView = NodeView()
+        newView.frame = NSMakeRect(CGFloat(node.positionX), CGFloat(node.positionY), CGFloat(100), CGFloat(100))
         view.subviews.append(newView)
 
-        view.addConstraint(NSLayoutConstraint(item: view, attribute: .Trailing, relatedBy: .Equal, toItem: newView, attribute: .Trailing, multiplier: CGFloat(1), constant: CGFloat(0)))
-        view.addConstraint(NSLayoutConstraint(item: view, attribute: .Top, relatedBy: .Equal, toItem: newView, attribute: .Top, multiplier: CGFloat(1), constant: CGFloat(0)))
+        view.addConstraint(NSLayoutConstraint(item: view, attribute: .Trailing, relatedBy: .GreaterThanOrEqual, toItem: newView, attribute: .Trailing, multiplier: CGFloat(1), constant: CGFloat(0)))
+        view.addConstraint(NSLayoutConstraint(item: view, attribute: .Top, relatedBy: .LessThanOrEqual, toItem: newView, attribute: .Top, multiplier: CGFloat(1), constant: CGFloat(0)))
 
-        println("\(view.translatesAutoresizingMaskIntoConstraints) \(newView.translatesAutoresizingMaskIntoConstraints)")
         println("Done")
     }
 

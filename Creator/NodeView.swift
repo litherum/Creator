@@ -9,12 +9,6 @@
 import Cocoa
 
 class NodeView: NSView {
-    override init(frame frameRect: NSRect) {
-        super.init(frame: frameRect)
-    }
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-    }
     override func drawRect(dirtyRect: NSRect) {
         NSColor.greenColor().set()
         NSBezierPath.fillRect(bounds)

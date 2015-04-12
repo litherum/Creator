@@ -7,6 +7,7 @@
         <customObject id="-2" userLabel="File's Owner" customClass="NodeViewController" customModule="Creator" customModuleProvider="target">
             <connections>
                 <outlet property="inputsView" destination="bFq-j3-UgW" id="42H-ZA-gkn"/>
+                <outlet property="outputsView" destination="t9s-ZZ-1JA" id="viT-lt-Jab"/>
                 <outlet property="titleView" destination="CMW-XJ-Yt9" id="4qk-Ek-nww"/>
                 <outlet property="view" destination="c22-O7-iKe" id="4UX-0i-XkD"/>
             </connections>
@@ -14,27 +15,34 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="c22-O7-iKe" customClass="NodeView" customModule="Creator" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="335" height="34"/>
+            <rect key="frame" x="0.0" y="0.0" width="335" height="50"/>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CMW-XJ-Yt9">
-                    <rect key="frame" x="149" y="17" width="37" height="17"/>
+                    <rect key="frame" x="143" y="0.0" width="50" height="50"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Title" drawsBackground="YES" id="aMp-fA-aFb">
                         <font key="font" metaFont="systemBold"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="selectedMenuItemColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <stackView orientation="vertical" alignment="centerX" spacing="0.0" horizontalStackHuggingPriority="750" verticalStackHuggingPriority="750" horizontalHuggingPriority="249" verticalHuggingPriority="249" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bFq-j3-UgW">
-                    <rect key="frame" x="0.0" y="0.0" width="335" height="17"/>
+                <stackView orientation="vertical" alignment="centerX" spacing="0.0" horizontalStackHuggingPriority="750" verticalStackHuggingPriority="750" horizontalHuggingPriority="249" verticalHuggingPriority="249" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bFq-j3-UgW" userLabel="Inputs Stack View">
+                    <rect key="frame" x="0.0" y="16" width="34" height="17"/>
+                </stackView>
+                <stackView orientation="vertical" alignment="centerX" spacing="0.0" horizontalHuggingPriority="249" verticalHuggingPriority="249" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="t9s-ZZ-1JA" userLabel="Ouptuts Stack View">
+                    <rect key="frame" x="301" y="0.0" width="34" height="34"/>
                 </stackView>
             </subviews>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="bFq-j3-UgW" secondAttribute="trailing" id="2F7-gS-tU6"/>
+                <constraint firstAttribute="trailing" secondItem="t9s-ZZ-1JA" secondAttribute="trailing" id="0Vq-HY-fBF"/>
+                <constraint firstAttribute="bottom" secondItem="t9s-ZZ-1JA" secondAttribute="bottom" id="CWX-tk-PyQ"/>
                 <constraint firstItem="CMW-XJ-Yt9" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="GGT-Vu-aM3"/>
-                <constraint firstAttribute="centerX" secondItem="CMW-XJ-Yt9" secondAttribute="centerX" id="K5r-7k-Ld3"/>
+                <constraint firstAttribute="width" relation="greaterThanOrEqual" secondItem="CMW-XJ-Yt9" secondAttribute="width" id="PNd-9m-UpO"/>
                 <constraint firstItem="bFq-j3-UgW" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="ap7-gK-g2I"/>
+                <constraint firstItem="t9s-ZZ-1JA" firstAttribute="leading" secondItem="bFq-j3-UgW" secondAttribute="trailing" constant="40" id="fG1-dz-Myg"/>
                 <constraint firstAttribute="bottom" secondItem="bFq-j3-UgW" secondAttribute="bottom" id="knE-qd-Rfi"/>
                 <constraint firstItem="bFq-j3-UgW" firstAttribute="top" secondItem="CMW-XJ-Yt9" secondAttribute="bottom" id="oal-Gj-Ror"/>
+                <constraint firstItem="CMW-XJ-Yt9" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="rdz-Qg-1LT"/>
+                <constraint firstItem="t9s-ZZ-1JA" firstAttribute="top" secondItem="CMW-XJ-Yt9" secondAttribute="bottom" id="zi1-31-YrQ"/>
             </constraints>
             <point key="canvasLocation" x="830.5" y="455"/>
         </customView>

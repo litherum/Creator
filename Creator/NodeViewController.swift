@@ -12,7 +12,6 @@ class NodeViewController: NSViewController {
     @IBOutlet var titleView: NSTextField!
     @IBOutlet var inputsView: NSStackView!
     @IBOutlet var outputsView: NSStackView!
-    var foo : NSTextField!
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -23,27 +22,24 @@ class NodeViewController: NSViewController {
     }
 
     override func viewDidLoad() {
-        for i in 0 ..< 5 {
-        foo = NSTextField()
-        foo.translatesAutoresizingMaskIntoConstraints = false
-        foo.selectable = false
-        foo.drawsBackground = false
-        foo.bezeled = false
-        foo.stringValue = "Foo Foo Foo"
-        inputsView.addView(foo, inGravity: .Center)
+    /*
+        for i in 0 ..< 2 {
+            var foo = NSTextField()
+            foo.translatesAutoresizingMaskIntoConstraints = false
+            foo.selectable = false
+            foo.drawsBackground = false
+            foo.bezeled = false
+            foo.stringValue = "Input"
+            inputsView.addView(foo, inGravity: .Center)
         }
-        //foo.addConstraint(NSLayoutConstraint(item: foo, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: CGFloat(1), constant: CGFloat(150)))
-        //foo.addConstraint(NSLayoutConstraint(item: foo, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: CGFloat(1), constant: CGFloat(150)))
 
-        /*var bar = NSTextField()
+        var bar = NSTextField()
         bar.translatesAutoresizingMaskIntoConstraints = false
-        bar.stringValue = "Bar"
+        bar.selectable = false
+        bar.drawsBackground = false
+        bar.bezeled = false
+        bar.stringValue = "Output"
         outputsView.addView(bar, inGravity: .Center)
-        bar.addConstraint(NSLayoutConstraint(item: bar, attribute: .Width, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: CGFloat(1), constant: CGFloat(150)))
-        bar.addConstraint(NSLayoutConstraint(item: bar, attribute: .Height, relatedBy: .Equal, toItem: nil, attribute: .NotAnAttribute, multiplier: CGFloat(1), constant: CGFloat(150)))*/
+    */
     }
-
-    /*override func viewDidAppear() {
-        view.window?.visualizeConstraints(foo.constraints)
-    }*/
 }

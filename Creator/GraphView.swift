@@ -42,9 +42,9 @@ class GraphView: NSView {
     }
 
     override func drawRect(dirtyRect: NSRect) {
-        NSColor.greenColor().set()
-        NSBezierPath.fillRect(bounds)
-        NSColor.blackColor().set()
-        NSBezierPath.fillRect(NSMakeRect(0, 0, 50, 45))
+        //NSColor.greenColor().set()
+        //NSBezierPath.fillRect(bounds)
+        //NSColor.blackColor().set()
+        //NSBezierPath.fillRect(NSMakeRect(0, 0, 50, 45))
     }
 }

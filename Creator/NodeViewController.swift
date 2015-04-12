@@ -35,14 +35,14 @@ class NodeViewController: NSViewController {
     override func viewDidLoad() {
         addInputView("a", alignment: .LeftTextAlignment, stackView: inputsView)
         addInputView("aa", alignment: .LeftTextAlignment, stackView: inputsView)
-        addInputView("aaa", alignment: .LeftTextAlignment, stackView: inputsView)
-        addInputView("aaaa", alignment: .LeftTextAlignment, stackView: inputsView)
+        //addInputView("aaa", alignment: .LeftTextAlignment, stackView: inputsView)
+        //addInputView("aaaa", alignment: .LeftTextAlignment, stackView: inputsView)
         addInputView("a", alignment: .RightTextAlignment, stackView: outputsView)
         addInputView("aa", alignment: .RightTextAlignment, stackView: outputsView)
         addInputView("aaa", alignment: .RightTextAlignment, stackView: outputsView)
     }
 
     override func viewWillAppear() {
-        //view.window?.visualizeConstraints(view.constraints)
+        //view.window?.visualizeConstraints(view.subviews[0].constraints)
     }
 }

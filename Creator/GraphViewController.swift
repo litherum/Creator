@@ -53,14 +53,21 @@ class GraphViewController: NSViewController {
     }
 
     func addView(node : Node) {
-        var newView = NodeView()
-        newView.frame = NSMakeRect(CGFloat(node.positionX), CGFloat(node.positionY), CGFloat(600), CGFloat(600))
-        view.subviews.append(newView)
+        //var topLevelObjects = NSArray?()
+        //let success = NSBundle.mainBundle().loadNibNamed("NodeView", owner: self, topLevelObjects: &topLevelObjects)
+        //println("\(success)")
 
-        view.addConstraint(NSLayoutConstraint(item: view, attribute: .Trailing, relatedBy: .GreaterThanOrEqual, toItem: newView, attribute: .Trailing, multiplier: CGFloat(1), constant: CGFloat(0)))
-        view.addConstraint(NSLayoutConstraint(item: view, attribute: .Top, relatedBy: .LessThanOrEqual, toItem: newView, attribute: .Top, multiplier: CGFloat(1), constant: CGFloat(0)))
+        let nodeViewController = NodeViewController(nibName: "NodeView", bundle: nil) as NodeViewController!
+        addChildViewController(nodeViewController)
+        view.addSubview(nodeViewController.view)
 
-        println("Done")
+        //var newView = NodeView()
+        //newView.frame = NSMakeRect(CGFloat(node.positionX), CGFloat(node.positionY), CGFloat(600), CGFloat(600))
+        //view.subviews.append(controller.view)
+
+        view.addConstraint(NSLayoutConstraint(item: view, attribute: .Trailing, relatedBy: .GreaterThanOrEqual, toItem: nodeViewController.view, attribute: .Trailing, multiplier: CGFloat(1), constant: CGFloat(0)))
+        view.addConstraint(NSLayoutConstraint(item: view, attribute: .Top, relatedBy: .LessThanOrEqual, toItem: nodeViewController.view, attribute: .Top, multiplier: CGFloat(1), constant: CGFloat(0)))
+        println("Success")
     }
 
     override func viewDidLoad() {

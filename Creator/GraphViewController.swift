@@ -79,8 +79,6 @@ class GraphViewController: NSViewController {
         let outputView = endNodeViewController.outputsView.views[Int(endNodeIndex)] as! NSView
         let startPoint = view.convertPoint(NSMakePoint(0, 0), fromView: inputView)
         let endPoint = view.convertPoint(NSMakePoint(0, 0), fromView: outputView)
-        println("Adding a connection between \(startNodeViewController) \(endNodeViewController) At indices \(startNodeIndex) \(endNodeIndex)")
-        println("Points: \(startPoint) \(endPoint)")
         connectionsView.connections.append(Connection(startPointInput: startPoint, startNodeInput: startNodeViewController.node, startIndexInput: startNodeIndex, endPointInput: endPoint, endNodeInput: endNodeViewController.node, endIndexInput: endNodeIndex))
         connectionsView.setNeedsDisplayInRect(connectionsView.bounds)
     }

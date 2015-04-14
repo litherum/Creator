@@ -28,14 +28,12 @@ class Connection {
 class ConnectionsView: NSView {
     var connections: [Connection] = []
     override func drawRect(dirtyRect: NSRect) {
-        println("Drawing Rect \(connections.count)")
         NSColor.redColor().set()
         for connection in connections {
             var path = NSBezierPath()
             path.moveToPoint(connection.startPoint)
             path.lineToPoint(connection.endPoint)
             path.stroke()
-            println("Drawing line from \(connection.startPoint) to \(connection.endPoint)")
         }
     }
 }

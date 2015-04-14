@@ -13,8 +13,13 @@ class GraphViewController: NSViewController {
     var managedObjectContext: NSManagedObjectContext!
     var managedObjectModel: AnyObject!
 
-    var draggingNodeViewController: NodeViewController!
-    var draggingStartPoint: NSPoint!
+    @IBOutlet var connectionsView: ConnectionsView!
+
+    enum DragOperation {
+        case Move(NodeViewController, NSPoint)
+        case Connect(NodeViewController, UInt)
+    }
+    var dragOperation: DragOperation!
 
     func fetchFrame() -> Frame? {
         var frameRequest = managedObjectModel.fetchRequestFromTemplateWithName("FrameRequest", substitutionVariables: [:]) as NSFetchRequest!
@@ -69,41 +74,88 @@ class GraphViewController: NSViewController {
         //println("Ambiguities: \(findViewsWithAmbiguousLayouts())")
     }
 
-    override func viewDidLoad() {
-        //println("View did load")
+    func addConnection(startNodeViewController: NodeViewController, startNodeIndex: UInt, endNodeViewController: NodeViewController, endNodeIndex: UInt) {
+        let inputView = startNodeViewController.inputsView.views[Int(startNodeIndex)] as! NSView
+        let outputView = endNodeViewController.outputsView.views[Int(endNodeIndex)] as! NSView
+        let startPoint = view.convertPoint(NSMakePoint(0, 0), fromView: inputView)
+        let endPoint = view.convertPoint(NSMakePoint(0, 0), fromView: outputView)
+        println("Adding a connection between \(startNodeViewController) \(endNodeViewController) At indices \(startNodeIndex) \(endNodeIndex)")
+        println("Points: \(startPoint) \(endPoint)")
+        connectionsView.connections.append(Connection(startPointInput: startPoint, startNodeInput: startNodeViewController.node, startIndexInput: startNodeIndex, endPointInput: endPoint, endNodeInput: endNodeViewController.node, endIndexInput: endNodeIndex))
+        connectionsView.setNeedsDisplayInRect(connectionsView.bounds)
     }
 
     override func mouseDown(theEvent: NSEvent) {
         var hit = view.hitTest(view.superview!.convertPoint(theEvent.locationInWindow, fromView: nil)) as NSView!
+        // This search kind of blows. The hit test already knows what was hit.
         for child in childViewControllers {
             if let c = child as? NodeViewController {
                 if hit == c.titleView {
-                    draggingNodeViewController = c
                     let currentMouseLocation = NSEvent.mouseLocation()
-                    draggingStartPoint = NSPoint()
-                    draggingStartPoint.x = draggingNodeViewController.leadingConstraint.constant
-                    draggingStartPoint.y = draggingNodeViewController.topConstraint.constant
+                    var draggingStartPoint = NSPoint()
+                    draggingStartPoint.x = c.leadingConstraint.constant
+                    draggingStartPoint.y = c.topConstraint.constant
                     draggingStartPoint.x -= currentMouseLocation.x
                     draggingStartPoint.y += currentMouseLocation.y
-                    break
+                    dragOperation = .Move(c, draggingStartPoint)
+                    return
+                } else {
+                    // See if we are dragging from a connection point
+                    var j: UInt = 0
+                    for input in c.inputsView.views {
+                        if let i = input as? NSView {
+                            if hit == i {
+                                dragOperation = .Connect(c, j)
+                                return
+                            }
+                            ++j
+                        }
+                    }
                 }
             }
         }
     }
 
     override func mouseDragged(theEvent: NSEvent) {
-        if draggingNodeViewController != nil && draggingStartPoint != nil {
-            let currentMouseLocation = NSEvent.mouseLocation()
-            draggingNodeViewController.leadingConstraint.constant = draggingStartPoint.x + currentMouseLocation.x
-            draggingNodeViewController.topConstraint.constant = draggingStartPoint.y - currentMouseLocation.y
-            draggingNodeViewController.node.positionX = Float(draggingNodeViewController.leadingConstraint.constant)
-            draggingNodeViewController.node.positionY = Float(draggingNodeViewController.topConstraint.constant)
+        if let op = dragOperation {
+            switch op {
+                case .Move(let draggingNodeViewController, let draggingStartPoint):
+                    let currentMouseLocation = NSEvent.mouseLocation()
+                    draggingNodeViewController.leadingConstraint.constant = draggingStartPoint.x + currentMouseLocation.x
+                    draggingNodeViewController.topConstraint.constant = draggingStartPoint.y - currentMouseLocation.y
+                    draggingNodeViewController.node.positionX = Float(draggingNodeViewController.leadingConstraint.constant)
+                    draggingNodeViewController.node.positionY = Float(draggingNodeViewController.topConstraint.constant)
+                case .Connect:
+                    break
+            }
         }
     }
 
     override func mouseUp(theEvent: NSEvent) {
-        draggingNodeViewController = nil
-        draggingStartPoint = nil
+        if let op = dragOperation {
+            switch op {
+                case .Move:
+                    dragOperation = nil
+                    return
+                case .Connect(let startNodeViewController, let startNodeIndex):
+                    var hit = view.hitTest(view.superview!.convertPoint(theEvent.locationInWindow, fromView: nil)) as NSView!
+                    for child in childViewControllers {
+                        if let c = child as? NodeViewController {
+                            var i: UInt = 0
+                            for output in c.outputsView.views {
+                                if let o = output as? NSView {
+                                    if hit == o {
+                                        addConnection(startNodeViewController, startNodeIndex: startNodeIndex, endNodeViewController: c, endNodeIndex: i)
+                                        dragOperation = nil
+                                        return
+                                    }
+                                    ++i
+                                }
+                            }
+                        }
+                    }
+            }
+        }
     }
 
     func findViewsWithAmbiguousLayoutsHelper(v: NSView) -> [NSView] {

@@ -36,11 +36,27 @@
                                             <rect key="frame" x="1" y="1" width="166" height="79"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
-                                                <view translatesAutoresizingMaskIntoConstraints="NO" id="lqd-mu-UTp" customClass="GraphView" customModule="Creator" customModuleProvider="target">
+                                                <view misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lqd-mu-UTp">
                                                     <rect key="frame" x="0.0" y="-199" width="800" height="800"/>
+                                                    <subviews>
+                                                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="aG3-W9-YRj" userLabel="Connections View" customClass="ConnectionsView" customModule="Creator" customModuleProvider="target">
+                                                            <rect key="frame" x="0.0" y="0.0" width="800" height="800"/>
+                                                        </customView>
+                                                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="psD-LP-Kaf" customClass="GraphView" customModule="Creator" customModuleProvider="target">
+                                                            <rect key="frame" x="0.0" y="0.0" width="800" height="800"/>
+                                                        </customView>
+                                                    </subviews>
                                                     <constraints>
+                                                        <constraint firstAttribute="trailing" secondItem="psD-LP-Kaf" secondAttribute="trailing" id="0B7-1g-ZxW"/>
+                                                        <constraint firstItem="aG3-W9-YRj" firstAttribute="leading" secondItem="lqd-mu-UTp" secondAttribute="leading" id="3da-hE-ltP"/>
+                                                        <constraint firstAttribute="bottom" secondItem="psD-LP-Kaf" secondAttribute="bottom" id="JJq-g4-g0m"/>
                                                         <constraint firstAttribute="height" constant="800" id="QcR-TG-JAv"/>
+                                                        <constraint firstAttribute="bottom" secondItem="aG3-W9-YRj" secondAttribute="bottom" id="SyQ-Ao-EML"/>
+                                                        <constraint firstAttribute="trailing" secondItem="aG3-W9-YRj" secondAttribute="trailing" id="Zk7-PK-6WB"/>
+                                                        <constraint firstItem="psD-LP-Kaf" firstAttribute="leading" secondItem="lqd-mu-UTp" secondAttribute="leading" id="ZrC-PU-zgJ"/>
+                                                        <constraint firstItem="aG3-W9-YRj" firstAttribute="top" secondItem="lqd-mu-UTp" secondAttribute="top" id="meX-VT-eFK"/>
                                                         <constraint firstAttribute="width" constant="800" id="nSW-db-9aq"/>
+                                                        <constraint firstItem="psD-LP-Kaf" firstAttribute="top" secondItem="lqd-mu-UTp" secondAttribute="top" id="xDy-sJ-LCR"/>
                                                     </constraints>
                                                 </view>
                                             </subviews>
@@ -53,7 +69,7 @@
                                             <rect key="frame" x="1" y="80" width="166" height="15"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
-                                        <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="rSy-pt-w7j">
+                                        <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="0.98994974874371855" horizontal="NO" id="rSy-pt-w7j">
                                             <rect key="frame" x="167" y="1" width="15" height="79"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
@@ -75,7 +91,7 @@
                                     <rect key="frame" x="1" y="1" width="181" height="94"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <view translatesAutoresizingMaskIntoConstraints="NO" id="9b0-m8-5lJ">
+                                        <view misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9b0-m8-5lJ">
                                             <rect key="frame" x="0.0" y="-8" width="1600" height="100"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="1600" id="TVI-0g-PKb"/>
@@ -92,7 +108,7 @@
                                     <rect key="frame" x="1" y="79" width="181" height="16"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
-                                <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="y3w-An-2cJ">
+                                <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="0.75" horizontal="NO" id="y3w-An-2cJ">
                                     <rect key="frame" x="166" y="1" width="16" height="94"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
@@ -118,6 +134,7 @@
         </window>
         <viewController id="TBV-vK-wk6" customClass="GraphViewController" customModule="Creator" customModuleProvider="target">
             <connections>
+                <outlet property="connectionsView" destination="aG3-W9-YRj" id="XVT-Xg-HZe"/>
                 <outlet property="view" destination="lqd-mu-UTp" id="3Dg-qg-dns"/>
             </connections>
         </viewController>

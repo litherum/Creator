@@ -12,6 +12,9 @@ class NodeViewController: NSViewController {
     @IBOutlet var titleView: NSTextField!
     @IBOutlet var inputsView: NSStackView!
     @IBOutlet var outputsView: NSStackView!
+    var leadingConstraint: NSLayoutConstraint!
+    var topConstraint: NSLayoutConstraint!
+    var node: Node!
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)

@@ -13,6 +13,9 @@ class GraphViewController: NSViewController {
     var managedObjectContext: NSManagedObjectContext!
     var managedObjectModel: AnyObject!
 
+    var draggingNodeViewController: NodeViewController!
+    var draggingStartPoint: NSPoint!
+
     func fetchFrame() -> Frame? {
         var frameRequest = managedObjectModel.fetchRequestFromTemplateWithName("FrameRequest", substitutionVariables: [:]) as NSFetchRequest!
         var error: NSError?
@@ -58,8 +61,11 @@ class GraphViewController: NSViewController {
         (nodeViewController.view as! NodeView).graphViewController = self
         addChildViewController(nodeViewController)
         view.addSubview(nodeViewController.view)
-        view.addConstraint(NSLayoutConstraint(item: nodeViewController.view, attribute: .Leading, relatedBy: .Equal, toItem: view, attribute: .Leading, multiplier: 1, constant: CGFloat(node.positionX)))
-        view.addConstraint(NSLayoutConstraint(item: nodeViewController.view, attribute: .Top, relatedBy: .Equal, toItem: view, attribute: .Top, multiplier: 1, constant: CGFloat(node.positionY)))
+        nodeViewController.leadingConstraint = NSLayoutConstraint(item: nodeViewController.view, attribute: .Leading, relatedBy: .Equal, toItem: view, attribute: .Leading, multiplier: 1, constant: CGFloat(node.positionX))
+        nodeViewController.topConstraint = NSLayoutConstraint(item: nodeViewController.view, attribute: .Top, relatedBy: .Equal, toItem: view, attribute: .Top, multiplier: 1, constant: CGFloat(node.positionY))
+        view.addConstraint(nodeViewController.leadingConstraint)
+        view.addConstraint(nodeViewController.topConstraint)
+        nodeViewController.node = node
         //println("Ambiguities: \(findViewsWithAmbiguousLayouts())")
     }
 
@@ -69,12 +75,35 @@ class GraphViewController: NSViewController {
 
     override func mouseDown(theEvent: NSEvent) {
         var hit = view.hitTest(view.superview!.convertPoint(theEvent.locationInWindow, fromView: nil)) as NSView!
-        while hit != view {
-            println("hit \(hit)")
-            hit = hit.superview
+        for child in childViewControllers {
+            if let c = child as? NodeViewController {
+                if hit == c.titleView {
+                    draggingNodeViewController = c
+                    let currentMouseLocation = NSEvent.mouseLocation()
+                    draggingStartPoint = NSPoint()
+                    draggingStartPoint.x = draggingNodeViewController.leadingConstraint.constant
+                    draggingStartPoint.y = draggingNodeViewController.topConstraint.constant
+                    draggingStartPoint.x -= currentMouseLocation.x
+                    draggingStartPoint.y += currentMouseLocation.y
+                    break
+                }
+            }
         }
-        
-        println("GraphViewController mousedown")
+    }
+
+    override func mouseDragged(theEvent: NSEvent) {
+        if draggingNodeViewController != nil && draggingStartPoint != nil {
+            let currentMouseLocation = NSEvent.mouseLocation()
+            draggingNodeViewController.leadingConstraint.constant = draggingStartPoint.x + currentMouseLocation.x
+            draggingNodeViewController.topConstraint.constant = draggingStartPoint.y - currentMouseLocation.y
+            draggingNodeViewController.node.positionX = Float(draggingNodeViewController.leadingConstraint.constant)
+            draggingNodeViewController.node.positionY = Float(draggingNodeViewController.topConstraint.constant)
+        }
+    }
+
+    override func mouseUp(theEvent: NSEvent) {
+        draggingNodeViewController = nil
+        draggingStartPoint = nil
     }
 
     func findViewsWithAmbiguousLayoutsHelper(v: NSView) -> [NSView] {

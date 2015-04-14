@@ -74,15 +74,6 @@ class GraphViewController: NSViewController {
         //println("Ambiguities: \(findViewsWithAmbiguousLayouts())")
     }
 
-    func addConnection(startNodeViewController: NodeViewController, startNodeIndex: UInt, endNodeViewController: NodeViewController, endNodeIndex: UInt) {
-        let inputView = startNodeViewController.inputsView.views[Int(startNodeIndex)] as! NSView
-        let outputView = endNodeViewController.outputsView.views[Int(endNodeIndex)] as! NSView
-        let startPoint = view.convertPoint(NSMakePoint(0, 0), fromView: inputView)
-        let endPoint = view.convertPoint(NSMakePoint(0, 0), fromView: outputView)
-        connectionsView.connections.append(Connection(startPointInput: startPoint, startNodeInput: startNodeViewController.node, startIndexInput: startNodeIndex, endPointInput: endPoint, endNodeInput: endNodeViewController.node, endIndexInput: endNodeIndex))
-        connectionsView.setNeedsDisplayInRect(connectionsView.bounds)
-    }
-
     override func mouseDown(theEvent: NSEvent) {
         var hit = view.hitTest(view.superview!.convertPoint(theEvent.locationInWindow, fromView: nil)) as NSView!
         // This search kind of blows. The hit test already knows what was hit.
@@ -123,6 +114,7 @@ class GraphViewController: NSViewController {
                     draggingNodeViewController.topConstraint.constant = draggingStartPoint.y - currentMouseLocation.y
                     draggingNodeViewController.node.positionX = Float(draggingNodeViewController.leadingConstraint.constant)
                     draggingNodeViewController.node.positionY = Float(draggingNodeViewController.topConstraint.constant)
+                    connectionsView.setNeedsDisplayInRect(connectionsView.bounds)
                 case .Connect:
                     break
             }
@@ -143,7 +135,8 @@ class GraphViewController: NSViewController {
                             for output in c.outputsView.views {
                                 if let o = output as? NSView {
                                     if hit == o {
-                                        addConnection(startNodeViewController, startNodeIndex: startNodeIndex, endNodeViewController: c, endNodeIndex: i)
+                                        connectionsView.connections.append(Connection(startNodeViewControllerInput: startNodeViewController, startIndexInput: startNodeIndex, endNodeViewControllerInput: c, endIndexInput: i))
+                                        connectionsView.setNeedsDisplayInRect(connectionsView.bounds)
                                         dragOperation = nil
                                         return
                                     }

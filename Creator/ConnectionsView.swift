@@ -9,18 +9,14 @@
 import Cocoa
 
 class Connection {
-    var startPoint: NSPoint
-    var startNode: Node
+    var startNodeViewController: NodeViewController
     var startIndex: UInt
-    var endPoint: NSPoint
-    var endNode: Node
+    var endNodeViewController: NodeViewController
     var endIndex: UInt
-    init(startPointInput: NSPoint, startNodeInput: Node, startIndexInput: UInt, endPointInput: NSPoint, endNodeInput: Node, endIndexInput: UInt) {
-        startPoint = startPointInput
-        startNode = startNodeInput
+    init(startNodeViewControllerInput: NodeViewController, startIndexInput: UInt, endNodeViewControllerInput: NodeViewController, endIndexInput: UInt) {
+        startNodeViewController = startNodeViewControllerInput
         startIndex = startIndexInput
-        endPoint = endPointInput
-        endNode = endNodeInput
+        endNodeViewController = endNodeViewControllerInput
         endIndex = endIndexInput
     }
 }
@@ -30,9 +26,13 @@ class ConnectionsView: NSView {
     override func drawRect(dirtyRect: NSRect) {
         NSColor.redColor().set()
         for connection in connections {
+            let inputView = connection.startNodeViewController.inputsView.views[Int(connection.startIndex)] as! NSView
+            let outputView = connection.endNodeViewController.outputsView.views[Int(connection.endIndex)] as! NSView
+            let startPoint = convertPoint(NSMakePoint(0, (inputView.bounds.origin.y + inputView.bounds.maxY) / 2), fromView: inputView)
+            let endPoint = convertPoint(NSMakePoint(outputView.bounds.maxX, (outputView.bounds.origin.y + outputView.bounds.maxY) / 2), fromView: outputView)
             var path = NSBezierPath()
-            path.moveToPoint(connection.startPoint)
-            path.lineToPoint(connection.endPoint)
+            path.moveToPoint(startPoint)
+            path.lineToPoint(endPoint)
             path.stroke()
         }
     }

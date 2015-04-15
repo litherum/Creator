@@ -80,7 +80,7 @@ class GraphViewController: NSViewController {
         for child in childViewControllers {
             if let c = child as? NodeViewController {
                 if hit == c.titleView {
-                    let currentMouseLocation = NSEvent.mouseLocation()
+                    let currentMouseLocation = theEvent.locationInWindow
                     var draggingStartPoint = NSPoint()
                     draggingStartPoint.x = c.leadingConstraint.constant
                     draggingStartPoint.y = c.topConstraint.constant
@@ -109,14 +109,20 @@ class GraphViewController: NSViewController {
         if let op = dragOperation {
             switch op {
                 case .Move(let draggingNodeViewController, let draggingStartPoint):
-                    let currentMouseLocation = NSEvent.mouseLocation()
+                    let currentMouseLocation = theEvent.locationInWindow
                     draggingNodeViewController.leadingConstraint.constant = draggingStartPoint.x + currentMouseLocation.x
                     draggingNodeViewController.topConstraint.constant = draggingStartPoint.y - currentMouseLocation.y
                     draggingNodeViewController.node.positionX = Float(draggingNodeViewController.leadingConstraint.constant)
                     draggingNodeViewController.node.positionY = Float(draggingNodeViewController.topConstraint.constant)
                     connectionsView.setNeedsDisplayInRect(connectionsView.bounds)
-                case .Connect:
-                    break
+                case .Connect(let startNodeViewController, let startNodeIndex):
+                    let mouseLocation = connectionsView.convertPoint(theEvent.locationInWindow, fromView: nil)
+                    if connectionsView.connectionInFlight != nil {
+                        connectionsView.connectionInFlight!.1 = mouseLocation
+                    } else {
+                        connectionsView.connectionInFlight = (Connection(startNodeViewControllerInput: startNodeViewController, startIndexInput: startNodeIndex, endNodeViewControllerInput: startNodeViewController, endIndexInput: startNodeIndex), mouseLocation)
+                    }
+                    connectionsView.setNeedsDisplayInRect(connectionsView.bounds)
             }
         }
     }
@@ -128,6 +134,8 @@ class GraphViewController: NSViewController {
                     dragOperation = nil
                     return
                 case .Connect(let startNodeViewController, let startNodeIndex):
+                    connectionsView.connectionInFlight = nil
+                    connectionsView.setNeedsDisplayInRect(connectionsView.bounds)
                     var hit = view.hitTest(view.superview!.convertPoint(theEvent.locationInWindow, fromView: nil)) as NSView!
                     for child in childViewControllers {
                         if let c = child as? NodeViewController {

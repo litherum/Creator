@@ -24,7 +24,7 @@ class NodeViewController: NSViewController {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
 
-    func addInputView(value: String, alignment: NSTextAlignment, stackView: NSStackView!) {
+    func addInputOutputView(value: String, alignment: NSTextAlignment, stackView: NSStackView!) {
         var foo = NSTextField()
         foo.translatesAutoresizingMaskIntoConstraints = false
         foo.selectable = false
@@ -36,13 +36,6 @@ class NodeViewController: NSViewController {
     }
 
     override func viewDidLoad() {
-        addInputView("a", alignment: .LeftTextAlignment, stackView: inputsView)
-        addInputView("aa", alignment: .LeftTextAlignment, stackView: inputsView)
-        //addInputView("aaa", alignment: .LeftTextAlignment, stackView: inputsView)
-        //addInputView("aaaa", alignment: .LeftTextAlignment, stackView: inputsView)
-        addInputView("a", alignment: .RightTextAlignment, stackView: outputsView)
-        addInputView("aa", alignment: .RightTextAlignment, stackView: outputsView)
-        addInputView("aaa", alignment: .RightTextAlignment, stackView: outputsView)
     }
 
     override func viewWillAppear() {

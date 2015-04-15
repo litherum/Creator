@@ -9,7 +9,13 @@
 import CoreData
 
 class ConstantBufferNode: Node {
-
     @NSManaged var payload: NSData
+    func populate(nullNode: NullNode, context: NSManagedObjectContext) {
+        addNodeToInputs(nullNode, context: context);
+        addNodeToInputs(nullNode, context: context);
+        addNodeToInputs(nullNode, context: context);
 
+        addNodeToOutputs(nullNode, context: context);
+        addNodeToOutputs(nullNode, context: context);
+    }
 }

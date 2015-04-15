@@ -9,7 +9,8 @@
 import Cocoa
 
 class GraphViewController: NSViewController {
-    lazy var frame : Frame? = self.fetchFrame()
+    lazy var frame: Frame? = self.fetchFrame()
+    lazy var nullNode: NullNode? = self.fetchNullNode()
     var managedObjectContext: NSManagedObjectContext!
     var managedObjectModel: AnyObject!
 
@@ -35,15 +36,30 @@ class GraphViewController: NSViewController {
         }
     }
 
-    func createConstantBufferNode() {
-        if let unwrappedFrame = frame {
-            var newBufferNode : ConstantBufferNode = NSEntityDescription.insertNewObjectForEntityForName("ConstantBufferNode", inManagedObjectContext: managedObjectContext) as! ConstantBufferNode
-            newBufferNode.positionX = 13
-            newBufferNode.positionY = 17
-            newBufferNode.payload = "test".dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)!
-            newBufferNode.frame = unwrappedFrame
-            addView(newBufferNode)
+    func fetchNullNode() -> NullNode? {
+        var nullNodeRequest = managedObjectModel.fetchRequestFromTemplateWithName("NullNodeRequest", substitutionVariables: [:]) as NSFetchRequest!
+        var error: NSError?
+        let nullNodes = managedObjectContext.executeFetchRequest(nullNodeRequest, error: &error) as! [NullNode]!
+        if error != nil {
+            return nil
         }
+        if nullNodes.count == 0 {
+            var result = NSEntityDescription.insertNewObjectForEntityForName("NullNode", inManagedObjectContext: managedObjectContext) as? NullNode
+            result!.frame = frame!
+            return result
+        } else {
+            return nullNodes[0]
+        }
+    }
+
+    func createConstantBufferNode() {
+        var newBufferNode : ConstantBufferNode = NSEntityDescription.insertNewObjectForEntityForName("ConstantBufferNode", inManagedObjectContext: managedObjectContext) as! ConstantBufferNode
+        newBufferNode.populate(nullNode!, context: managedObjectContext)
+        newBufferNode.positionX = 13
+        newBufferNode.positionY = 17
+        newBufferNode.payload = "test".dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)!
+        newBufferNode.frame = frame!
+        addView(newBufferNode)
     }
 
     func populate() {
@@ -61,7 +77,7 @@ class GraphViewController: NSViewController {
         //println("Ambiguities: \(findViewsWithAmbiguousLayouts())")
     }
 
-    func addView(node : Node) {
+    func addView(node: Node) {
         let nodeViewController = NodeViewController(nibName: "NodeViewController", bundle: nil) as NodeViewController!
         (nodeViewController.view as! NodeView).graphViewController = self
         addChildViewController(nodeViewController)
@@ -70,6 +86,14 @@ class GraphViewController: NSViewController {
         nodeViewController.topConstraint = NSLayoutConstraint(item: nodeViewController.view, attribute: .Top, relatedBy: .Equal, toItem: view, attribute: .Top, multiplier: 1, constant: CGFloat(node.positionY))
         view.addConstraint(nodeViewController.leadingConstraint)
         view.addConstraint(nodeViewController.topConstraint)
+
+        for i in node.inputs {
+            nodeViewController.addInputOutputView("aaa", alignment: .LeftTextAlignment, stackView: nodeViewController.inputsView)
+        }
+        for o in node.outputs {
+            nodeViewController.addInputOutputView("aaa", alignment: .RightTextAlignment, stackView: nodeViewController.outputsView)
+        }
+        
         nodeViewController.node = node
         //println("Ambiguities: \(findViewsWithAmbiguousLayouts())")
     }
@@ -145,6 +169,12 @@ class GraphViewController: NSViewController {
                                     if hit == o {
                                         connectionsView.connections.append(Connection(startNodeViewControllerInput: startNodeViewController, startIndexInput: startNodeIndex, endNodeViewControllerInput: c, endIndexInput: i))
                                         connectionsView.setNeedsDisplayInRect(connectionsView.bounds)
+
+                                        var edge = NSEntityDescription.insertNewObjectForEntityForName("Edge", inManagedObjectContext: managedObjectContext) as! Edge
+                                        edge.source = startNodeViewController.node
+                                        edge.destination = c.node
+                                        startNodeViewController.node.mutableOrderedSetValueForKey("inputs")[Int(startNodeIndex)] = edge
+                                        c.node.mutableOrderedSetValueForKey("outputs")[Int(i)] = edge
                                         dragOperation = nil
                                         return
                                     }

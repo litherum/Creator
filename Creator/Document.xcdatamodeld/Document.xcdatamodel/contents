@@ -6,6 +6,10 @@
     <entity name="ConstantFloatNode" representedClassName="Creator.ConstantFloatNode" parentEntity="Node" syncable="YES">
         <attribute name="payload" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
     </entity>
+    <entity name="Edge" representedClassName="Creator.Edge" syncable="YES">
+        <relationship name="destination" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Node" inverseName="outputs" inverseEntity="Node" syncable="YES"/>
+        <relationship name="source" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Node" inverseName="inputs" inverseEntity="Node" syncable="YES"/>
+    </entity>
     <entity name="FragmentShaderNode" representedClassName="Creator.FragmentShaderNode" parentEntity="Node" syncable="YES">
         <attribute name="source" attributeType="String" syncable="YES"/>
     </entity>
@@ -16,20 +20,24 @@
         <attribute name="positionX" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="positionY" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <relationship name="frame" maxCount="1" deletionRule="Nullify" destinationEntity="Frame" inverseName="passes" inverseEntity="Frame" syncable="YES"/>
-        <relationship name="inputs" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Node" inverseName="outputs" inverseEntity="Node" syncable="YES"/>
-        <relationship name="outputs" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Node" inverseName="inputs" inverseEntity="Node" syncable="YES"/>
+        <relationship name="inputs" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Edge" inverseName="source" inverseEntity="Edge" syncable="YES"/>
+        <relationship name="outputs" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Edge" inverseName="destination" inverseEntity="Edge" syncable="YES"/>
     </entity>
+    <entity name="NullNode" representedClassName="Creator.NullNode" parentEntity="Node" syncable="YES"/>
     <entity name="VertexShaderNode" representedClassName="Creator.VertexShaderNode" parentEntity="Node" syncable="YES">
         <attribute name="source" attributeType="String" syncable="YES"/>
     </entity>
     <fetchRequest name="FrameRequest" entity="Frame"/>
     <fetchRequest name="NodeRequest" entity="Node"/>
+    <fetchRequest name="NullNodeRequest" entity="NullNode"/>
     <elements>
         <element name="ConstantBufferNode" positionX="-236" positionY="153" width="128" height="60"/>
         <element name="ConstantFloatNode" positionX="-99" positionY="153" width="128" height="60"/>
         <element name="FragmentShaderNode" positionX="171" positionY="153" width="128" height="60"/>
         <element name="Frame" positionX="216" positionY="-18" width="128" height="60"/>
-        <element name="Node" positionX="-63" positionY="-18" width="128" height="120"/>
+        <element name="Node" positionX="-63" positionY="-18" width="128" height="118"/>
+        <element name="NullNode" positionX="-371" positionY="153" width="128" height="43"/>
         <element name="VertexShaderNode" positionX="36" positionY="153" width="128" height="60"/>
+        <element name="Edge" positionX="-335" positionY="0" width="128" height="73"/>
     </elements>
 </model>

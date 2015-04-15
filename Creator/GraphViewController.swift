@@ -170,12 +170,17 @@ class GraphViewController: NSViewController {
                                         connectionsView.connections.append(Connection(startNodeViewControllerInput: startNodeViewController, startIndexInput: startNodeIndex, endNodeViewControllerInput: c, endIndexInput: i))
                                         connectionsView.setNeedsDisplayInRect(connectionsView.bounds)
 
+                                        managedObjectContext.deleteObject(startNodeViewController.node.inputs[Int(startNodeIndex)] as! Edge)
+                                        managedObjectContext.deleteObject(c.node.outputs[Int(i)] as! Edge)
                                         var edge = NSEntityDescription.insertNewObjectForEntityForName("Edge", inManagedObjectContext: managedObjectContext) as! Edge
-                                        edge.source = startNodeViewController.node
-                                        edge.destination = c.node
-                                        startNodeViewController.node.mutableOrderedSetValueForKey("inputs")[Int(startNodeIndex)] = edge
-                                        c.node.mutableOrderedSetValueForKey("outputs")[Int(i)] = edge
+                                        var inputSet = startNodeViewController.node.mutableOrderedSetValueForKey("inputs")
+                                        inputSet.removeObjectAtIndex(Int(startNodeIndex))
+                                        inputSet.insertObject(edge, atIndex: Int(startNodeIndex))
+                                        var outputSet = c.node.mutableOrderedSetValueForKey("outputs")
+                                        outputSet.removeObjectAtIndex(Int(i))
+                                        outputSet.insertObject(edge, atIndex: Int(i))
                                         dragOperation = nil
+
                                         return
                                     }
                                     ++i

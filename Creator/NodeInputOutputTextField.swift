@@ -11,13 +11,18 @@ import Cocoa
 class NodeInputOutputTextField: NSTextField {
     weak var graphViewController: GraphViewController!
     weak var nodeViewController: NodeViewController!
+    var input: Bool = true
     var index: UInt = 0
 
     override func mouseDown(theEvent: NSEvent) {
-        graphViewController.nodeInputOutputMouseDown(nodeViewController, index: index)
+        if input {
+            graphViewController.nodeInputOutputMouseDown(nodeViewController, index: index)
+        }
     }
 
     override func mouseUp(theEvent: NSEvent) {
-        graphViewController.nodeInputOutputMouseUp(nodeViewController, index: index, mouseLocation: theEvent.locationInWindow)
+        if input {
+            graphViewController.nodeInputOutputMouseUp(nodeViewController, index: index, mouseLocation: theEvent.locationInWindow)
+        }
     }
 }

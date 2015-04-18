@@ -29,11 +29,12 @@ class NodeViewController: NSViewController {
         titleView.nodeViewController = self
     }
 
-    func addInputOutputView(value: String, alignment: NSTextAlignment, stackView: NSStackView!, index: UInt) {
+    func addInputOutputView(value: String, alignment: NSTextAlignment, input: Bool, index: UInt) {
         var inputOutputTextField = NodeInputOutputTextField()
         
         inputOutputTextField.graphViewController = graphViewController
         inputOutputTextField.nodeViewController = self
+        inputOutputTextField.input = input
         inputOutputTextField.index = index
 
         inputOutputTextField.translatesAutoresizingMaskIntoConstraints = false
@@ -42,6 +43,6 @@ class NodeViewController: NSViewController {
         inputOutputTextField.bezeled = false
         inputOutputTextField.alignment = alignment
         inputOutputTextField.stringValue = value
-        stackView.addView(inputOutputTextField, inGravity: .Center)
+        (input ? inputsView : outputsView).addView(inputOutputTextField, inGravity: .Center)
     }
 }

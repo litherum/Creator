@@ -77,7 +77,13 @@ class GraphViewController: NSViewController {
             }
             addNodeView(node)
         }
+        updateEdgeViews()
+    }
+
+    func updateEdgeViews() {
+        connectionsView.connections = []
         var edgeRequest = managedObjectModel.fetchRequestFromTemplateWithName("EdgeRequest", substitutionVariables: [:]) as NSFetchRequest!
+        var error: NSError?
         let edges = managedObjectContext.executeFetchRequest(edgeRequest, error: &error) as! [Edge]!
         if error != nil {
             return
@@ -105,10 +111,10 @@ class GraphViewController: NSViewController {
         nodeViewController.topConstraint = topConstraint
 
         for i in 0 ..< node.inputs.count {
-            nodeViewController.addInputOutputView("aaa", alignment: .LeftTextAlignment, stackView: nodeViewController.inputsView, index: UInt(i))
+            nodeViewController.addInputOutputView("aaa", alignment: .LeftTextAlignment, input: true, index: UInt(i))
         }
         for i in 0 ..< node.outputs.count {
-            nodeViewController.addInputOutputView("aaa", alignment: .RightTextAlignment, stackView: nodeViewController.outputsView, index: UInt(i))
+            nodeViewController.addInputOutputView("aaa", alignment: .RightTextAlignment, input: false, index: UInt(i))
         }
     }
 
@@ -127,22 +133,26 @@ class GraphViewController: NSViewController {
     func nodeInputOutputMouseUp(nodeViewController: NodeViewController, index: UInt, mouseLocation: NSPoint) {
         if let dragOperation = dragOperation {
             switch (dragOperation) {
-            case .Connect(let node, let index):
+            case .Connect(let inputNode, let inputIndex):
                 if let hitView = view.hitTest(view.superview!.convertPoint(mouseLocation, fromView: nil)) {
                     if let nodeInputOutputTextField = hitView as? NodeInputOutputTextField {
-                        managedObjectContext.deleteObject(node.inputs[Int(index)] as! Edge)
-                        managedObjectContext.deleteObject(nodeViewControllerToNodeDictionary[nodeInputOutputTextField.nodeViewController]!.outputs[Int(nodeInputOutputTextField.index)] as! Edge)
-                        var edge = NSEntityDescription.insertNewObjectForEntityForName("Edge", inManagedObjectContext: managedObjectContext) as! Edge
-                        edge.sourceIndex = Int32(index)
-                        edge.destinationIndex = Int32(nodeInputOutputTextField.index)
-                        var inputSet = node.mutableOrderedSetValueForKey("inputs")
-                        inputSet.removeObjectAtIndex(Int(index))
-                        inputSet.insertObject(edge, atIndex: Int(index))
-                        var outputSet = nodeViewControllerToNodeDictionary[nodeInputOutputTextField.nodeViewController]!.mutableOrderedSetValueForKey("outputs")
-                        outputSet.removeObjectAtIndex(Int(nodeInputOutputTextField.index))
-                        outputSet.insertObject(node.inputs[Int(index)], atIndex: Int(nodeInputOutputTextField.index))
+                        let outputNode = nodeViewControllerToNodeDictionary[nodeInputOutputTextField.nodeViewController]!
+                        let outputIndex = nodeInputOutputTextField.index
+                        if (inputNode.inputs[Int(inputIndex)] as! Edge).destination is NullNode && (outputNode.outputs[Int(outputIndex)] as! Edge).source is NullNode {
+                            managedObjectContext.deleteObject(inputNode.inputs[Int(inputIndex)] as! Edge)
+                            managedObjectContext.deleteObject(outputNode.outputs[Int(outputIndex)] as! Edge)
+                            var edge = NSEntityDescription.insertNewObjectForEntityForName("Edge", inManagedObjectContext: managedObjectContext) as! Edge
+                            edge.sourceIndex = Int32(index)
+                            edge.destinationIndex = Int32(outputIndex)
+                            var inputSet = inputNode.mutableOrderedSetValueForKey("inputs")
+                            inputSet.removeObjectAtIndex(Int(index))
+                            inputSet.insertObject(edge, atIndex: Int(index))
+                            var outputSet = outputNode.mutableOrderedSetValueForKey("outputs")
+                            outputSet.removeObjectAtIndex(Int(outputIndex))
+                            outputSet.insertObject(inputNode.inputs[Int(inputIndex)], atIndex: Int(outputIndex))
 
-                        addEdgeView(nodeToNodeViewControllerDictionary[node]!.inputsView.views[Int(index)] as! NodeInputOutputTextField, outputTextField: nodeInputOutputTextField)
+                            addEdgeView(nodeToNodeViewControllerDictionary[inputNode]!.inputsView.views[Int(inputIndex)] as! NodeInputOutputTextField, outputTextField: nodeInputOutputTextField)
+                        }
                     }
                 }
                 connectionsView.connectionInFlight = nil
@@ -170,12 +180,12 @@ class GraphViewController: NSViewController {
             let currentMouseLocation = theEvent.locationInWindow
             switch op {
             case .Move(let node, let position):
-                // FIXME: Update connectionsView.connections
                 let viewController = nodeToNodeViewControllerDictionary[node]!
                 viewController.leadingConstraint.constant = position.x + currentMouseLocation.x
                 viewController.topConstraint.constant = position.y - currentMouseLocation.y
                 node.positionX = Float(viewController.leadingConstraint.constant)
                 node.positionY = Float(viewController.topConstraint.constant)
+                updateEdgeViews()
             case .Connect(let node, let index):
                 let mouseLocation = connectionsView.convertPoint(currentMouseLocation, fromView: nil)
                 if connectionsView.connectionInFlight != nil {

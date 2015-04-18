@@ -46,10 +46,10 @@ class GraphViewController: NSViewController {
             return nil
         }
         if nullNodes.count == 0 {
-            var result = NSEntityDescription.insertNewObjectForEntityForName("NullNode", inManagedObjectContext: managedObjectContext) as? NullNode
-            result!.frame = frame!
-            result!.title = "NULL NODE"
-            return result
+            var node = NSEntityDescription.insertNewObjectForEntityForName("NullNode", inManagedObjectContext: managedObjectContext) as! NullNode
+            node.frame = frame!
+            node.title = "NULL NODE"
+            return node
         } else {
             return nullNodes[0]
         }
@@ -124,10 +124,10 @@ class GraphViewController: NSViewController {
             return
         }
         for edge in edges {
-            if edge.source.frame != frame || edge.destination.frame != frame || edge.source is NullNode || edge.destination is NullNode {
+            if edge.source.node.frame != frame || edge.destination.node.frame != frame || edge.source.node is NullNode || edge.destination.node is NullNode {
                 continue
             }
-            addEdgeView(nodeToNodeViewControllerDictionary[edge.source]!.inputsView.views[Int(edge.sourceIndex)] as! NodeInputOutputTextField, outputTextField: nodeToNodeViewControllerDictionary[edge.destination]!.outputsView.views[Int(edge.destinationIndex)] as! NodeInputOutputTextField)
+            addEdgeView(nodeToNodeViewControllerDictionary[edge.source.node]!.inputsView.views[Int(edge.source.index)] as! NodeInputOutputTextField, outputTextField: nodeToNodeViewControllerDictionary[edge.destination.node]!.outputsView.views[Int(edge.destination.index)] as! NodeInputOutputTextField)
         }
     }
 
@@ -147,10 +147,10 @@ class GraphViewController: NSViewController {
         nodeViewController.titleView.stringValue = node.title
 
         for i in 0 ..< node.inputs.count {
-            nodeViewController.addInputOutputView("aaa", alignment: .LeftTextAlignment, input: true, index: UInt(i))
+            nodeViewController.addInputOutputView((node.inputs[i] as! InputPort).title, alignment: .LeftTextAlignment, input: true, index: UInt(i))
         }
         for i in 0 ..< node.outputs.count {
-            nodeViewController.addInputOutputView("aaa", alignment: .RightTextAlignment, input: false, index: UInt(i))
+            nodeViewController.addInputOutputView((node.outputs[i] as! OutputPort).title, alignment: .RightTextAlignment, input: false, index: UInt(i))
         }
     }
 
@@ -174,18 +174,27 @@ class GraphViewController: NSViewController {
                     if let nodeInputOutputTextField = hitView as? NodeInputOutputTextField {
                         let outputNode = nodeViewControllerToNodeDictionary[nodeInputOutputTextField.nodeViewController]!
                         let outputIndex = nodeInputOutputTextField.index
-                        if (inputNode.inputs[Int(inputIndex)] as! Edge).destination is NullNode && (outputNode.outputs[Int(outputIndex)] as! Edge).source is NullNode {
-                            managedObjectContext.deleteObject(inputNode.inputs[Int(inputIndex)] as! Edge)
-                            managedObjectContext.deleteObject(outputNode.outputs[Int(outputIndex)] as! Edge)
+                        let inputPort = inputNode.inputs[Int(inputIndex)] as! InputPort
+                        let outputPort = outputNode.outputs[Int(outputIndex)] as! OutputPort
+                        if inputPort.edge.destination.node is NullNode && outputPort.edge.source.node is NullNode {
+                            let nullNodeInputPort = outputPort.edge.source
+                            let nullNodeOutputPort = inputPort.edge.destination
+                            managedObjectContext.deleteObject(inputPort.edge)
+                            managedObjectContext.deleteObject(outputPort.edge)
+
+                            for i in Int(nullNodeInputPort.index) ..< nullNode!.inputs.count {
+                                (nullNode!.inputs[i] as! InputPort).index--
+                            }
+                            for i in Int(nullNodeOutputPort.index) ..< nullNode!.outputs.count {
+                                (nullNode!.outputs[i] as! OutputPort).index--
+                            }
+                            // FIXME: Might need to explicitly remove nullNodeInputPort from nullNode.inputs and nullNodeOutputPort from nullNode.outputs
+                            managedObjectContext.deleteObject(nullNodeInputPort)
+                            managedObjectContext.deleteObject(nullNodeOutputPort)
+
                             var edge = NSEntityDescription.insertNewObjectForEntityForName("Edge", inManagedObjectContext: managedObjectContext) as! Edge
-                            edge.sourceIndex = Int32(index)
-                            edge.destinationIndex = Int32(outputIndex)
-                            var inputSet = inputNode.mutableOrderedSetValueForKey("inputs")
-                            inputSet.removeObjectAtIndex(Int(index))
-                            inputSet.insertObject(edge, atIndex: Int(index))
-                            var outputSet = outputNode.mutableOrderedSetValueForKey("outputs")
-                            outputSet.removeObjectAtIndex(Int(outputIndex))
-                            outputSet.insertObject(inputNode.inputs[Int(inputIndex)], atIndex: Int(outputIndex))
+                            inputPort.edge = edge
+                            outputPort.edge = edge
 
                             addEdgeView(nodeToNodeViewControllerDictionary[inputNode]!.inputsView.views[Int(inputIndex)] as! NodeInputOutputTextField, outputTextField: nodeInputOutputTextField)
                         }

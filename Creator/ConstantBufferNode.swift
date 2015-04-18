@@ -11,6 +11,6 @@ import CoreData
 class ConstantBufferNode: Node {
     @NSManaged var payload: NSData
     override func populate(nullNode: NullNode, context: NSManagedObjectContext) {
-        addNodeToOutputs(nullNode, context: context, sourceIndex: UInt(0), destinationIndex: UInt(0));
+        addNodeToOutputs(nullNode, context: context, index: UInt(0));
     }
 }

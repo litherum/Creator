@@ -20,29 +20,45 @@ class Node: NSManagedObject {
     }
 
     func populateDummy(nullNode: NullNode, context: NSManagedObjectContext) {
-        addNodeToInputs(nullNode, context: context, sourceIndex: UInt(0), destinationIndex: UInt(0));
-        addNodeToInputs(nullNode, context: context, sourceIndex: UInt(1), destinationIndex: UInt(0));
-        addNodeToInputs(nullNode, context: context, sourceIndex: UInt(2), destinationIndex: UInt(0));
+        addNodeToInputs(nullNode, context: context, index: UInt(0));
+        addNodeToInputs(nullNode, context: context, index: UInt(1));
+        addNodeToInputs(nullNode, context: context, index: UInt(2));
 
-        addNodeToOutputs(nullNode, context: context, sourceIndex: UInt(0), destinationIndex: UInt(0));
-        addNodeToOutputs(nullNode, context: context, sourceIndex: UInt(0), destinationIndex: UInt(1));
+        addNodeToOutputs(nullNode, context: context, index: UInt(0));
+        addNodeToOutputs(nullNode, context: context, index: UInt(1));
     }
 
-    func addNodeToInputs(node: Node, context: NSManagedObjectContext, sourceIndex: UInt, destinationIndex: UInt) {
+    func addNodeToInputs(nullNode: NullNode, context: NSManagedObjectContext, index: UInt) {
         var edge = NSEntityDescription.insertNewObjectForEntityForName("Edge", inManagedObjectContext: context) as! Edge
-        edge.source = self
-        edge.sourceIndex = Int32(sourceIndex)
-        edge.destination = node
-        edge.destinationIndex = Int32(destinationIndex)
-        mutableOrderedSetValueForKey("inputs").addObject(edge)
+        var inputPort = NSEntityDescription.insertNewObjectForEntityForName("InputPort", inManagedObjectContext: context) as! InputPort
+        var outputPort = NSEntityDescription.insertNewObjectForEntityForName("OutputPort", inManagedObjectContext: context) as! OutputPort
+
+        inputPort.index = Int32(inputs.count)
+        inputPort.title = "Input Port"
+        outputPort.index = Int32(nullNode.outputs.count)
+        outputPort.title = ""
+
+        edge.source = inputPort
+        edge.destination = outputPort
+
+        mutableOrderedSetValueForKey("inputs").addObject(inputPort)
+        nullNode.mutableOrderedSetValueForKey("outputs").addObject(outputPort)
     }
 
-    func addNodeToOutputs(node: Node, context: NSManagedObjectContext, sourceIndex: UInt, destinationIndex: UInt) {
+    func addNodeToOutputs(nullNode: NullNode, context: NSManagedObjectContext, index: UInt) {
         var edge = NSEntityDescription.insertNewObjectForEntityForName("Edge", inManagedObjectContext: context) as! Edge
-        edge.source = node
-        edge.sourceIndex = Int32(sourceIndex)
-        edge.destination = self
-        edge.destinationIndex = Int32(destinationIndex)
-        mutableOrderedSetValueForKey("outputs").addObject(edge)
+        var inputPort = NSEntityDescription.insertNewObjectForEntityForName("InputPort", inManagedObjectContext: context) as! InputPort
+        var outputPort = NSEntityDescription.insertNewObjectForEntityForName("OutputPort", inManagedObjectContext: context) as! OutputPort
+
+        inputPort.index = Int32(nullNode.inputs.count)
+        inputPort.title = ""
+        outputPort.index = Int32(outputs.count)
+        outputPort.title = "Output Port"
+
+        edge.source = inputPort
+        edge.destination = outputPort
+
+        nullNode.mutableOrderedSetValueForKey("inputs").addObject(inputPort)
+        mutableOrderedSetValueForKey("outputs").addObject(outputPort)
     }
 }

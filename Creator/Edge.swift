@@ -8,10 +8,7 @@
 
 import CoreData
 
-// Edges' destinations are on the left.
 class Edge: NSManagedObject {
-    @NSManaged var sourceIndex: Int32
-    @NSManaged var destinationIndex: Int32
-    @NSManaged var destination: Node
-    @NSManaged var source: Node
+    @NSManaged var destination: OutputPort
+    @NSManaged var source: InputPort
 }

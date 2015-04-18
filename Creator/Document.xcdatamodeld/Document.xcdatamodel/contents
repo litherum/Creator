@@ -7,6 +7,8 @@
         <attribute name="payload" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
     </entity>
     <entity name="Edge" representedClassName="Creator.Edge" syncable="YES">
+        <attribute name="destinationIndex" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="sourceIndex" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <relationship name="destination" maxCount="1" deletionRule="Nullify" destinationEntity="Node" inverseName="outputs" inverseEntity="Node" syncable="YES"/>
         <relationship name="source" maxCount="1" deletionRule="Nullify" destinationEntity="Node" inverseName="inputs" inverseEntity="Node" syncable="YES"/>
     </entity>
@@ -34,11 +36,11 @@
     <elements>
         <element name="ConstantBufferNode" positionX="-236" positionY="153" width="128" height="60"/>
         <element name="ConstantFloatNode" positionX="-99" positionY="153" width="128" height="60"/>
+        <element name="Edge" positionX="-335" positionY="0" width="128" height="105"/>
         <element name="FragmentShaderNode" positionX="171" positionY="153" width="128" height="60"/>
         <element name="Frame" positionX="216" positionY="-18" width="128" height="60"/>
         <element name="Node" positionX="-63" positionY="-18" width="128" height="118"/>
         <element name="NullNode" positionX="-371" positionY="153" width="128" height="43"/>
         <element name="VertexShaderNode" positionX="36" positionY="153" width="128" height="60"/>
-        <element name="Edge" positionX="-335" positionY="0" width="128" height="73"/>
     </elements>
 </model>

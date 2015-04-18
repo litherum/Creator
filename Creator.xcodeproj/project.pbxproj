@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		C21199221AE1E44D009ED4DE /* NodeInputOutputTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21199211AE1E44D009ED4DE /* NodeInputOutputTextField.swift */; };
 		C21199261AE1EF70009ED4DE /* NodeTitleTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21199251AE1EF70009ED4DE /* NodeTitleTextField.swift */; };
+		C211992A1AE20791009ED4DE /* Edge.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21199291AE20791009ED4DE /* Edge.swift */; };
 		C21E61821AD8BEFE000FC413 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21E61811AD8BEFE000FC413 /* AppDelegate.swift */; };
 		C21E61841AD8BEFE000FC413 /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21E61831AD8BEFE000FC413 /* Document.swift */; };
 		C21E61871AD8BEFE000FC413 /* Document.xib in Resources */ = {isa = PBXBuildFile; fileRef = C21E61851AD8BEFE000FC413 /* Document.xib */; };
@@ -25,10 +26,8 @@
 		C2C5A1311AD9A52A001DFC56 /* ConstantFloatNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C5A1301AD9A52A001DFC56 /* ConstantFloatNode.swift */; };
 		C2C5A1331AD9A52A001DFC56 /* FragmentShaderNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C5A1321AD9A52A001DFC56 /* FragmentShaderNode.swift */; };
 		C2C5A1351AD9C6FA001DFC56 /* GraphViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C5A1341AD9C6FA001DFC56 /* GraphViewController.swift */; };
-		C2C5A1391AD9CFE7001DFC56 /* NodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C5A1381AD9CFE7001DFC56 /* NodeView.swift */; };
 		C2C5A13B1ADA012A001DFC56 /* NodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C2C5A13A1ADA012A001DFC56 /* NodeViewController.xib */; };
 		C2C5A13D1ADA0DCC001DFC56 /* NodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C5A13C1ADA0DCC001DFC56 /* NodeViewController.swift */; };
-		C2DFB1261ADE1BD2009EC827 /* Edge.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2DFB1251ADE1BD2009EC827 /* Edge.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +43,7 @@
 /* Begin PBXFileReference section */
 		C21199211AE1E44D009ED4DE /* NodeInputOutputTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeInputOutputTextField.swift; sourceTree = "<group>"; };
 		C21199251AE1EF70009ED4DE /* NodeTitleTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeTitleTextField.swift; sourceTree = "<group>"; };
+		C21199291AE20791009ED4DE /* Edge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Edge.swift; sourceTree = "<group>"; };
 		C21E617C1AD8BEFE000FC413 /* Creator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Creator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C21E61801AD8BEFE000FC413 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C21E61811AD8BEFE000FC413 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -64,10 +64,8 @@
 		C2C5A1301AD9A52A001DFC56 /* ConstantFloatNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConstantFloatNode.swift; sourceTree = "<group>"; };
 		C2C5A1321AD9A52A001DFC56 /* FragmentShaderNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FragmentShaderNode.swift; sourceTree = "<group>"; };
 		C2C5A1341AD9C6FA001DFC56 /* GraphViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphViewController.swift; sourceTree = "<group>"; };
-		C2C5A1381AD9CFE7001DFC56 /* NodeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeView.swift; sourceTree = "<group>"; };
 		C2C5A13A1ADA012A001DFC56 /* NodeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NodeViewController.xib; sourceTree = "<group>"; };
 		C2C5A13C1ADA0DCC001DFC56 /* NodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeViewController.swift; sourceTree = "<group>"; };
-		C2DFB1251ADE1BD2009EC827 /* Edge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Edge.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,7 +107,7 @@
 		C21E617E1AD8BEFE000FC413 /* Creator */ = {
 			isa = PBXGroup;
 			children = (
-				C2DFB1251ADE1BD2009EC827 /* Edge.swift */,
+				C21199291AE20791009ED4DE /* Edge.swift */,
 				C21E61811AD8BEFE000FC413 /* AppDelegate.swift */,
 				C2C5A1321AD9A52A001DFC56 /* FragmentShaderNode.swift */,
 				C2C5A1301AD9A52A001DFC56 /* ConstantFloatNode.swift */,
@@ -126,7 +124,6 @@
 				C2C5A1341AD9C6FA001DFC56 /* GraphViewController.swift */,
 				C2C5A13A1ADA012A001DFC56 /* NodeViewController.xib */,
 				C21E61851AD8BEFE000FC413 /* Document.xib */,
-				C2C5A1381AD9CFE7001DFC56 /* NodeView.swift */,
 				C21E618B1AD8BEFE000FC413 /* Images.xcassets */,
 				C21E618D1AD8BEFE000FC413 /* MainMenu.xib */,
 				C21E61881AD8BEFE000FC413 /* Document.xcdatamodeld */,
@@ -270,11 +267,10 @@
 				C2C5A12D1AD9A52A001DFC56 /* ConstantBufferNode.swift in Sources */,
 				C2C5A12B1AD9A52A001DFC56 /* Node.swift in Sources */,
 				C2A20BEA1ADCC59200DE369D /* ConnectionsView.swift in Sources */,
-				C2DFB1261ADE1BD2009EC827 /* Edge.swift in Sources */,
 				C21199261AE1EF70009ED4DE /* NodeTitleTextField.swift in Sources */,
+				C211992A1AE20791009ED4DE /* Edge.swift in Sources */,
 				C21E618A1AD8BEFE000FC413 /* Document.xcdatamodeld in Sources */,
 				C2C5A12F1AD9A52A001DFC56 /* Frame.swift in Sources */,
-				C2C5A1391AD9CFE7001DFC56 /* NodeView.swift in Sources */,
 				C21E61841AD8BEFE000FC413 /* Document.swift in Sources */,
 				C21E61821AD8BEFE000FC413 /* AppDelegate.swift in Sources */,
 				C21199221AE1E44D009ED4DE /* NodeInputOutputTextField.swift in Sources */,

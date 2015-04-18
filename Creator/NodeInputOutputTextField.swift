@@ -18,6 +18,6 @@ class NodeInputOutputTextField: NSTextField {
     }
 
     override func mouseUp(theEvent: NSEvent) {
-        graphViewController.nodeInputOutputMouseUp(nodeViewController, index: index)
+        graphViewController.nodeInputOutputMouseUp(nodeViewController, index: index, mouseLocation: theEvent.locationInWindow)
     }
 }

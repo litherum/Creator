@@ -61,7 +61,7 @@ class GraphViewController: NSViewController {
         newBufferNode.positionY = 17
         newBufferNode.payload = "test".dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)!
         newBufferNode.frame = frame!
-        addView(newBufferNode)
+        addNodeView(newBufferNode)
     }
 
     func populate() {
@@ -72,14 +72,25 @@ class GraphViewController: NSViewController {
             return
         }
         for node in nodes {
-            if node.frame == frame {
-                addView(node)
+            if node.frame != frame || node is NullNode {
+                continue
             }
+            addNodeView(node)
         }
-        //println("Ambiguities: \(findViewsWithAmbiguousLayouts())")
+        var edgeRequest = managedObjectModel.fetchRequestFromTemplateWithName("EdgeRequest", substitutionVariables: [:]) as NSFetchRequest!
+        let edges = managedObjectContext.executeFetchRequest(edgeRequest, error: &error) as! [Edge]!
+        if error != nil {
+            return
+        }
+        for edge in edges {
+            if edge.source.frame != frame || edge.destination.frame != frame || edge.source is NullNode || edge.destination is NullNode {
+                continue
+            }
+            addEdgeView(nodeToNodeViewControllerDictionary[edge.source]!.inputsView.views[Int(edge.sourceIndex)] as! NodeInputOutputTextField, outputTextField: nodeToNodeViewControllerDictionary[edge.destination]!.outputsView.views[Int(edge.destinationIndex)] as! NodeInputOutputTextField)
+        }
     }
 
-    func addView(node: Node) {
+    func addNodeView(node: Node) {
         let nodeViewController = NodeViewController(nibName: "NodeViewController", bundle: nil) as NodeViewController!
         nodeViewController.graphViewController = self
         nodeViewControllerToNodeDictionary[nodeViewController] = node
@@ -101,20 +112,41 @@ class GraphViewController: NSViewController {
         }
     }
 
+    func addEdgeView(inputTextField: NodeInputOutputTextField, outputTextField: NodeInputOutputTextField) {
+        view.layoutSubtreeIfNeeded()
+        let startPoint = connectionsView.convertPoint(NSMakePoint(0, (inputTextField.bounds.origin.y + inputTextField.bounds.maxY) / 2), fromView: inputTextField)
+        let endPoint = connectionsView.convertPoint(NSMakePoint(outputTextField.bounds.maxX, (outputTextField.bounds.origin.y + outputTextField.bounds.maxY) / 2), fromView: outputTextField)
+        connectionsView.connections.append(Connection(startPoint: startPoint, endPoint: endPoint))
+        connectionsView.setNeedsDisplayInRect(connectionsView.bounds)
+    }
+
     func nodeInputOutputMouseDown(nodeViewController: NodeViewController, index: UInt) {
         dragOperation = .Connect(nodeViewControllerToNodeDictionary[nodeViewController]!, index)
     }
 
-    func nodeInputOutputMouseUp(nodeViewController: NodeViewController, index: UInt) {
-        //dragOperation = .Connect(nodeViewControllerToNodeDictionary[nodeViewController]!, index)
+    func nodeInputOutputMouseUp(nodeViewController: NodeViewController, index: UInt, mouseLocation: NSPoint) {
         if let dragOperation = dragOperation {
             switch (dragOperation) {
             case .Connect(let node, let index):
-                let inputView = nodeToNodeViewControllerDictionary[node]!.view
-                let outputView = nodeViewController.view
-                let startPoint = connectionsView.convertPoint(NSMakePoint(0, (inputView.bounds.origin.y + inputView.bounds.maxY) / 2), fromView: inputView)
-                let endPoint = connectionsView.convertPoint(NSMakePoint(outputView.bounds.maxX, (outputView.bounds.origin.y + outputView.bounds.maxY) / 2), fromView: outputView)
-                connectionsView.connections.append(Connection(startPoint: startPoint, endPoint: endPoint))
+                if let hitView = view.hitTest(view.superview!.convertPoint(mouseLocation, fromView: nil)) {
+                    if let nodeInputOutputTextField = hitView as? NodeInputOutputTextField {
+                        managedObjectContext.deleteObject(node.inputs[Int(index)] as! Edge)
+                        managedObjectContext.deleteObject(nodeViewControllerToNodeDictionary[nodeInputOutputTextField.nodeViewController]!.outputs[Int(nodeInputOutputTextField.index)] as! Edge)
+                        var edge = NSEntityDescription.insertNewObjectForEntityForName("Edge", inManagedObjectContext: managedObjectContext) as! Edge
+                        edge.sourceIndex = Int32(index)
+                        edge.destinationIndex = Int32(nodeInputOutputTextField.index)
+                        var inputSet = node.mutableOrderedSetValueForKey("inputs")
+                        inputSet.removeObjectAtIndex(Int(index))
+                        inputSet.insertObject(edge, atIndex: Int(index))
+                        var outputSet = nodeViewControllerToNodeDictionary[nodeInputOutputTextField.nodeViewController]!.mutableOrderedSetValueForKey("outputs")
+                        outputSet.removeObjectAtIndex(Int(nodeInputOutputTextField.index))
+                        outputSet.insertObject(node.inputs[Int(index)], atIndex: Int(nodeInputOutputTextField.index))
+
+                        addEdgeView(nodeToNodeViewControllerDictionary[node]!.inputsView.views[Int(index)] as! NodeInputOutputTextField, outputTextField: nodeInputOutputTextField)
+                    }
+                }
+                connectionsView.connectionInFlight = nil
+                connectionsView.setNeedsDisplayInRect(connectionsView.bounds)
             default:
                 break
             }
@@ -132,99 +164,35 @@ class GraphViewController: NSViewController {
     func nodeTitleMouseUp(nodeViewController: NodeViewController, mouseLocation: NSPoint) {
         dragOperation = nil
     }
-/*
-    override func mouseDown(theEvent: NSEvent) {
-        var hit = view.hitTest(view.superview!.convertPoint(theEvent.locationInWindow, fromView: nil)) as NSView!
-        // This search kind of blows. The hit test already knows what was hit.
-        for child in childViewControllers {
-            if let c = child as? NodeViewController {
-                if hit == c.titleView {
-                    let currentMouseLocation = theEvent.locationInWindow
-                    var draggingStartPoint = NSPoint()
-                    draggingStartPoint.x = c.leadingConstraint.constant
-                    draggingStartPoint.y = c.topConstraint.constant
-                    draggingStartPoint.x -= currentMouseLocation.x
-                    draggingStartPoint.y += currentMouseLocation.y
-                    dragOperation = .Move(c, draggingStartPoint)
-                    return
-                } else {
-                    // See if we are dragging from a connection point
-                    var j: UInt = 0
-                    for input in c.inputsView.views {
-                        if let i = input as? NSView {
-                            if hit == i {
-                                dragOperation = .Connect(c, j)
-                                return
-                            }
-                            ++j
-                        }
-                    }
-                }
-            }
-        }
-    }
 
     override func mouseDragged(theEvent: NSEvent) {
         if let op = dragOperation {
+            let currentMouseLocation = theEvent.locationInWindow
             switch op {
-                case .Move(let draggingNodeViewController, let draggingStartPoint):
-                    let currentMouseLocation = theEvent.locationInWindow
-                    draggingNodeViewController.leadingConstraint.constant = draggingStartPoint.x + currentMouseLocation.x
-                    draggingNodeViewController.topConstraint.constant = draggingStartPoint.y - currentMouseLocation.y
-                    draggingNodeViewController.node.positionX = Float(draggingNodeViewController.leadingConstraint.constant)
-                    draggingNodeViewController.node.positionY = Float(draggingNodeViewController.topConstraint.constant)
-                    connectionsView.setNeedsDisplayInRect(connectionsView.bounds)
-                case .Connect(let startNodeViewController, let startNodeIndex):
-                    let mouseLocation = connectionsView.convertPoint(theEvent.locationInWindow, fromView: nil)
-                    if connectionsView.connectionInFlight != nil {
-                        connectionsView.connectionInFlight!.1 = mouseLocation
-                    } else {
-                        connectionsView.connectionInFlight = (Connection(startNodeViewControllerInput: startNodeViewController, startIndexInput: startNodeIndex, endNodeViewControllerInput: startNodeViewController, endIndexInput: startNodeIndex), mouseLocation)
-                    }
-                    connectionsView.setNeedsDisplayInRect(connectionsView.bounds)
+            case .Move(let node, let position):
+                // FIXME: Update connectionsView.connections
+                let viewController = nodeToNodeViewControllerDictionary[node]!
+                viewController.leadingConstraint.constant = position.x + currentMouseLocation.x
+                viewController.topConstraint.constant = position.y - currentMouseLocation.y
+                node.positionX = Float(viewController.leadingConstraint.constant)
+                node.positionY = Float(viewController.topConstraint.constant)
+            case .Connect(let node, let index):
+                let mouseLocation = connectionsView.convertPoint(currentMouseLocation, fromView: nil)
+                if connectionsView.connectionInFlight != nil {
+                    connectionsView.connectionInFlight!.endPoint = mouseLocation
+                } else {
+                    let inputView = nodeToNodeViewControllerDictionary[node]!.inputsView.views[Int(index)] as! NodeInputOutputTextField
+                    let startPoint = connectionsView.convertPoint(NSMakePoint(0, (inputView.bounds.origin.y + inputView.bounds.maxY) / 2), fromView: inputView)
+                    connectionsView.connectionInFlight = Connection(startPoint: startPoint, endPoint: mouseLocation)
+                }
+                connectionsView.setNeedsDisplayInRect(connectionsView.bounds)
             }
         }
     }
 
     override func mouseUp(theEvent: NSEvent) {
-        if let op = dragOperation {
-            switch op {
-                case .Move:
-                    dragOperation = nil
-                    return
-                case .Connect(let startNodeViewController, let startNodeIndex):
-                    connectionsView.connectionInFlight = nil
-                    connectionsView.setNeedsDisplayInRect(connectionsView.bounds)
-                    var hit = view.hitTest(view.superview!.convertPoint(theEvent.locationInWindow, fromView: nil)) as NSView!
-                    for child in childViewControllers {
-                        if let c = child as? NodeViewController {
-                            var i: UInt = 0
-                            for output in c.outputsView.views {
-                                if let o = output as? NSView {
-                                    if hit == o {
-                                        connectionsView.connections.append(Connection(startNodeViewControllerInput: startNodeViewController, startIndexInput: startNodeIndex, endNodeViewControllerInput: c, endIndexInput: i))
-                                        connectionsView.setNeedsDisplayInRect(connectionsView.bounds)
-
-                                        managedObjectContext.deleteObject(startNodeViewController.node.inputs[Int(startNodeIndex)] as! Edge)
-                                        managedObjectContext.deleteObject(c.node.outputs[Int(i)] as! Edge)
-                                        var edge = NSEntityDescription.insertNewObjectForEntityForName("Edge", inManagedObjectContext: managedObjectContext) as! Edge
-                                        var inputSet = startNodeViewController.node.mutableOrderedSetValueForKey("inputs")
-                                        inputSet.removeObjectAtIndex(Int(startNodeIndex))
-                                        inputSet.insertObject(edge, atIndex: Int(startNodeIndex))
-                                        var outputSet = c.node.mutableOrderedSetValueForKey("outputs")
-                                        outputSet.removeObjectAtIndex(Int(i))
-                                        outputSet.insertObject(edge, atIndex: Int(i))
-                                        dragOperation = nil
-
-                                        return
-                                    }
-                                    ++i
-                                }
-                            }
-                        }
-                    }
-            }
-        }
+        connectionsView.connectionInFlight = nil
+        dragOperation = nil
+        connectionsView.setNeedsDisplayInRect(connectionsView.bounds)
     }
-*/
 }

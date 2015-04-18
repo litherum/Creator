@@ -9,7 +9,8 @@
 import CoreData
 
 class FragmentShaderNode: Node {
-
     @NSManaged var source: String
-
+    override func populate(nullNode: NullNode, context: NSManagedObjectContext) {
+        populateDummy(nullNode, context: context)
+    }
 }

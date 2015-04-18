@@ -17,7 +17,6 @@ class Document: NSPersistentDocument {
 
     override func windowControllerDidLoadNib(aController: NSWindowController) {
         super.windowControllerDidLoadNib(aController)
-        //aController.window?.visualizeConstraints([])
 
         graphViewController.managedObjectContext = managedObjectContext
         graphViewController.managedObjectModel = managedObjectModel
@@ -34,5 +33,17 @@ class Document: NSPersistentDocument {
 
     @IBAction func createConstantBufferNode(sender: AnyObject?) {
         graphViewController.createConstantBufferNode()
+    }
+
+    @IBAction func createVertexShaderNode(sender: AnyObject?) {
+        graphViewController.createVertexShaderNode()
+    }
+
+    @IBAction func createFragmentShaderNode(sender: AnyObject?) {
+        graphViewController.createFragmentShaderNode()
+    }
+
+    @IBAction func createConstantFloatNode(sender: AnyObject?) {
+        graphViewController.createConstantFloatNode()
     }
 }

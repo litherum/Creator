@@ -48,6 +48,7 @@ class GraphViewController: NSViewController {
         if nullNodes.count == 0 {
             var result = NSEntityDescription.insertNewObjectForEntityForName("NullNode", inManagedObjectContext: managedObjectContext) as? NullNode
             result!.frame = frame!
+            result!.title = "NULL NODE"
             return result
         } else {
             return nullNodes[0]
@@ -55,13 +56,47 @@ class GraphViewController: NSViewController {
     }
 
     func createConstantBufferNode() {
-        var newBufferNode : ConstantBufferNode = NSEntityDescription.insertNewObjectForEntityForName("ConstantBufferNode", inManagedObjectContext: managedObjectContext) as! ConstantBufferNode
-        newBufferNode.populate(nullNode!, context: managedObjectContext)
-        newBufferNode.positionX = 13
-        newBufferNode.positionY = 17
-        newBufferNode.payload = "test".dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)!
-        newBufferNode.frame = frame!
-        addNodeView(newBufferNode)
+        var newNode = NSEntityDescription.insertNewObjectForEntityForName("ConstantBufferNode", inManagedObjectContext: managedObjectContext) as! ConstantBufferNode
+        newNode.populate(nullNode!, context: managedObjectContext)
+        newNode.positionX = 13
+        newNode.positionY = 17
+        newNode.title = "Constant Buffer"
+        newNode.payload = "test".dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)!
+        newNode.frame = frame!
+        addNodeView(newNode)
+    }
+
+    func createVertexShaderNode() {
+        var newNode = NSEntityDescription.insertNewObjectForEntityForName("VertexShaderNode", inManagedObjectContext: managedObjectContext) as! VertexShaderNode
+        newNode.populate(nullNode!, context: managedObjectContext)
+        newNode.positionX = 13
+        newNode.positionY = 17
+        newNode.title = "Vertex Shader"
+        newNode.source = "test"
+        newNode.frame = frame!
+        addNodeView(newNode)
+    }
+
+    func createFragmentShaderNode() {
+        var newNode = NSEntityDescription.insertNewObjectForEntityForName("FragmentShaderNode", inManagedObjectContext: managedObjectContext) as! FragmentShaderNode
+        newNode.populate(nullNode!, context: managedObjectContext)
+        newNode.positionX = 13
+        newNode.positionY = 17
+        newNode.title = "Fragment Shader"
+        newNode.source = "test"
+        newNode.frame = frame!
+        addNodeView(newNode)
+    }
+
+    func createConstantFloatNode() {
+        var newNode = NSEntityDescription.insertNewObjectForEntityForName("ConstantFloatNode", inManagedObjectContext: managedObjectContext) as! ConstantFloatNode
+        newNode.populate(nullNode!, context: managedObjectContext)
+        newNode.positionX = 13
+        newNode.positionY = 17
+        newNode.title = "Constant Float"
+        newNode.payload = 15
+        newNode.frame = frame!
+        addNodeView(newNode)
     }
 
     func populate() {
@@ -109,6 +144,7 @@ class GraphViewController: NSViewController {
         view.addConstraint(topConstraint)
         nodeViewController.leadingConstraint = leadingConstraint
         nodeViewController.topConstraint = topConstraint
+        nodeViewController.titleView.stringValue = node.title
 
         for i in 0 ..< node.inputs.count {
             nodeViewController.addInputOutputView("aaa", alignment: .LeftTextAlignment, input: true, index: UInt(i))

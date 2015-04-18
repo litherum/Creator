@@ -19,8 +19,8 @@
 		C21E619B1AD8BEFE000FC413 /* CreatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21E619A1AD8BEFE000FC413 /* CreatorTests.swift */; };
 		C28E86461ADE1693003CEA94 /* NullNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28E86451ADE1693003CEA94 /* NullNode.swift */; };
 		C2A20BEA1ADCC59200DE369D /* ConnectionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A20BE91ADCC59200DE369D /* ConnectionsView.swift */; };
-		C2C5A1291AD9A529001DFC56 /* VertexShaderNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C5A1281AD9A529001DFC56 /* VertexShaderNode.swift */; };
-		C2C5A12B1AD9A52A001DFC56 /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C5A12A1AD9A52A001DFC56 /* Node.swift */; };
+		C2BBF79E1AE2C29300A418B9 /* VertexShaderNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BBF79D1AE2C29300A418B9 /* VertexShaderNode.swift */; };
+		C2BBF7A01AE2C2B800A418B9 /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BBF79F1AE2C2B800A418B9 /* Node.swift */; };
 		C2C5A12D1AD9A52A001DFC56 /* ConstantBufferNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C5A12C1AD9A52A001DFC56 /* ConstantBufferNode.swift */; };
 		C2C5A12F1AD9A52A001DFC56 /* Frame.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C5A12E1AD9A52A001DFC56 /* Frame.swift */; };
 		C2C5A1311AD9A52A001DFC56 /* ConstantFloatNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C5A1301AD9A52A001DFC56 /* ConstantFloatNode.swift */; };
@@ -57,8 +57,8 @@
 		C21E619A1AD8BEFE000FC413 /* CreatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatorTests.swift; sourceTree = "<group>"; };
 		C28E86451ADE1693003CEA94 /* NullNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NullNode.swift; sourceTree = "<group>"; };
 		C2A20BE91ADCC59200DE369D /* ConnectionsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionsView.swift; sourceTree = "<group>"; };
-		C2C5A1281AD9A529001DFC56 /* VertexShaderNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VertexShaderNode.swift; sourceTree = "<group>"; };
-		C2C5A12A1AD9A52A001DFC56 /* Node.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
+		C2BBF79D1AE2C29300A418B9 /* VertexShaderNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VertexShaderNode.swift; sourceTree = "<group>"; };
+		C2BBF79F1AE2C2B800A418B9 /* Node.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
 		C2C5A12C1AD9A52A001DFC56 /* ConstantBufferNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConstantBufferNode.swift; sourceTree = "<group>"; };
 		C2C5A12E1AD9A52A001DFC56 /* Frame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Frame.swift; sourceTree = "<group>"; };
 		C2C5A1301AD9A52A001DFC56 /* ConstantFloatNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConstantFloatNode.swift; sourceTree = "<group>"; };
@@ -107,25 +107,16 @@
 		C21E617E1AD8BEFE000FC413 /* Creator */ = {
 			isa = PBXGroup;
 			children = (
-				C21199291AE20791009ED4DE /* Edge.swift */,
+				C2BBF7A21AE2C32000A418B9 /* Model */,
+				C2BBF7A31AE2C34D00A418B9 /* Views */,
 				C21E61811AD8BEFE000FC413 /* AppDelegate.swift */,
-				C2C5A1321AD9A52A001DFC56 /* FragmentShaderNode.swift */,
-				C2C5A1301AD9A52A001DFC56 /* ConstantFloatNode.swift */,
-				C2C5A12E1AD9A52A001DFC56 /* Frame.swift */,
-				C2C5A12C1AD9A52A001DFC56 /* ConstantBufferNode.swift */,
-				C2C5A12A1AD9A52A001DFC56 /* Node.swift */,
-				C28E86451ADE1693003CEA94 /* NullNode.swift */,
-				C2C5A1281AD9A529001DFC56 /* VertexShaderNode.swift */,
 				C21E61831AD8BEFE000FC413 /* Document.swift */,
-				C21199251AE1EF70009ED4DE /* NodeTitleTextField.swift */,
-				C21199211AE1E44D009ED4DE /* NodeInputOutputTextField.swift */,
-				C2A20BE91ADCC59200DE369D /* ConnectionsView.swift */,
 				C2C5A13C1ADA0DCC001DFC56 /* NodeViewController.swift */,
 				C2C5A1341AD9C6FA001DFC56 /* GraphViewController.swift */,
 				C2C5A13A1ADA012A001DFC56 /* NodeViewController.xib */,
 				C21E61851AD8BEFE000FC413 /* Document.xib */,
-				C21E618B1AD8BEFE000FC413 /* Images.xcassets */,
 				C21E618D1AD8BEFE000FC413 /* MainMenu.xib */,
+				C21E618B1AD8BEFE000FC413 /* Images.xcassets */,
 				C21E61881AD8BEFE000FC413 /* Document.xcdatamodeld */,
 				C21E617F1AD8BEFE000FC413 /* Supporting Files */,
 			);
@@ -155,6 +146,39 @@
 				C21E61991AD8BEFE000FC413 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		C2BBF7A11AE2C2E600A418B9 /* Nodes */ = {
+			isa = PBXGroup;
+			children = (
+				C2C5A12C1AD9A52A001DFC56 /* ConstantBufferNode.swift */,
+				C2C5A1301AD9A52A001DFC56 /* ConstantFloatNode.swift */,
+				C2C5A1321AD9A52A001DFC56 /* FragmentShaderNode.swift */,
+				C2BBF79F1AE2C2B800A418B9 /* Node.swift */,
+				C28E86451ADE1693003CEA94 /* NullNode.swift */,
+				C2BBF79D1AE2C29300A418B9 /* VertexShaderNode.swift */,
+			);
+			name = Nodes;
+			sourceTree = "<group>";
+		};
+		C2BBF7A21AE2C32000A418B9 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				C2BBF7A11AE2C2E600A418B9 /* Nodes */,
+				C21199291AE20791009ED4DE /* Edge.swift */,
+				C2C5A12E1AD9A52A001DFC56 /* Frame.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		C2BBF7A31AE2C34D00A418B9 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				C21199251AE1EF70009ED4DE /* NodeTitleTextField.swift */,
+				C21199211AE1E44D009ED4DE /* NodeInputOutputTextField.swift */,
+				C2A20BE91ADCC59200DE369D /* ConnectionsView.swift */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -261,16 +285,16 @@
 				C2C5A1331AD9A52A001DFC56 /* FragmentShaderNode.swift in Sources */,
 				C2C5A1351AD9C6FA001DFC56 /* GraphViewController.swift in Sources */,
 				C2C5A1311AD9A52A001DFC56 /* ConstantFloatNode.swift in Sources */,
-				C2C5A1291AD9A529001DFC56 /* VertexShaderNode.swift in Sources */,
 				C2C5A13D1ADA0DCC001DFC56 /* NodeViewController.swift in Sources */,
 				C28E86461ADE1693003CEA94 /* NullNode.swift in Sources */,
 				C2C5A12D1AD9A52A001DFC56 /* ConstantBufferNode.swift in Sources */,
-				C2C5A12B1AD9A52A001DFC56 /* Node.swift in Sources */,
 				C2A20BEA1ADCC59200DE369D /* ConnectionsView.swift in Sources */,
 				C21199261AE1EF70009ED4DE /* NodeTitleTextField.swift in Sources */,
 				C211992A1AE20791009ED4DE /* Edge.swift in Sources */,
 				C21E618A1AD8BEFE000FC413 /* Document.xcdatamodeld in Sources */,
 				C2C5A12F1AD9A52A001DFC56 /* Frame.swift in Sources */,
+				C2BBF7A01AE2C2B800A418B9 /* Node.swift in Sources */,
+				C2BBF79E1AE2C29300A418B9 /* VertexShaderNode.swift in Sources */,
 				C21E61841AD8BEFE000FC413 /* Document.swift in Sources */,
 				C21E61821AD8BEFE000FC413 /* AppDelegate.swift in Sources */,
 				C21199221AE1E44D009ED4DE /* NodeInputOutputTextField.swift in Sources */,

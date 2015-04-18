@@ -20,21 +20,21 @@ class Node: NSManagedObject {
     }
 
     func populateDummy(nullNode: NullNode, context: NSManagedObjectContext) {
-        addNodeToInputs(nullNode, context: context, index: UInt(0));
-        addNodeToInputs(nullNode, context: context, index: UInt(1));
-        addNodeToInputs(nullNode, context: context, index: UInt(2));
+        addNodeToInputs(nullNode, context: context, name: "Input Value", index: UInt(0));
+        addNodeToInputs(nullNode, context: context, name: "Input Value", index: UInt(1));
+        addNodeToInputs(nullNode, context: context, name: "Input Value", index: UInt(2));
 
-        addNodeToOutputs(nullNode, context: context, index: UInt(0));
-        addNodeToOutputs(nullNode, context: context, index: UInt(1));
+        addNodeToOutputs(nullNode, context: context, name: "Output Value", index: UInt(0));
+        addNodeToOutputs(nullNode, context: context, name: "Output Value", index: UInt(1));
     }
 
-    func addNodeToInputs(nullNode: NullNode, context: NSManagedObjectContext, index: UInt) {
+    func addNodeToInputs(nullNode: NullNode, context: NSManagedObjectContext, name: String, index: UInt) {
         var edge = NSEntityDescription.insertNewObjectForEntityForName("Edge", inManagedObjectContext: context) as! Edge
         var inputPort = NSEntityDescription.insertNewObjectForEntityForName("InputPort", inManagedObjectContext: context) as! InputPort
         var outputPort = NSEntityDescription.insertNewObjectForEntityForName("OutputPort", inManagedObjectContext: context) as! OutputPort
 
         inputPort.index = Int32(inputs.count)
-        inputPort.title = "Input Port"
+        inputPort.title = name
         outputPort.index = Int32(nullNode.outputs.count)
         outputPort.title = ""
 
@@ -45,7 +45,7 @@ class Node: NSManagedObject {
         nullNode.mutableOrderedSetValueForKey("outputs").addObject(outputPort)
     }
 
-    func addNodeToOutputs(nullNode: NullNode, context: NSManagedObjectContext, index: UInt) {
+    func addNodeToOutputs(nullNode: NullNode, context: NSManagedObjectContext, name: String, index: UInt) {
         var edge = NSEntityDescription.insertNewObjectForEntityForName("Edge", inManagedObjectContext: context) as! Edge
         var inputPort = NSEntityDescription.insertNewObjectForEntityForName("InputPort", inManagedObjectContext: context) as! InputPort
         var outputPort = NSEntityDescription.insertNewObjectForEntityForName("OutputPort", inManagedObjectContext: context) as! OutputPort
@@ -53,7 +53,7 @@ class Node: NSManagedObject {
         inputPort.index = Int32(nullNode.inputs.count)
         inputPort.title = ""
         outputPort.index = Int32(outputs.count)
-        outputPort.title = "Output Port"
+        outputPort.title = name
 
         edge.source = inputPort
         edge.destination = outputPort

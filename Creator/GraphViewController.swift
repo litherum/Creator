@@ -11,14 +11,16 @@ import Cocoa
 class GraphViewController: NSViewController {
     lazy var frame: Frame? = self.fetchFrame()
     lazy var nullNode: NullNode? = self.fetchNullNode()
+    var nodeViewControllerToNodeDictionary: [NodeViewController: Node] = [:]
+    var nodeToNodeViewControllerDictionary: [Node: NodeViewController] = [:]
     var managedObjectContext: NSManagedObjectContext!
     var managedObjectModel: AnyObject!
 
     @IBOutlet var connectionsView: ConnectionsView!
 
     enum DragOperation {
-        case Move(NodeViewController, NSPoint)
-        case Connect(NodeViewController, UInt)
+        case Move(Node, NSPoint)
+        case Connect(Node, UInt)
     }
     var dragOperation: DragOperation!
 
@@ -79,25 +81,58 @@ class GraphViewController: NSViewController {
 
     func addView(node: Node) {
         let nodeViewController = NodeViewController(nibName: "NodeViewController", bundle: nil) as NodeViewController!
-        (nodeViewController.view as! NodeView).graphViewController = self
+        nodeViewController.graphViewController = self
+        nodeViewControllerToNodeDictionary[nodeViewController] = node
+        nodeToNodeViewControllerDictionary[node] = nodeViewController
         addChildViewController(nodeViewController)
         view.addSubview(nodeViewController.view)
-        nodeViewController.leadingConstraint = NSLayoutConstraint(item: nodeViewController.view, attribute: .Leading, relatedBy: .Equal, toItem: view, attribute: .Leading, multiplier: 1, constant: CGFloat(node.positionX))
-        nodeViewController.topConstraint = NSLayoutConstraint(item: nodeViewController.view, attribute: .Top, relatedBy: .Equal, toItem: view, attribute: .Top, multiplier: 1, constant: CGFloat(node.positionY))
-        view.addConstraint(nodeViewController.leadingConstraint)
-        view.addConstraint(nodeViewController.topConstraint)
+        let leadingConstraint = NSLayoutConstraint(item: nodeViewController.view, attribute: .Leading, relatedBy: .Equal, toItem: view, attribute: .Leading, multiplier: 1, constant: CGFloat(node.positionX))
+        let topConstraint = NSLayoutConstraint(item: nodeViewController.view, attribute: .Top, relatedBy: .Equal, toItem: view, attribute: .Top, multiplier: 1, constant: CGFloat(node.positionY))
+        view.addConstraint(leadingConstraint)
+        view.addConstraint(topConstraint)
+        nodeViewController.leadingConstraint = leadingConstraint
+        nodeViewController.topConstraint = topConstraint
 
-        for i in node.inputs {
-            nodeViewController.addInputOutputView("aaa", alignment: .LeftTextAlignment, stackView: nodeViewController.inputsView)
+        for i in 0 ..< node.inputs.count {
+            nodeViewController.addInputOutputView("aaa", alignment: .LeftTextAlignment, stackView: nodeViewController.inputsView, index: UInt(i))
         }
-        for o in node.outputs {
-            nodeViewController.addInputOutputView("aaa", alignment: .RightTextAlignment, stackView: nodeViewController.outputsView)
+        for i in 0 ..< node.outputs.count {
+            nodeViewController.addInputOutputView("aaa", alignment: .RightTextAlignment, stackView: nodeViewController.outputsView, index: UInt(i))
         }
-        
-        nodeViewController.node = node
-        //println("Ambiguities: \(findViewsWithAmbiguousLayouts())")
     }
 
+    func nodeInputOutputMouseDown(nodeViewController: NodeViewController, index: UInt) {
+        dragOperation = .Connect(nodeViewControllerToNodeDictionary[nodeViewController]!, index)
+    }
+
+    func nodeInputOutputMouseUp(nodeViewController: NodeViewController, index: UInt) {
+        //dragOperation = .Connect(nodeViewControllerToNodeDictionary[nodeViewController]!, index)
+        if let dragOperation = dragOperation {
+            switch (dragOperation) {
+            case .Connect(let node, let index):
+                let inputView = nodeToNodeViewControllerDictionary[node]!.view
+                let outputView = nodeViewController.view
+                let startPoint = connectionsView.convertPoint(NSMakePoint(0, (inputView.bounds.origin.y + inputView.bounds.maxY) / 2), fromView: inputView)
+                let endPoint = connectionsView.convertPoint(NSMakePoint(outputView.bounds.maxX, (outputView.bounds.origin.y + outputView.bounds.maxY) / 2), fromView: outputView)
+                connectionsView.connections.append(Connection(startPoint: startPoint, endPoint: endPoint))
+            default:
+                break
+            }
+        }
+        dragOperation = nil
+    }
+
+    func nodeTitleMouseDown(nodeViewController: NodeViewController, mouseLocation: NSPoint) {
+        var draggingStartPoint = NSPoint(x: nodeViewController.leadingConstraint.constant, y: nodeViewController.topConstraint.constant)
+        draggingStartPoint.x -= mouseLocation.x
+        draggingStartPoint.y += mouseLocation.y
+        dragOperation = .Move(nodeViewControllerToNodeDictionary[nodeViewController]!, draggingStartPoint)
+    }
+
+    func nodeTitleMouseUp(nodeViewController: NodeViewController, mouseLocation: NSPoint) {
+        dragOperation = nil
+    }
+/*
     override func mouseDown(theEvent: NSEvent) {
         var hit = view.hitTest(view.superview!.convertPoint(theEvent.locationInWindow, fromView: nil)) as NSView!
         // This search kind of blows. The hit test already knows what was hit.
@@ -191,20 +226,5 @@ class GraphViewController: NSViewController {
             }
         }
     }
-
-    func findViewsWithAmbiguousLayoutsHelper(v: NSView) -> [NSView] {
-        var result: [NSView] = []
-        if v.hasAmbiguousLayout {
-            result.append(v)
-        }
-        for c in v.subviews {
-            result.extend(findViewsWithAmbiguousLayoutsHelper(c as! NSView))
-        }
-        return result
-    }
-    func findViewsWithAmbiguousLayouts() -> [NSView] {
-        view.updateConstraints()
-        view.layoutSubtreeIfNeeded()
-        return findViewsWithAmbiguousLayoutsHelper(view)
-    }
+*/
 }

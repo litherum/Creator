@@ -9,12 +9,12 @@
 import Cocoa
 
 class NodeViewController: NSViewController {
-    @IBOutlet var titleView: NSTextField!
+    weak var graphViewController: GraphViewController!
+    weak var leadingConstraint: NSLayoutConstraint!
+    weak var topConstraint: NSLayoutConstraint!
+    @IBOutlet var titleView: NodeTitleTextField!
     @IBOutlet var inputsView: NSStackView!
     @IBOutlet var outputsView: NSStackView!
-    var leadingConstraint: NSLayoutConstraint!
-    var topConstraint: NSLayoutConstraint!
-    var node: Node!
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -24,21 +24,24 @@ class NodeViewController: NSViewController {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
 
-    func addInputOutputView(value: String, alignment: NSTextAlignment, stackView: NSStackView!) {
-        var foo = NSTextField()
-        foo.translatesAutoresizingMaskIntoConstraints = false
-        foo.selectable = false
-        foo.drawsBackground = false
-        foo.bezeled = false
-        foo.alignment = alignment
-        foo.stringValue = value
-        stackView.addView(foo, inGravity: .Center)
-    }
-
     override func viewDidLoad() {
+        titleView.graphViewController = graphViewController
+        titleView.nodeViewController = self
     }
 
-    override func viewWillAppear() {
-        //view.window?.visualizeConstraints(view.subviews[0].constraints)
+    func addInputOutputView(value: String, alignment: NSTextAlignment, stackView: NSStackView!, index: UInt) {
+        var inputOutputTextField = NodeInputOutputTextField()
+        
+        inputOutputTextField.graphViewController = graphViewController
+        inputOutputTextField.nodeViewController = self
+        inputOutputTextField.index = index
+
+        inputOutputTextField.translatesAutoresizingMaskIntoConstraints = false
+        inputOutputTextField.selectable = false
+        inputOutputTextField.drawsBackground = false
+        inputOutputTextField.bezeled = false
+        inputOutputTextField.alignment = alignment
+        inputOutputTextField.stringValue = value
+        stackView.addView(inputOutputTextField, inGravity: .Center)
     }
 }

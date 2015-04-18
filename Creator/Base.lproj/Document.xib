@@ -36,13 +36,13 @@
                                             <rect key="frame" x="1" y="1" width="166" height="79"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
-                                                <view translatesAutoresizingMaskIntoConstraints="NO" id="lqd-mu-UTp">
+                                                <view misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lqd-mu-UTp">
                                                     <rect key="frame" x="0.0" y="-199" width="800" height="800"/>
                                                     <subviews>
                                                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="aG3-W9-YRj" userLabel="Connections View" customClass="ConnectionsView" customModule="Creator" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="0.0" width="800" height="800"/>
                                                         </customView>
-                                                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="psD-LP-Kaf" customClass="GraphView" customModule="Creator" customModuleProvider="target">
+                                                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="psD-LP-Kaf">
                                                             <rect key="frame" x="0.0" y="0.0" width="800" height="800"/>
                                                         </customView>
                                                     </subviews>
@@ -69,7 +69,7 @@
                                             <rect key="frame" x="1" y="80" width="166" height="15"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
-                                        <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="rSy-pt-w7j">
+                                        <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="0.98994974874371855" horizontal="NO" id="rSy-pt-w7j">
                                             <rect key="frame" x="167" y="1" width="15" height="79"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </scroller>
@@ -91,7 +91,7 @@
                                     <rect key="frame" x="1" y="1" width="181" height="94"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <view translatesAutoresizingMaskIntoConstraints="NO" id="9b0-m8-5lJ">
+                                        <view misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9b0-m8-5lJ">
                                             <rect key="frame" x="0.0" y="-8" width="1600" height="100"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="1600" id="TVI-0g-PKb"/>
@@ -108,7 +108,7 @@
                                     <rect key="frame" x="1" y="79" width="181" height="16"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
-                                <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="y3w-An-2cJ">
+                                <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="0.75" horizontal="NO" id="y3w-An-2cJ">
                                     <rect key="frame" x="166" y="1" width="16" height="94"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>

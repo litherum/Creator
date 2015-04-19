@@ -33,6 +33,14 @@ class VertexShaderNode: Node {
         } else {
             println("Success!")
         }
+
+        // Once the program has been linked, we can use glGetProgramiv(program, GL_ACTIVE_ATTRIBUTES, &out) to get the number of attributes,
+        // then glGetProgramiv(program, GL_ACTIVE_ATTRIBUTE_MAX_LENGTH, &out) and glGetActiveAttrib(program, i, length, nil, &size, &type, &buffer)
+        // to get the names of the attributes.
+        // Then, we can use glGetProgramiv(program, GL_ACTIVE_UNIFORMS, &out) to get the number of uniforms, and then use
+        // glGetProgramiv(program, GL_ACTIVE_UNIFORM_MAX_LENGTH, &out) and glGetActiveUniformName(program, i, length, nil, &length, &buffer)
+        // to get the names of the uniforms.
+        // Punting support for other types of variables in shaders is okay.
     }
 
     override func prepareForDeletion() {

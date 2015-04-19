@@ -20,12 +20,14 @@ class ResultView: NSOpenGLView {
         // Context should always be current in our main thread from now on.
         openGLContext.makeCurrentContext()
 
+        /*
         var numExtensions: GLint = 0
         glGetIntegerv(GLenum(GL_NUM_EXTENSIONS), &numExtensions)
         for i in 0 ..< GLuint(numExtensions) {
             let buffer: UnsafePointer<GLubyte> = glGetStringi(GLenum(GL_EXTENSIONS), i)
             println("\(String.fromCString(UnsafePointer<CChar>(buffer))!)")
         }
+        */
     }
 
     override func prepareOpenGL() {

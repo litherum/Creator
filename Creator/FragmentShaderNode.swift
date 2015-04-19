@@ -11,9 +11,10 @@ import GLKit
 
 class FragmentShaderNode: Node {
     @NSManaged var source: String
+    @NSManaged var program: Program
     var handle: GLuint = 0
     override func populate(nullNode: NullNode, context: NSManagedObjectContext) {
-        addNodeToInputs(nullNode, context: context, name: "Previous pipeline stage", index: UInt(0));
+        addNodeToInputs(nullNode, context: context, name: "Previous stage", index: UInt(0));
 
         handle = glCreateShader(GLenum(GL_FRAGMENT_SHADER))
         let data = source.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)!
@@ -28,12 +29,9 @@ class FragmentShaderNode: Node {
             glGetShaderiv(handle, GLenum(GL_INFO_LOG_LENGTH), &logLength)
             var buffer = UnsafeMutablePointer<GLchar>.alloc(Int(logLength))
             glGetShaderInfoLog(handle, logLength, nil, buffer)
-            let bufferData = NSData(bytes: buffer, length: Int(logLength))
-            let log = NSString(data: bufferData, encoding: NSUTF8StringEncoding)!
+            let log = NSString(data: NSData(bytes: buffer, length: Int(logLength)), encoding: NSUTF8StringEncoding)!
             println("Could not compile! Log:\n\(log)")
             buffer.dealloc(Int(logLength))
-        } else {
-            println("Compilation success!")
         }
     }
 

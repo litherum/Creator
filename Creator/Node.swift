@@ -19,6 +19,7 @@ class Node: NSManagedObject {
     func populate(nullNode: NullNode, context: NSManagedObjectContext) {
     }
 
+    // FIXME: We should be able to generate index here.
     func addNodeToInputs(nullNode: NullNode, context: NSManagedObjectContext, name: String, index: UInt) {
         var edge = NSEntityDescription.insertNewObjectForEntityForName("Edge", inManagedObjectContext: context) as! Edge
         var inputPort = NSEntityDescription.insertNewObjectForEntityForName("InputPort", inManagedObjectContext: context) as! InputPort

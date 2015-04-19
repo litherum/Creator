@@ -32,7 +32,8 @@ class GraphViewController: NSViewController {
             return nil
         }
         if frames.count == 0 {
-            return NSEntityDescription.insertNewObjectForEntityForName("Frame", inManagedObjectContext: managedObjectContext) as? Frame
+            let f = NSEntityDescription.insertNewObjectForEntityForName("Frame", inManagedObjectContext: managedObjectContext) as! Frame
+            return f
         } else {
             return frames[0]
         }
@@ -86,7 +87,6 @@ class GraphViewController: NSViewController {
         newNode.positionX = 13
         newNode.positionY = 17
         newNode.title = "Fragment Shader"
-        newNode.source = "test"
         newNode.frame = frame!
         addNodeView(newNode)
     }
@@ -191,7 +191,6 @@ class GraphViewController: NSViewController {
                             for i in Int(nullNodeOutputPort.index) ..< nullNode!.outputs.count {
                                 (nullNode!.outputs[i] as! OutputPort).index--
                             }
-                            // FIXME: Might need to explicitly remove nullNodeInputPort from nullNode.inputs and nullNodeOutputPort from nullNode.outputs
                             managedObjectContext.deleteObject(nullNodeInputPort)
                             managedObjectContext.deleteObject(nullNodeOutputPort)
 
@@ -200,6 +199,19 @@ class GraphViewController: NSViewController {
                             outputPort.edge = edge
 
                             addEdgeView(nodeToNodeViewControllerDictionary[inputNode]!.inputsView.views[Int(inputIndex)] as! NodeInputOutputTextField, outputTextField: nodeInputOutputTextField)
+
+                            if let inputFragmentShader = inputNode as? FragmentShaderNode {
+                                if let outputVertexShader = outputNode as? VertexShaderNode {
+                                    var newProgram = NSEntityDescription.insertNewObjectForEntityForName("Program", inManagedObjectContext: managedObjectContext) as! Program
+                                    newProgram.vertexShader = outputVertexShader
+                                    newProgram.fragmentShader = inputFragmentShader
+                                    newProgram.populate(nullNode!, context: managedObjectContext)
+                                    for i in 0 ..< outputVertexShader.inputs.count {
+                                        nodeInputOutputTextField.nodeViewController.addInputOutputView((outputVertexShader.inputs[i] as! InputPort).title, alignment: .LeftTextAlignment, input: true, index: UInt(i))
+                                    }
+                                    updateEdgeViews()
+                                }
+                            }
                         }
                     }
                 }

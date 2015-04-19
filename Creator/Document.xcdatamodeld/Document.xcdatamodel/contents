@@ -12,6 +12,7 @@
     </entity>
     <entity name="FragmentShaderNode" representedClassName="Creator.FragmentShaderNode" parentEntity="Node" syncable="YES">
         <attribute name="source" attributeType="String" syncable="YES"/>
+        <relationship name="program" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Program" inverseName="fragmentShader" inverseEntity="Program" syncable="YES"/>
     </entity>
     <entity name="Frame" representedClassName="Creator.Frame" syncable="YES">
         <relationship name="passes" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Node" inverseName="frame" inverseEntity="Node" syncable="YES"/>
@@ -37,8 +38,13 @@
         <attribute name="index" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="title" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="Program" representedClassName="Creator.Program" syncable="YES">
+        <relationship name="fragmentShader" maxCount="1" deletionRule="Nullify" destinationEntity="FragmentShaderNode" inverseName="program" inverseEntity="FragmentShaderNode" syncable="YES"/>
+        <relationship name="vertexShader" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="VertexShaderNode" inverseName="program" inverseEntity="VertexShaderNode" syncable="YES"/>
+    </entity>
     <entity name="VertexShaderNode" representedClassName="Creator.VertexShaderNode" parentEntity="Node" syncable="YES">
         <attribute name="source" attributeType="String" syncable="YES"/>
+        <relationship name="program" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Program" inverseName="vertexShader" inverseEntity="Program" syncable="YES"/>
     </entity>
     <fetchRequest name="EdgeRequest" entity="Edge"/>
     <fetchRequest name="FrameRequest" entity="Frame"/>
@@ -48,13 +54,14 @@
         <element name="ConstantBufferNode" positionX="-236" positionY="153" width="128" height="60"/>
         <element name="ConstantFloatNode" positionX="-99" positionY="153" width="128" height="60"/>
         <element name="Edge" positionX="-335" positionY="0" width="128" height="75"/>
-        <element name="FragmentShaderNode" positionX="171" positionY="153" width="128" height="60"/>
+        <element name="FragmentShaderNode" positionX="171" positionY="153" width="128" height="75"/>
         <element name="Frame" positionX="216" positionY="-18" width="128" height="60"/>
+        <element name="InputPort" positionX="-153" positionY="81" width="128" height="75"/>
         <element name="Node" positionX="-63" positionY="-18" width="128" height="135"/>
         <element name="NullNode" positionX="-371" positionY="153" width="128" height="45"/>
-        <element name="VertexShaderNode" positionX="36" positionY="153" width="128" height="60"/>
-        <element name="Port" positionX="-162" positionY="72" width="128" height="75"/>
-        <element name="InputPort" positionX="-153" positionY="81" width="128" height="75"/>
         <element name="OutputPort" positionX="-144" positionY="99" width="128" height="75"/>
+        <element name="Port" positionX="-162" positionY="72" width="128" height="75"/>
+        <element name="VertexShaderNode" positionX="36" positionY="153" width="128" height="75"/>
+        <element name="Program" positionX="-162" positionY="72" width="128" height="75"/>
     </elements>
 </model>

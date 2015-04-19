@@ -19,15 +19,6 @@ class Node: NSManagedObject {
     func populate(nullNode: NullNode, context: NSManagedObjectContext) {
     }
 
-    func populateDummy(nullNode: NullNode, context: NSManagedObjectContext) {
-        addNodeToInputs(nullNode, context: context, name: "Input Value", index: UInt(0));
-        addNodeToInputs(nullNode, context: context, name: "Input Value", index: UInt(1));
-        addNodeToInputs(nullNode, context: context, name: "Input Value", index: UInt(2));
-
-        addNodeToOutputs(nullNode, context: context, name: "Output Value", index: UInt(0));
-        addNodeToOutputs(nullNode, context: context, name: "Output Value", index: UInt(1));
-    }
-
     func addNodeToInputs(nullNode: NullNode, context: NSManagedObjectContext, name: String, index: UInt) {
         var edge = NSEntityDescription.insertNewObjectForEntityForName("Edge", inManagedObjectContext: context) as! Edge
         var inputPort = NSEntityDescription.insertNewObjectForEntityForName("InputPort", inManagedObjectContext: context) as! InputPort

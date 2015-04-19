@@ -13,11 +13,13 @@ class VertexShaderNode: Node {
     @NSManaged var source: String
     var handle: GLuint = 0
     override func populate(nullNode: NullNode, context: NSManagedObjectContext) {
-        populateDummy(nullNode, context: context)
+        addNodeToOutputs(nullNode, context: context, name: "Next pipeline stage", index: UInt(0));
 
         handle = glCreateShader(GLenum(GL_VERTEX_SHADER))
-        var b = UnsafePointer<GLchar>(source.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)!.bytes)
-        glShaderSource(handle, GLsizei(1), &b, nil)
+        let data = source.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)!
+        var b = UnsafePointer<GLchar>(data.bytes)
+        var lineLen = GLint(data.length)
+        glShaderSource(handle, GLsizei(1), &b, &lineLen)
         glCompileShader(handle)
         var compileStatus = GL_FALSE
         glGetShaderiv(handle, GLenum(GL_COMPILE_STATUS), &compileStatus)
@@ -31,7 +33,7 @@ class VertexShaderNode: Node {
             println("Could not compile! Log:\n\(log)")
             buffer.dealloc(Int(logLength))
         } else {
-            println("Success!")
+            println("Compilation success!")
         }
 
         // Once the program has been linked, we can use glGetProgramiv(program, GL_ACTIVE_ATTRIBUTES, &out) to get the number of attributes,
@@ -44,6 +46,16 @@ class VertexShaderNode: Node {
     }
 
     override func prepareForDeletion() {
-        glDeleteShader(handle)
+        if handle != 0 {
+            glDeleteShader(handle)
+            handle = 0
+        }
+    }
+
+    deinit {
+        if handle != 0 {
+            glDeleteShader(handle)
+            handle = 0
+        }
     }
 }

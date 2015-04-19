@@ -68,7 +68,8 @@ class GraphViewController: NSViewController {
 
     func createVertexShaderNode() {
         var newNode = NSEntityDescription.insertNewObjectForEntityForName("VertexShaderNode", inManagedObjectContext: managedObjectContext) as! VertexShaderNode
-        newNode.source = "#version 410\n\nin vec4 pos;\n\nvoid main() {\ngl_Position = pos;\n}\n"
+        var error: NSError?
+        newNode.source = String(contentsOfFile: NSBundle.mainBundle().pathForResource("DefaultVertexShader", ofType: "vs")!, encoding: NSUTF8StringEncoding, error: &error)!
         newNode.populate(nullNode!, context: managedObjectContext)
         newNode.positionX = 13
         newNode.positionY = 17
@@ -79,6 +80,8 @@ class GraphViewController: NSViewController {
 
     func createFragmentShaderNode() {
         var newNode = NSEntityDescription.insertNewObjectForEntityForName("FragmentShaderNode", inManagedObjectContext: managedObjectContext) as! FragmentShaderNode
+        var error: NSError?
+        newNode.source = String(contentsOfFile: NSBundle.mainBundle().pathForResource("DefaultFragmentShader", ofType: "fs")!, encoding: NSUTF8StringEncoding, error: &error)!
         newNode.populate(nullNode!, context: managedObjectContext)
         newNode.positionX = 13
         newNode.positionY = 17

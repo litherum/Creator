@@ -24,6 +24,7 @@
 		C2BBF7A71AE2C72200A418B9 /* InputPort.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BBF7A61AE2C72200A418B9 /* InputPort.swift */; };
 		C2BBF7A91AE2C72200A418B9 /* OutputPort.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BBF7A81AE2C72200A418B9 /* OutputPort.swift */; };
 		C2BBF7AB1AE2D14F00A418B9 /* Port.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BBF7AA1AE2D14F00A418B9 /* Port.swift */; };
+		C2BBF7AD1AE30FCE00A418B9 /* ResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BBF7AC1AE30FCE00A418B9 /* ResultView.swift */; };
 		C2C5A12D1AD9A52A001DFC56 /* ConstantBufferNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C5A12C1AD9A52A001DFC56 /* ConstantBufferNode.swift */; };
 		C2C5A12F1AD9A52A001DFC56 /* Frame.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C5A12E1AD9A52A001DFC56 /* Frame.swift */; };
 		C2C5A1311AD9A52A001DFC56 /* ConstantFloatNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C5A1301AD9A52A001DFC56 /* ConstantFloatNode.swift */; };
@@ -65,6 +66,7 @@
 		C2BBF7A61AE2C72200A418B9 /* InputPort.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputPort.swift; sourceTree = "<group>"; };
 		C2BBF7A81AE2C72200A418B9 /* OutputPort.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OutputPort.swift; sourceTree = "<group>"; };
 		C2BBF7AA1AE2D14F00A418B9 /* Port.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Port.swift; sourceTree = "<group>"; };
+		C2BBF7AC1AE30FCE00A418B9 /* ResultView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResultView.swift; sourceTree = "<group>"; };
 		C2C5A12C1AD9A52A001DFC56 /* ConstantBufferNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConstantBufferNode.swift; sourceTree = "<group>"; };
 		C2C5A12E1AD9A52A001DFC56 /* Frame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Frame.swift; sourceTree = "<group>"; };
 		C2C5A1301AD9A52A001DFC56 /* ConstantFloatNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConstantFloatNode.swift; sourceTree = "<group>"; };
@@ -119,8 +121,8 @@
 				C21E61831AD8BEFE000FC413 /* Document.swift */,
 				C2C5A13C1ADA0DCC001DFC56 /* NodeViewController.swift */,
 				C2C5A1341AD9C6FA001DFC56 /* GraphViewController.swift */,
-				C2C5A13A1ADA012A001DFC56 /* NodeViewController.xib */,
 				C21E61851AD8BEFE000FC413 /* Document.xib */,
+				C2C5A13A1ADA012A001DFC56 /* NodeViewController.xib */,
 				C21E618D1AD8BEFE000FC413 /* MainMenu.xib */,
 				C21E61881AD8BEFE000FC413 /* Document.xcdatamodeld */,
 				C21E618B1AD8BEFE000FC413 /* Images.xcassets */,
@@ -186,6 +188,7 @@
 				C21199251AE1EF70009ED4DE /* NodeTitleTextField.swift */,
 				C21199211AE1E44D009ED4DE /* NodeInputOutputTextField.swift */,
 				C2A20BE91ADCC59200DE369D /* ConnectionsView.swift */,
+				C2BBF7AC1AE30FCE00A418B9 /* ResultView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -308,6 +311,7 @@
 				C21E61821AD8BEFE000FC413 /* AppDelegate.swift in Sources */,
 				C2BBF7A71AE2C72200A418B9 /* InputPort.swift in Sources */,
 				C2BBF7AB1AE2D14F00A418B9 /* Port.swift in Sources */,
+				C2BBF7AD1AE30FCE00A418B9 /* ResultView.swift in Sources */,
 				C21199221AE1E44D009ED4DE /* NodeInputOutputTextField.swift in Sources */,
 				C2BBF7A91AE2C72200A418B9 /* OutputPort.swift in Sources */,
 			);

@@ -68,11 +68,11 @@ class GraphViewController: NSViewController {
 
     func createVertexShaderNode() {
         var newNode = NSEntityDescription.insertNewObjectForEntityForName("VertexShaderNode", inManagedObjectContext: managedObjectContext) as! VertexShaderNode
+        newNode.source = "#version 410\n\nin vec4 pos;\n\nvoid main() {\ngl_Position = pos;\n}\n"
         newNode.populate(nullNode!, context: managedObjectContext)
         newNode.positionX = 13
         newNode.positionY = 17
         newNode.title = "Vertex Shader"
-        newNode.source = "test"
         newNode.frame = frame!
         addNodeView(newNode)
     }

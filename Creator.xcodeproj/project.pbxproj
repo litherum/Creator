@@ -17,6 +17,7 @@
 		C21E618C1AD8BEFE000FC413 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C21E618B1AD8BEFE000FC413 /* Images.xcassets */; };
 		C21E618F1AD8BEFE000FC413 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C21E618D1AD8BEFE000FC413 /* MainMenu.xib */; };
 		C21E619B1AD8BEFE000FC413 /* CreatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21E619A1AD8BEFE000FC413 /* CreatorTests.swift */; };
+		C28602D81AE7471A0074E66B /* NodeDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C28602D71AE7471A0074E66B /* NodeDetailsViewController.xib */; };
 		C28CFA681AE41F1E004C7074 /* DefaultVertexShader.vs in Resources */ = {isa = PBXBuildFile; fileRef = C28CFA671AE41F1E004C7074 /* DefaultVertexShader.vs */; };
 		C28CFA6A1AE41F54004C7074 /* DefaultFragmentShader.fs in Resources */ = {isa = PBXBuildFile; fileRef = C28CFA691AE41F54004C7074 /* DefaultFragmentShader.fs */; };
 		C28CFA6C1AE4273F004C7074 /* Program.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28CFA6B1AE4273F004C7074 /* Program.swift */; };
@@ -62,6 +63,7 @@
 		C21E61941AD8BEFE000FC413 /* CreatorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CreatorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C21E61991AD8BEFE000FC413 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C21E619A1AD8BEFE000FC413 /* CreatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatorTests.swift; sourceTree = "<group>"; };
+		C28602D71AE7471A0074E66B /* NodeDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NodeDetailsViewController.xib; sourceTree = "<group>"; };
 		C28CFA671AE41F1E004C7074 /* DefaultVertexShader.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = DefaultVertexShader.vs; sourceTree = "<group>"; };
 		C28CFA691AE41F54004C7074 /* DefaultFragmentShader.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = DefaultFragmentShader.fs; sourceTree = "<group>"; };
 		C28CFA6B1AE4273F004C7074 /* Program.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Program.swift; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 				C2C5A13C1ADA0DCC001DFC56 /* NodeViewController.swift */,
 				C2C5A1341AD9C6FA001DFC56 /* GraphViewController.swift */,
 				C21E61851AD8BEFE000FC413 /* Document.xib */,
+				C28602D71AE7471A0074E66B /* NodeDetailsViewController.xib */,
 				C2C5A13A1ADA012A001DFC56 /* NodeViewController.xib */,
 				C21E618D1AD8BEFE000FC413 /* MainMenu.xib */,
 				C21E61881AD8BEFE000FC413 /* Document.xcdatamodeld */,
@@ -291,6 +294,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C21E61871AD8BEFE000FC413 /* Document.xib in Resources */,
+				C28602D81AE7471A0074E66B /* NodeDetailsViewController.xib in Resources */,
 				C28CFA6A1AE41F54004C7074 /* DefaultFragmentShader.fs in Resources */,
 				C21E618C1AD8BEFE000FC413 /* Images.xcassets in Resources */,
 				C28CFA681AE41F1E004C7074 /* DefaultVertexShader.vs in Resources */,

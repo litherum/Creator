@@ -15,6 +15,7 @@ class NodeViewController: NSViewController {
     @IBOutlet var titleView: NodeTitleTextField!
     @IBOutlet var inputsView: NSStackView!
     @IBOutlet var outputsView: NSStackView!
+    @IBOutlet var detailsPopover: NSPopover!
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -37,6 +38,7 @@ class NodeViewController: NSViewController {
         inputOutputTextField.input = input
         inputOutputTextField.index = index
 
+        // FIXME: These settings could be done with IB
         inputOutputTextField.translatesAutoresizingMaskIntoConstraints = false
         inputOutputTextField.selectable = false
         inputOutputTextField.drawsBackground = false
@@ -44,5 +46,9 @@ class NodeViewController: NSViewController {
         inputOutputTextField.alignment = alignment
         inputOutputTextField.stringValue = value
         (input ? inputsView : outputsView).addView(inputOutputTextField, inGravity: .Center)
+    }
+
+    func showDetails() {
+        detailsPopover.showRelativeToRect(view.bounds, ofView: view, preferredEdge: NSMaxXEdge)
     }
 }

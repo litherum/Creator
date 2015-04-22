@@ -135,7 +135,7 @@ class GraphViewController: NSViewController {
     }
 
     func addNodeView(node: Node) {
-        let nodeViewController = NodeViewController(nibName: "NodeViewController", bundle: nil) as NodeViewController!
+        let nodeViewController = NodeViewController(nibName: "NodeViewController", bundle: nil)!
         nodeViewController.graphViewController = self
         nodeViewControllerToNodeDictionary[nodeViewController] = node
         nodeToNodeViewControllerDictionary[node] = nodeViewController

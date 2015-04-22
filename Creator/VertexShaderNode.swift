@@ -13,6 +13,7 @@ class VertexShaderNode: Node {
     @NSManaged var source: String
     @NSManaged var program: Program
     var handle: GLuint = 0
+
     override func populate(nullNode: NullNode, context: NSManagedObjectContext) {
         addNodeToOutputs(nullNode, context: context, name: "Next stage", index: UInt(0));
 

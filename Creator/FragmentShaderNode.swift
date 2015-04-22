@@ -13,6 +13,7 @@ class FragmentShaderNode: Node {
     @NSManaged var source: String
     @NSManaged var program: Program
     var handle: GLuint = 0
+
     override func populate(nullNode: NullNode, context: NSManagedObjectContext) {
         addNodeToInputs(nullNode, context: context, name: "Previous stage", index: UInt(0));
 

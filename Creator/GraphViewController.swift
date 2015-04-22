@@ -135,7 +135,7 @@ class GraphViewController: NSViewController {
     }
 
     func addNodeView(node: Node) {
-        let nodeViewController = NodeViewController(nibName: "NodeViewController", bundle: nil)!
+        let nodeViewController = NodeViewController(nibName: "NodeViewController", bundle: nil, node: node)!
         nodeViewController.graphViewController = self
         nodeViewControllerToNodeDictionary[nodeViewController] = node
         nodeToNodeViewControllerDictionary[node] = nodeViewController
@@ -228,6 +228,7 @@ class GraphViewController: NSViewController {
         var draggingStartPoint = NSPoint(x: nodeViewController.leadingConstraint.constant, y: nodeViewController.topConstraint.constant)
         draggingStartPoint.x -= mouseLocation.x
         draggingStartPoint.y += mouseLocation.y
+        // FIXME: Dragging logic can probably be moved into NodeViewController.
         dragOperation = .Move(nodeViewControllerToNodeDictionary[nodeViewController]!, draggingStartPoint)
     }
 

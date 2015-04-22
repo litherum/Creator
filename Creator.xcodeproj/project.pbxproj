@@ -18,6 +18,8 @@
 		C21E618F1AD8BEFE000FC413 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C21E618D1AD8BEFE000FC413 /* MainMenu.xib */; };
 		C21E619B1AD8BEFE000FC413 /* CreatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21E619A1AD8BEFE000FC413 /* CreatorTests.swift */; };
 		C28602D81AE7471A0074E66B /* NodeDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C28602D71AE7471A0074E66B /* NodeDetailsViewController.xib */; };
+		C28602DC1AE755B60074E66B /* VertexShaderDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C28602DB1AE755B60074E66B /* VertexShaderDetailsViewController.xib */; };
+		C28602DE1AE7579B0074E66B /* VertexShaderDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28602DD1AE7579B0074E66B /* VertexShaderDetailsViewController.swift */; };
 		C28CFA681AE41F1E004C7074 /* DefaultVertexShader.vs in Resources */ = {isa = PBXBuildFile; fileRef = C28CFA671AE41F1E004C7074 /* DefaultVertexShader.vs */; };
 		C28CFA6A1AE41F54004C7074 /* DefaultFragmentShader.fs in Resources */ = {isa = PBXBuildFile; fileRef = C28CFA691AE41F54004C7074 /* DefaultFragmentShader.fs */; };
 		C28CFA6C1AE4273F004C7074 /* Program.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28CFA6B1AE4273F004C7074 /* Program.swift */; };
@@ -64,6 +66,8 @@
 		C21E61991AD8BEFE000FC413 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C21E619A1AD8BEFE000FC413 /* CreatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatorTests.swift; sourceTree = "<group>"; };
 		C28602D71AE7471A0074E66B /* NodeDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NodeDetailsViewController.xib; sourceTree = "<group>"; };
+		C28602DB1AE755B60074E66B /* VertexShaderDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VertexShaderDetailsViewController.xib; sourceTree = "<group>"; };
+		C28602DD1AE7579B0074E66B /* VertexShaderDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VertexShaderDetailsViewController.swift; sourceTree = "<group>"; };
 		C28CFA671AE41F1E004C7074 /* DefaultVertexShader.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = DefaultVertexShader.vs; sourceTree = "<group>"; };
 		C28CFA691AE41F54004C7074 /* DefaultFragmentShader.fs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = DefaultFragmentShader.fs; sourceTree = "<group>"; };
 		C28CFA6B1AE4273F004C7074 /* Program.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Program.swift; sourceTree = "<group>"; };
@@ -126,14 +130,10 @@
 				C28CFA661AE41EE2004C7074 /* Resources */,
 				C2BBF7A21AE2C32000A418B9 /* Model */,
 				C2BBF7A31AE2C34D00A418B9 /* Views */,
+				C28602D91AE7552E0074E66B /* Interface Builder */,
 				C21E61811AD8BEFE000FC413 /* AppDelegate.swift */,
 				C21E61831AD8BEFE000FC413 /* Document.swift */,
-				C2C5A13C1ADA0DCC001DFC56 /* NodeViewController.swift */,
-				C2C5A1341AD9C6FA001DFC56 /* GraphViewController.swift */,
-				C21E61851AD8BEFE000FC413 /* Document.xib */,
-				C28602D71AE7471A0074E66B /* NodeDetailsViewController.xib */,
-				C2C5A13A1ADA012A001DFC56 /* NodeViewController.xib */,
-				C21E618D1AD8BEFE000FC413 /* MainMenu.xib */,
+				C28602DF1AE75C9A0074E66B /* View Controllers */,
 				C21E61881AD8BEFE000FC413 /* Document.xcdatamodeld */,
 				C21E618B1AD8BEFE000FC413 /* Images.xcassets */,
 				C21E617F1AD8BEFE000FC413 /* Supporting Files */,
@@ -164,6 +164,44 @@
 				C21E61991AD8BEFE000FC413 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		C28602D91AE7552E0074E66B /* Interface Builder */ = {
+			isa = PBXGroup;
+			children = (
+				C28602DA1AE755800074E66B /* Details Popovers */,
+				C21E61851AD8BEFE000FC413 /* Document.xib */,
+				C2C5A13A1ADA012A001DFC56 /* NodeViewController.xib */,
+				C21E618D1AD8BEFE000FC413 /* MainMenu.xib */,
+			);
+			name = "Interface Builder";
+			sourceTree = "<group>";
+		};
+		C28602DA1AE755800074E66B /* Details Popovers */ = {
+			isa = PBXGroup;
+			children = (
+				C28602D71AE7471A0074E66B /* NodeDetailsViewController.xib */,
+				C28602DB1AE755B60074E66B /* VertexShaderDetailsViewController.xib */,
+			);
+			name = "Details Popovers";
+			sourceTree = "<group>";
+		};
+		C28602DF1AE75C9A0074E66B /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				C28602E01AE75CB60074E66B /* Details View Controllers */,
+				C2C5A13C1ADA0DCC001DFC56 /* NodeViewController.swift */,
+				C2C5A1341AD9C6FA001DFC56 /* GraphViewController.swift */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		C28602E01AE75CB60074E66B /* Details View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				C28602DD1AE7579B0074E66B /* VertexShaderDetailsViewController.swift */,
+			);
+			name = "Details View Controllers";
 			sourceTree = "<group>";
 		};
 		C28CFA661AE41EE2004C7074 /* Resources */ = {
@@ -293,6 +331,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C28602DC1AE755B60074E66B /* VertexShaderDetailsViewController.xib in Resources */,
 				C21E61871AD8BEFE000FC413 /* Document.xib in Resources */,
 				C28602D81AE7471A0074E66B /* NodeDetailsViewController.xib in Resources */,
 				C28CFA6A1AE41F54004C7074 /* DefaultFragmentShader.fs in Resources */,
@@ -338,6 +377,7 @@
 				C2BBF7AD1AE30FCE00A418B9 /* ResultView.swift in Sources */,
 				C21199221AE1E44D009ED4DE /* NodeInputOutputTextField.swift in Sources */,
 				C2BBF7A91AE2C72200A418B9 /* OutputPort.swift in Sources */,
+				C28602DE1AE7579B0074E66B /* VertexShaderDetailsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

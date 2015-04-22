@@ -9,6 +9,7 @@
 import Cocoa
 
 class NodeViewController: NSViewController {
+    var node: Node!
     weak var graphViewController: GraphViewController!
     weak var leadingConstraint: NSLayoutConstraint!
     weak var topConstraint: NSLayoutConstraint!
@@ -21,7 +22,8 @@ class NodeViewController: NSViewController {
         super.init(coder: coder)
     }
 
-    override init?(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+    init?(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?, node: Node) {
+        self.node = node
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
 
@@ -38,7 +40,7 @@ class NodeViewController: NSViewController {
         inputOutputTextField.input = input
         inputOutputTextField.index = index
 
-        // FIXME: These settings could be done with IB
+        // FIXME: These settings could be done with IB.
         inputOutputTextField.translatesAutoresizingMaskIntoConstraints = false
         inputOutputTextField.selectable = false
         inputOutputTextField.drawsBackground = false
@@ -49,6 +51,11 @@ class NodeViewController: NSViewController {
     }
 
     func showDetails() {
+        if let vertexShaderNode = node as? VertexShaderNode {
+            detailsPopover.contentViewController = VertexShaderDetailsViewController(nibName: "VertexShaderDetailsViewController", bundle: nil, node: vertexShaderNode)!
+        } else {
+            detailsPopover.contentViewController = NSViewController(nibName: "NodeDetailsViewController", bundle: nil)!
+        }
         detailsPopover.showRelativeToRect(view.bounds, ofView: view, preferredEdge: NSMaxXEdge)
     }
 }

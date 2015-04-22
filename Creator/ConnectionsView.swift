@@ -11,9 +11,9 @@ import Cocoa
 class Connection {
     var startPoint: NSPoint
     var endPoint: NSPoint
-    init(startPoint startPointInput: NSPoint, endPoint endPointInput: NSPoint) {
-        startPoint = startPointInput
-        endPoint = endPointInput
+    init(startPoint: NSPoint, endPoint: NSPoint) {
+        self.startPoint = startPoint
+        self.endPoint = endPoint
     }
 }
 

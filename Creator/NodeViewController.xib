@@ -66,11 +66,6 @@
             </constraints>
             <point key="canvasLocation" x="830.5" y="455"/>
         </customView>
-        <viewController nibName="NodeDetailsViewController" id="F42-xk-PUG" userLabel="Popover View Controller"/>
-        <popover behavior="t" id="lDz-5B-qLq">
-            <connections>
-                <outlet property="contentViewController" destination="F42-xk-PUG" id="tga-Hg-X6V"/>
-            </connections>
-        </popover>
+        <popover behavior="t" id="lDz-5B-qLq"/>
     </objects>
 </document>

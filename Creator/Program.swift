@@ -45,7 +45,7 @@ class Program: NSManagedObject {
             var type: GLenum = 0
             glGetActiveAttrib(handle, i, nameLength, &usedLength, &size, &type, &buffer)
             let name = NSString(data: NSData(bytes: &buffer, length: Int(usedLength)), encoding: NSUTF8StringEncoding)!
-            vertexShader.addNodeToInputs(nullNode, context: context, name: name as String, index: UInt(i));
+            vertexShader.addNodeToInputs(nullNode, context: context, name: name as String);
         }
 
         glGetProgramiv(handle, GLenum(GL_ACTIVE_UNIFORM_MAX_LENGTH), &nameLength)
@@ -56,7 +56,7 @@ class Program: NSManagedObject {
             var usedLength: GLsizei = 0
             glGetActiveUniformName(handle, GLuint(i), nameLength, &usedLength, &buffer)
             let name = NSString(data: NSData(bytes: &buffer, length: Int(usedLength)), encoding: NSUTF8StringEncoding)!
-            vertexShader.addNodeToInputs(nullNode, context: context, name: name as String, index: UInt(numAttributes + i));
+            vertexShader.addNodeToInputs(nullNode, context: context, name: name as String);
         }
     }
 

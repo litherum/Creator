@@ -15,7 +15,7 @@ class VertexShaderNode: Node {
     var handle: GLuint = 0
 
     override func populate(nullNode: NullNode, context: NSManagedObjectContext) {
-        addNodeToOutputs(nullNode, context: context, name: "Next stage", index: UInt(0));
+        addNodeToOutputs(nullNode, context: context, name: "Next stage");
 
         handle = glCreateShader(GLenum(GL_VERTEX_SHADER))
         let data = source.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)!

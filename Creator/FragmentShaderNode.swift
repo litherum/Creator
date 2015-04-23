@@ -15,7 +15,7 @@ class FragmentShaderNode: Node {
     var handle: GLuint = 0
 
     override func populate(nullNode: NullNode, context: NSManagedObjectContext) {
-        addNodeToInputs(nullNode, context: context, name: "Previous stage", index: UInt(0));
+        addNodeToInputs(nullNode, context: context, name: "Previous stage");
 
         handle = glCreateShader(GLenum(GL_FRAGMENT_SHADER))
         let data = source.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)!

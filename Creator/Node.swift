@@ -19,8 +19,7 @@ class Node: NSManagedObject {
     func populate(nullNode: NullNode, context: NSManagedObjectContext) {
     }
 
-    // FIXME: We should be able to generate index here.
-    func addNodeToInputs(nullNode: NullNode, context: NSManagedObjectContext, name: String, index: UInt) {
+    func addNodeToInputs(nullNode: NullNode, context: NSManagedObjectContext, name: String) {
         var edge = NSEntityDescription.insertNewObjectForEntityForName("Edge", inManagedObjectContext: context) as! Edge
         var inputPort = NSEntityDescription.insertNewObjectForEntityForName("InputPort", inManagedObjectContext: context) as! InputPort
         var outputPort = NSEntityDescription.insertNewObjectForEntityForName("OutputPort", inManagedObjectContext: context) as! OutputPort
@@ -37,7 +36,7 @@ class Node: NSManagedObject {
         nullNode.mutableOrderedSetValueForKey("outputs").addObject(outputPort)
     }
 
-    func addNodeToOutputs(nullNode: NullNode, context: NSManagedObjectContext, name: String, index: UInt) {
+    func addNodeToOutputs(nullNode: NullNode, context: NSManagedObjectContext, name: String) {
         var edge = NSEntityDescription.insertNewObjectForEntityForName("Edge", inManagedObjectContext: context) as! Edge
         var inputPort = NSEntityDescription.insertNewObjectForEntityForName("InputPort", inManagedObjectContext: context) as! InputPort
         var outputPort = NSEntityDescription.insertNewObjectForEntityForName("OutputPort", inManagedObjectContext: context) as! OutputPort

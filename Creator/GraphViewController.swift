@@ -18,11 +18,7 @@ class GraphViewController: NSViewController {
 
     @IBOutlet var connectionsView: ConnectionsView!
 
-    enum DragOperation {
-        case Move(Node, NSPoint)
-        case Connect(Node, UInt)
-    }
-    var dragOperation: DragOperation!
+    var connectionInProgress: (Node, UInt)?
 
     func fetchFrame() -> Frame? {
         var frameRequest = managedObjectModel.fetchRequestFromTemplateWithName("FrameRequest", substitutionVariables: [:]) as NSFetchRequest!
@@ -166,104 +162,72 @@ class GraphViewController: NSViewController {
     }
 
     func nodeInputOutputMouseDown(nodeViewController: NodeViewController, index: UInt) {
-        dragOperation = .Connect(nodeViewControllerToNodeDictionary[nodeViewController]!, index)
+        connectionInProgress = (nodeViewControllerToNodeDictionary[nodeViewController]!, index)
     }
 
     func nodeInputOutputMouseUp(nodeViewController: NodeViewController, index: UInt, mouseLocation: NSPoint) {
-        if let dragOperation = dragOperation {
-            switch (dragOperation) {
-            case .Connect(let inputNode, let inputIndex):
-                if let hitView = view.hitTest(view.superview!.convertPoint(mouseLocation, fromView: nil)) {
-                    if let nodeInputOutputTextField = hitView as? NodeInputOutputTextField {
-                        let outputNode = nodeViewControllerToNodeDictionary[nodeInputOutputTextField.nodeViewController]!
-                        let outputIndex = nodeInputOutputTextField.index
-                        let inputPort = inputNode.inputs[Int(inputIndex)] as! InputPort
-                        let outputPort = outputNode.outputs[Int(outputIndex)] as! OutputPort
-                        if inputPort.edge.destination.node is NullNode && outputPort.edge.source.node is NullNode {
-                            let nullNodeInputPort = outputPort.edge.source
-                            let nullNodeOutputPort = inputPort.edge.destination
-                            managedObjectContext.deleteObject(inputPort.edge)
-                            managedObjectContext.deleteObject(outputPort.edge)
+        if let (let inputNode, let inputIndex) = connectionInProgress {
+            if let hitView = view.hitTest(view.superview!.convertPoint(mouseLocation, fromView: nil)) {
+                if let nodeInputOutputTextField = hitView as? NodeInputOutputTextField {
+                    let outputNode = nodeViewControllerToNodeDictionary[nodeInputOutputTextField.nodeViewController]!
+                    let outputIndex = nodeInputOutputTextField.index
+                    let inputPort = inputNode.inputs[Int(inputIndex)] as! InputPort
+                    let outputPort = outputNode.outputs[Int(outputIndex)] as! OutputPort
+                    if inputPort.edge.destination.node is NullNode && outputPort.edge.source.node is NullNode {
+                        let nullNodeInputPort = outputPort.edge.source
+                        let nullNodeOutputPort = inputPort.edge.destination
+                        managedObjectContext.deleteObject(inputPort.edge)
+                        managedObjectContext.deleteObject(outputPort.edge)
 
-                            for i in Int(nullNodeInputPort.index) ..< nullNode!.inputs.count {
-                                (nullNode!.inputs[i] as! InputPort).index--
-                            }
-                            for i in Int(nullNodeOutputPort.index) ..< nullNode!.outputs.count {
-                                (nullNode!.outputs[i] as! OutputPort).index--
-                            }
-                            managedObjectContext.deleteObject(nullNodeInputPort)
-                            managedObjectContext.deleteObject(nullNodeOutputPort)
+                        for i in Int(nullNodeInputPort.index) ..< nullNode!.inputs.count {
+                            (nullNode!.inputs[i] as! InputPort).index--
+                        }
+                        for i in Int(nullNodeOutputPort.index) ..< nullNode!.outputs.count {
+                            (nullNode!.outputs[i] as! OutputPort).index--
+                        }
+                        managedObjectContext.deleteObject(nullNodeInputPort)
+                        managedObjectContext.deleteObject(nullNodeOutputPort)
 
-                            var edge = NSEntityDescription.insertNewObjectForEntityForName("Edge", inManagedObjectContext: managedObjectContext) as! Edge
-                            inputPort.edge = edge
-                            outputPort.edge = edge
+                        var edge = NSEntityDescription.insertNewObjectForEntityForName("Edge", inManagedObjectContext: managedObjectContext) as! Edge
+                        inputPort.edge = edge
+                        outputPort.edge = edge
 
-                            addEdgeView(nodeToNodeViewControllerDictionary[inputNode]!.inputsView.views[Int(inputIndex)] as! NodeInputOutputTextField, outputTextField: nodeInputOutputTextField)
+                        addEdgeView(nodeToNodeViewControllerDictionary[inputNode]!.inputsView.views[Int(inputIndex)] as! NodeInputOutputTextField, outputTextField: nodeInputOutputTextField)
 
-                            if let inputFragmentShader = inputNode as? FragmentShaderNode {
-                                if let outputVertexShader = outputNode as? VertexShaderNode {
-                                    var newProgram = NSEntityDescription.insertNewObjectForEntityForName("Program", inManagedObjectContext: managedObjectContext) as! Program
-                                    newProgram.vertexShader = outputVertexShader
-                                    newProgram.fragmentShader = inputFragmentShader
-                                    newProgram.populate(nullNode!, context: managedObjectContext)
-                                    for i in 0 ..< outputVertexShader.inputs.count {
-                                        nodeInputOutputTextField.nodeViewController.addInputOutputView((outputVertexShader.inputs[i] as! InputPort).title, alignment: .LeftTextAlignment, input: true, index: UInt(i))
-                                    }
-                                    updateEdgeViews()
+                        if let inputFragmentShader = inputNode as? FragmentShaderNode {
+                            if let outputVertexShader = outputNode as? VertexShaderNode {
+                                var newProgram = NSEntityDescription.insertNewObjectForEntityForName("Program", inManagedObjectContext: managedObjectContext) as! Program
+                                newProgram.vertexShader = outputVertexShader
+                                newProgram.fragmentShader = inputFragmentShader
+                                newProgram.populate(nullNode!, context: managedObjectContext)
+                                for i in 0 ..< outputVertexShader.inputs.count {
+                                    nodeInputOutputTextField.nodeViewController.addInputOutputView((outputVertexShader.inputs[i] as! InputPort).title, alignment: .LeftTextAlignment, input: true, index: UInt(i))
                                 }
+                                updateEdgeViews()
                             }
                         }
                     }
                 }
-                connectionsView.connectionInFlight = nil
-                connectionsView.setNeedsDisplayInRect(connectionsView.bounds)
-            default:
-                break
             }
+            connectionsView.connectionInFlight = nil
+            connectionsView.setNeedsDisplayInRect(connectionsView.bounds)
         }
-        dragOperation = nil
-    }
-
-    func nodeTitleMouseDown(nodeViewController: NodeViewController, mouseLocation: NSPoint) {
-        var draggingStartPoint = NSPoint(x: nodeViewController.leadingConstraint.constant, y: nodeViewController.topConstraint.constant)
-        draggingStartPoint.x -= mouseLocation.x
-        draggingStartPoint.y += mouseLocation.y
-        // FIXME: Dragging logic can probably be moved into NodeViewController.
-        dragOperation = .Move(nodeViewControllerToNodeDictionary[nodeViewController]!, draggingStartPoint)
-    }
-
-    func nodeTitleMouseUp(nodeViewController: NodeViewController, mouseLocation: NSPoint) {
-        dragOperation = nil
+        connectionInProgress = nil
     }
 
     override func mouseDragged(theEvent: NSEvent) {
-        if let op = dragOperation {
+        if let (let node, let index) = connectionInProgress {
             let currentMouseLocation = theEvent.locationInWindow
-            switch op {
-            case .Move(let node, let position):
-                let viewController = nodeToNodeViewControllerDictionary[node]!
-                viewController.leadingConstraint.constant = position.x + currentMouseLocation.x
-                viewController.topConstraint.constant = position.y - currentMouseLocation.y
-                node.positionX = Float(viewController.leadingConstraint.constant)
-                node.positionY = Float(viewController.topConstraint.constant)
-                updateEdgeViews()
-            case .Connect(let node, let index):
-                let mouseLocation = connectionsView.convertPoint(currentMouseLocation, fromView: nil)
-                if connectionsView.connectionInFlight != nil {
-                    connectionsView.connectionInFlight!.endPoint = mouseLocation
-                } else {
-                    let inputView = nodeToNodeViewControllerDictionary[node]!.inputsView.views[Int(index)] as! NodeInputOutputTextField
-                    let startPoint = connectionsView.convertPoint(NSMakePoint(0, (inputView.bounds.origin.y + inputView.bounds.maxY) / 2), fromView: inputView)
-                    connectionsView.connectionInFlight = Connection(startPoint: startPoint, endPoint: mouseLocation)
-                }
-                connectionsView.setNeedsDisplayInRect(connectionsView.bounds)
+            let mouseLocation = connectionsView.convertPoint(currentMouseLocation, fromView: nil)
+            if connectionsView.connectionInFlight != nil {
+                connectionsView.connectionInFlight!.endPoint = mouseLocation
+            } else {
+                let inputView = nodeToNodeViewControllerDictionary[node]!.inputsView.views[Int(index)] as! NodeInputOutputTextField
+                let startPoint = connectionsView.convertPoint(NSMakePoint(0, (inputView.bounds.origin.y + inputView.bounds.maxY) / 2), fromView: inputView)
+                connectionsView.connectionInFlight = Connection(startPoint: startPoint, endPoint: mouseLocation)
             }
+            connectionsView.setNeedsDisplayInRect(connectionsView.bounds)
         }
     }
 
-    override func mouseUp(theEvent: NSEvent) {
-        connectionsView.connectionInFlight = nil
-        dragOperation = nil
-        connectionsView.setNeedsDisplayInRect(connectionsView.bounds)
-    }
 }

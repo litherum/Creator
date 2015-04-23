@@ -13,6 +13,7 @@ class NodeViewController: NSViewController {
     weak var graphViewController: GraphViewController!
     weak var leadingConstraint: NSLayoutConstraint!
     weak var topConstraint: NSLayoutConstraint!
+    var draggingStartPoint: NSPoint?
     @IBOutlet var titleView: NodeTitleTextField!
     @IBOutlet var inputsView: NSStackView!
     @IBOutlet var outputsView: NSStackView!
@@ -48,6 +49,27 @@ class NodeViewController: NSViewController {
         inputOutputTextField.alignment = alignment
         inputOutputTextField.stringValue = value
         (input ? inputsView : outputsView).addView(inputOutputTextField, inGravity: .Center)
+    }
+
+    func nodeTitleMouseDown(mouseLocation: NSPoint) {
+        var startPoint = NSPoint(x: leadingConstraint.constant, y: topConstraint.constant)
+        startPoint.x -= mouseLocation.x
+        startPoint.y += mouseLocation.y
+        draggingStartPoint = startPoint
+    }
+
+    func nodeTitleMouseDragged(mouseLocation: NSPoint) {
+        if let startPoint = draggingStartPoint {
+            leadingConstraint.constant = startPoint.x + mouseLocation.x
+            topConstraint.constant = startPoint.y - mouseLocation.y
+            node.positionX = Float(leadingConstraint.constant)
+            node.positionY = Float(topConstraint.constant)
+            graphViewController.updateEdgeViews()
+        }
+    }
+
+    func nodeTitleMouseUp(mouseLocation: NSPoint) {
+        draggingStartPoint = nil
     }
 
     func showDetails() {

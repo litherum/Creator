@@ -14,15 +14,20 @@ class NodeTitleTextField: NSTextField {
     var dragging: Bool = false
 
     override func mouseDown(theEvent: NSEvent) {
-        graphViewController.nodeTitleMouseDown(nodeViewController, mouseLocation: theEvent.locationInWindow)
+        assert(!dragging, "We should only be dragging while the mouse is down")
+        nodeViewController.nodeTitleMouseDown(theEvent.locationInWindow)
         dragging = true
     }
 
+    override func mouseDragged(theEvent: NSEvent) {
+        assert(dragging, "We should always be dragging while the mouse is down")
+        nodeViewController.nodeTitleMouseDragged(theEvent.locationInWindow)
+    }
+
     override func mouseUp(theEvent: NSEvent) {
-        if dragging {
-            graphViewController.nodeTitleMouseUp(nodeViewController, mouseLocation: theEvent.locationInWindow)
-            dragging = false
-        }
+        assert(dragging, "We should always be dragging while the mouse is down")
+        nodeViewController.nodeTitleMouseUp(theEvent.locationInWindow)
+        dragging = false
         if theEvent.clickCount == 2 {
             nodeViewController.showDetails()
         }

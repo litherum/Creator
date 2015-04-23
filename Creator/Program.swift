@@ -27,40 +27,37 @@ class Program: NSManagedObject {
         if linkStatus == GL_FALSE {
             var logLength: GLint = 0
             glGetProgramiv(handle, GLenum(GL_INFO_LOG_LENGTH), &logLength)
-            var buffer = UnsafeMutablePointer<GLchar>.alloc(Int(logLength))
-            glGetProgramInfoLog(handle, logLength, nil, buffer)
-            let log = NSString(data: NSData(bytes: buffer, length: Int(logLength)), encoding: NSUTF8StringEncoding)!
+            var buffer = Array<GLchar>(count: Int(logLength), repeatedValue: GLchar(0))
+            glGetProgramInfoLog(handle, logLength, nil, &buffer)
+            let log = NSString(data: NSData(bytes: &buffer, length: Int(logLength)), encoding: NSUTF8StringEncoding)!
             println("Could not link! Log:\n\(log)")
-            buffer.dealloc(Int(logLength))
             return
         }
 
         var nameLength: GLint = 0
         glGetProgramiv(handle, GLenum(GL_ACTIVE_ATTRIBUTE_MAX_LENGTH), &nameLength)
-        var buffer = UnsafeMutablePointer<GLchar>.alloc(Int(nameLength))
+        var buffer = Array<GLchar>(count: Int(nameLength), repeatedValue: GLchar(0))
         var numAttributes: GLint = 0
         glGetProgramiv(handle, GLenum(GL_ACTIVE_ATTRIBUTES), &numAttributes)
         for i in 0 ..< GLuint(numAttributes) {
             var usedLength: GLsizei = 0
             var size: GLint = 0
             var type: GLenum = 0
-            glGetActiveAttrib(handle, i, nameLength, &usedLength, &size, &type, buffer)
-            let name = NSString(data: NSData(bytes: buffer, length: Int(usedLength)), encoding: NSUTF8StringEncoding)!
+            glGetActiveAttrib(handle, i, nameLength, &usedLength, &size, &type, &buffer)
+            let name = NSString(data: NSData(bytes: &buffer, length: Int(usedLength)), encoding: NSUTF8StringEncoding)!
             vertexShader.addNodeToInputs(nullNode, context: context, name: name as String, index: UInt(i));
         }
-        buffer.dealloc(Int(nameLength))
 
         glGetProgramiv(handle, GLenum(GL_ACTIVE_UNIFORM_MAX_LENGTH), &nameLength)
-        buffer = UnsafeMutablePointer<GLchar>.alloc(Int(nameLength))
+        buffer = Array<GLchar>(count: Int(nameLength), repeatedValue: GLchar(0))
         var numUniforms: GLint = 0
         glGetProgramiv(handle, GLenum(GL_ACTIVE_UNIFORMS), &numUniforms)
         for i in 0 ..< numUniforms {
             var usedLength: GLsizei = 0
-            glGetActiveUniformName(handle, GLuint(i), nameLength, &usedLength, buffer)
-            let name = NSString(data: NSData(bytes: buffer, length: Int(usedLength)), encoding: NSUTF8StringEncoding)!
+            glGetActiveUniformName(handle, GLuint(i), nameLength, &usedLength, &buffer)
+            let name = NSString(data: NSData(bytes: &buffer, length: Int(usedLength)), encoding: NSUTF8StringEncoding)!
             vertexShader.addNodeToInputs(nullNode, context: context, name: name as String, index: UInt(numAttributes + i));
         }
-        buffer.dealloc(Int(nameLength))
     }
 
     override func prepareForDeletion() {

@@ -28,11 +28,10 @@ class VertexShaderNode: Node {
         if compileStatus == GL_FALSE {
             var logLength: GLint = 0
             glGetShaderiv(handle, GLenum(GL_INFO_LOG_LENGTH), &logLength)
-            var buffer = UnsafeMutablePointer<GLchar>.alloc(Int(logLength))
-            glGetShaderInfoLog(handle, logLength, nil, buffer)
-            let log = NSString(data: NSData(bytes: buffer, length: Int(logLength)), encoding: NSUTF8StringEncoding)!
+            var buffer = Array<GLchar>(count: Int(logLength), repeatedValue: GLchar(0))
+            glGetShaderInfoLog(handle, logLength, nil, &buffer)
+            let log = NSString(data: NSData(bytes: &buffer, length: Int(logLength)), encoding: NSUTF8StringEncoding)!
             println("Could not compile! Log:\n\(log)")
-            buffer.dealloc(Int(logLength))
         }
     }
 

@@ -38,6 +38,7 @@
 		C2C5A1351AD9C6FA001DFC56 /* GraphViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C5A1341AD9C6FA001DFC56 /* GraphViewController.swift */; };
 		C2C5A13B1ADA012A001DFC56 /* NodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C2C5A13A1ADA012A001DFC56 /* NodeViewController.xib */; };
 		C2C5A13D1ADA0DCC001DFC56 /* NodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C5A13C1ADA0DCC001DFC56 /* NodeViewController.swift */; };
+		C2E6282E1AE890CA00C06ED4 /* Notes in Resources */ = {isa = PBXBuildFile; fileRef = C2E6282D1AE890CA00C06ED4 /* Notes */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,6 +87,7 @@
 		C2C5A1341AD9C6FA001DFC56 /* GraphViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphViewController.swift; sourceTree = "<group>"; };
 		C2C5A13A1ADA012A001DFC56 /* NodeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NodeViewController.xib; sourceTree = "<group>"; };
 		C2C5A13C1ADA0DCC001DFC56 /* NodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeViewController.swift; sourceTree = "<group>"; };
+		C2E6282D1AE890CA00C06ED4 /* Notes */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Notes; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +139,7 @@
 				C21E61881AD8BEFE000FC413 /* Document.xcdatamodeld */,
 				C21E618B1AD8BEFE000FC413 /* Images.xcassets */,
 				C21E617F1AD8BEFE000FC413 /* Supporting Files */,
+				C2E6282D1AE890CA00C06ED4 /* Notes */,
 			);
 			path = Creator;
 			sourceTree = "<group>";
@@ -337,6 +340,7 @@
 				C28CFA6A1AE41F54004C7074 /* DefaultFragmentShader.fs in Resources */,
 				C21E618C1AD8BEFE000FC413 /* Images.xcassets in Resources */,
 				C28CFA681AE41F1E004C7074 /* DefaultVertexShader.vs in Resources */,
+				C2E6282E1AE890CA00C06ED4 /* Notes in Resources */,
 				C2C5A13B1ADA012A001DFC56 /* NodeViewController.xib in Resources */,
 				C21E618F1AD8BEFE000FC413 /* MainMenu.xib in Resources */,
 			);

@@ -1,0 +1,2 @@
+Invariants:
+- For all i, Node.inputs[i].index == i (and same for outputs)

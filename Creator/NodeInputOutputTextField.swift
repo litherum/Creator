@@ -14,6 +14,24 @@ class NodeInputOutputTextField: NSTextField {
     var input: Bool = true
     var index: UInt = 0
 
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+
+    init(graphViewController: GraphViewController, nodeViewController: NodeViewController, input: Bool, index: UInt, alignment: NSTextAlignment, value: String) {
+        super.init(frame: NSZeroRect)
+        translatesAutoresizingMaskIntoConstraints = false
+        selectable = false
+        drawsBackground = false
+        bezeled = false
+        self.graphViewController = graphViewController
+        self.nodeViewController = nodeViewController
+        self.input = input
+        self.index = index
+        self.alignment = alignment
+        self.stringValue = value
+    }
+
     override func mouseDown(theEvent: NSEvent) {
         if input {
             graphViewController.nodeInputOutputMouseDown(nodeViewController, index: index)

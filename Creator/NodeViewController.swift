@@ -34,20 +34,8 @@ class NodeViewController: NSViewController {
     }
 
     func addInputOutputView(value: String, alignment: NSTextAlignment, input: Bool, index: UInt) {
-        var inputOutputTextField = NodeInputOutputTextField()
-        
-        inputOutputTextField.graphViewController = graphViewController
-        inputOutputTextField.nodeViewController = self
-        inputOutputTextField.input = input
-        inputOutputTextField.index = index
+        var inputOutputTextField = NodeInputOutputTextField(graphViewController: graphViewController, nodeViewController: self, input: input, index: index, alignment: alignment, value: value)
 
-        // FIXME: These settings could be done with IB.
-        inputOutputTextField.translatesAutoresizingMaskIntoConstraints = false
-        inputOutputTextField.selectable = false
-        inputOutputTextField.drawsBackground = false
-        inputOutputTextField.bezeled = false
-        inputOutputTextField.alignment = alignment
-        inputOutputTextField.stringValue = value
         (input ? inputsView : outputsView).addView(inputOutputTextField, inGravity: .Center)
     }
 

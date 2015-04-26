@@ -24,7 +24,7 @@ class FragmentShaderDetailsOutputRowViewController: NSViewController {
     }
 
     @IBAction func deleteRow(sender: NSButton) {
-        fragmentShaderDetailsViewController.deleteRow(index)
+        fragmentShaderDetailsViewController.deleteOutput(index)
     }
 
     @IBAction func nameModified(sender: NSTextField) {

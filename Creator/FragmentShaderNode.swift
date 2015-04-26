@@ -11,11 +11,19 @@ import GLKit
 
 class FragmentShaderNode: Node {
     @NSManaged var source: String
-    @NSManaged var program: Program
+    @NSManaged var program: Program?
     var handle: GLuint = 0
 
     override func populate(nullNode: NullNode, context: NSManagedObjectContext) {
-        addNodeToInputs(nullNode, context: context, name: "Previous stage");
+        addPortToInputs(nullNode, context: context, name: "Previous stage");
+
+        compile()
+    }
+
+    func compile() -> String? {
+        if handle != 0 {
+            glDeleteShader(handle)
+        }
 
         handle = glCreateShader(GLenum(GL_FRAGMENT_SHADER))
         let data = source.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)!
@@ -25,14 +33,14 @@ class FragmentShaderNode: Node {
         glCompileShader(handle)
         var compileStatus = GL_FALSE
         glGetShaderiv(handle, GLenum(GL_COMPILE_STATUS), &compileStatus)
-        if compileStatus == GL_FALSE {
-            var logLength: GLint = 0
-            glGetShaderiv(handle, GLenum(GL_INFO_LOG_LENGTH), &logLength)
-            var buffer = Array<GLchar>(count: Int(logLength), repeatedValue: GLchar(0))
-            glGetShaderInfoLog(handle, logLength, nil, &buffer)
-            let log = NSString(data: NSData(bytes: &buffer, length: Int(logLength)), encoding: NSUTF8StringEncoding)!
-            println("Could not compile! Log:\n\(log)")
+        if compileStatus == GL_TRUE {
+            return nil
         }
+        var logLength: GLint = 0
+        glGetShaderiv(handle, GLenum(GL_INFO_LOG_LENGTH), &logLength)
+        var buffer = Array<GLchar>(count: Int(logLength), repeatedValue: GLchar(0))
+        glGetShaderInfoLog(handle, logLength, nil, &buffer)
+        return NSString(data: NSData(bytes: &buffer, length: Int(logLength)), encoding: NSUTF8StringEncoding)! as String
     }
 
     override func prepareForDeletion() {

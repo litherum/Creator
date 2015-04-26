@@ -37,10 +37,50 @@ class NodeViewController: NSViewController {
         titleView.nodeViewController = self
     }
 
-    func addInputOutputView(value: String, input: Bool, index: Int) {
+    func setShaderSource(source: String) {
+        var program: Program?
+        if let vertexShaderNode = node as? VertexShaderNode {
+            vertexShaderNode.source = source
+            let compilationLog = vertexShaderNode.compile()
+            if let log = compilationLog {
+                println("Could not compile! Log:")
+                println(log)
+            }
+            program = vertexShaderNode.program
+        } else if let fragmentShaderNode = node as? FragmentShaderNode {
+            fragmentShaderNode.source = source
+            let compilationLog = fragmentShaderNode.compile()
+            if let log = compilationLog {
+                println("Could not compile! Log:")
+                println(log)
+            }
+            program = fragmentShaderNode.program
+        }
+
+        if let program = program {
+            let linkLog = program.link()
+            if let log = linkLog {
+                println("Could not link! Log:")
+                println(log)
+            }
+
+            // FIXME: Compare these new attributes/uniforms to the existing vertex shader inputs and insert/delete inputs as necessary
+            program.iterateOverAttributes({(index: GLuint, name: String, size: GLint, type: GLenum) in
+                println("Attribute: \(index) \(name) \(size) \(type)")
+            })
+
+            program.iterateOverUniforms({(index: GLuint, name: String) in
+                println("Uniform: \(index) \(name)")
+            })
+        }
+    }
+
+    func addInputOutputView(value: String, input: Bool) {
+        var stackView = input ? inputsView : outputsView
+        let index = stackView.views.count
         var inputOutputTextField = NodeInputOutputTextField(graphViewController: graphViewController, nodeViewController: self, input: input, index: index, value: value)
 
-        (input ? inputsView : outputsView).addView(inputOutputTextField, inGravity: .Center)
+        stackView.addView(inputOutputTextField, inGravity: .Center)
     }
 
     func nodeTitleMouseDown(mouseLocation: NSPoint) {
@@ -65,8 +105,8 @@ class NodeViewController: NSViewController {
     }
 
     func addOutput(name: String) {
-        addInputOutputView(name, input: false, index: node.outputs.count)
-        node.addNodeToOutputs(nullNode, context: managedObjectContext, name: name)
+        addInputOutputView(name, input: false)
+        node.addPortToOutputs(nullNode, context: managedObjectContext, name: name)
     }
 
     func deleteOutput(index: Int) {
@@ -93,11 +133,9 @@ class NodeViewController: NSViewController {
         if let constantFloatNode = node as? ConstantFloatNode {
             detailsPopover.contentViewController = ConstantFloatDetailsViewController(nibName: "ConstantFloatDetailsViewController", bundle: nil, node: constantFloatNode)!
         } else if let vertexShaderNode = node as? VertexShaderNode {
-            detailsPopover.contentViewController = VertexShaderDetailsViewController(nibName: "VertexShaderDetailsViewController", bundle: nil, node: vertexShaderNode)!
+            detailsPopover.contentViewController = VertexShaderDetailsViewController(nibName: "VertexShaderDetailsViewController", bundle: nil, nodeViewController: self, node: vertexShaderNode)!
         } else if let fragmentShaderNode = node as? FragmentShaderNode {
-            var fragmentShaderDetailsViewController = FragmentShaderDetailsViewController(nibName: "FragmentShaderDetailsViewController", bundle: nil, node: fragmentShaderNode)!
-            fragmentShaderDetailsViewController.nodeViewController = self
-            detailsPopover.contentViewController = fragmentShaderDetailsViewController
+            detailsPopover.contentViewController = FragmentShaderDetailsViewController(nibName: "FragmentShaderDetailsViewController", bundle: nil, nodeViewController: self, node: fragmentShaderNode)!
         } else if let constantBufferNode = node as? ConstantBufferNode {
             detailsPopover.contentViewController = ConstantBufferDetailsViewController(nibName: "ConstantBufferDetailsViewController", bundle: nil, node: constantBufferNode)!
         } else {

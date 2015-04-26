@@ -9,6 +9,7 @@
 import Cocoa
 
 class VertexShaderDetailsViewController: NSViewController {
+    weak var nodeViewController: NodeViewController!
     var node: VertexShaderNode!
     @IBOutlet var textView: NSTextView!
 
@@ -16,7 +17,8 @@ class VertexShaderDetailsViewController: NSViewController {
         super.init(coder: coder)
     }
 
-    init?(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?, node: VertexShaderNode) {
+    init?(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?, nodeViewController: NodeViewController, node: VertexShaderNode) {
+        self.nodeViewController = nodeViewController
         self.node = node
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
@@ -27,8 +29,7 @@ class VertexShaderDetailsViewController: NSViewController {
 
     override func viewWillDisappear() {
         if let s = textView.string {
-            node.source = s
-            // FIXME: Need to repopulate the node, and possibly repopulate any programs
+            nodeViewController.setShaderSource(s)
         }
     }
 }

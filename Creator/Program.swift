@@ -14,9 +14,9 @@ class Program: NSManagedObject {
     @NSManaged var fragmentShader: FragmentShaderNode
     var handle: GLuint = 0
 
-    func populate(nullNode: NullNode, context: NSManagedObjectContext) {
-        if vertexShader.handle == 0 || fragmentShader.handle == 0 {
-            return
+    func link() -> String? {
+        if handle != 0 {
+            glDeleteProgram(handle)
         }
         handle = glCreateProgram()
         glAttachShader(handle, vertexShader.handle)
@@ -24,16 +24,17 @@ class Program: NSManagedObject {
         glLinkProgram(handle)
         var linkStatus = GL_FALSE
         glGetProgramiv(handle, GLenum(GL_LINK_STATUS), &linkStatus)
-        if linkStatus == GL_FALSE {
-            var logLength: GLint = 0
-            glGetProgramiv(handle, GLenum(GL_INFO_LOG_LENGTH), &logLength)
-            var buffer = Array<GLchar>(count: Int(logLength), repeatedValue: GLchar(0))
-            glGetProgramInfoLog(handle, logLength, nil, &buffer)
-            let log = NSString(data: NSData(bytes: &buffer, length: Int(logLength)), encoding: NSUTF8StringEncoding)!
-            println("Could not link! Log:\n\(log)")
-            return
+        if linkStatus == GL_TRUE {
+            return nil
         }
+        var logLength: GLint = 0
+        glGetProgramiv(handle, GLenum(GL_INFO_LOG_LENGTH), &logLength)
+        var buffer = Array<GLchar>(count: Int(logLength), repeatedValue: GLchar(0))
+        glGetProgramInfoLog(handle, logLength, nil, &buffer)
+        return NSString(data: NSData(bytes: &buffer, length: Int(logLength)), encoding: NSUTF8StringEncoding)! as String
+    }
 
+    func iterateOverAttributes(callback: (index: GLuint, name: String, size: GLint, type: GLenum) -> Void) {
         var nameLength: GLint = 0
         glGetProgramiv(handle, GLenum(GL_ACTIVE_ATTRIBUTE_MAX_LENGTH), &nameLength)
         var buffer = Array<GLchar>(count: Int(nameLength), repeatedValue: GLchar(0))
@@ -44,19 +45,23 @@ class Program: NSManagedObject {
             var size: GLint = 0
             var type: GLenum = 0
             glGetActiveAttrib(handle, i, nameLength, &usedLength, &size, &type, &buffer)
-            let name = NSString(data: NSData(bytes: &buffer, length: Int(usedLength)), encoding: NSUTF8StringEncoding)!
-            vertexShader.addNodeToInputs(nullNode, context: context, name: name as String);
+            let name = NSString(data: NSData(bytes: &buffer, length: Int(usedLength)), encoding: NSUTF8StringEncoding)! as String
+            callback(index: i, name: name, size: size, type: type)
+            GL_FLOAT
         }
+    }
 
+    func iterateOverUniforms(callback: (index: GLuint, name: String) -> Void) {
+        var nameLength: GLint = 0
         glGetProgramiv(handle, GLenum(GL_ACTIVE_UNIFORM_MAX_LENGTH), &nameLength)
-        buffer = Array<GLchar>(count: Int(nameLength), repeatedValue: GLchar(0))
-        var numUniforms: GLint = 0
-        glGetProgramiv(handle, GLenum(GL_ACTIVE_UNIFORMS), &numUniforms)
-        for i in 0 ..< numUniforms {
+        var buffer = Array<GLchar>(count: Int(nameLength), repeatedValue: GLchar(0))
+        var numAttributes: GLint = 0
+        glGetProgramiv(handle, GLenum(GL_ACTIVE_ATTRIBUTES), &numAttributes)
+        for i in 0 ..< GLuint(numAttributes) {
             var usedLength: GLsizei = 0
-            glGetActiveUniformName(handle, GLuint(i), nameLength, &usedLength, &buffer)
-            let name = NSString(data: NSData(bytes: &buffer, length: Int(usedLength)), encoding: NSUTF8StringEncoding)!
-            vertexShader.addNodeToInputs(nullNode, context: context, name: name as String);
+            glGetActiveUniformName(handle, i, nameLength, &usedLength, &buffer)
+            let name = NSString(data: NSData(bytes: &buffer, length: Int(usedLength)), encoding: NSUTF8StringEncoding)! as String
+            callback(index: i, name: name)
         }
     }
 

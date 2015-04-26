@@ -150,10 +150,10 @@ class GraphViewController: NSViewController {
         nodeViewController.titleView.stringValue = node.title
 
         for i in 0 ..< node.inputs.count {
-            nodeViewController.addInputOutputView((node.inputs[i] as! InputPort).title, input: true, index: i)
+            nodeViewController.addInputOutputView((node.inputs[i] as! InputPort).title, input: true)
         }
         for i in 0 ..< node.outputs.count {
-            nodeViewController.addInputOutputView((node.outputs[i] as! OutputPort).title, input: false, index: i)
+            nodeViewController.addInputOutputView((node.outputs[i] as! OutputPort).title, input: false)
         }
     }
 
@@ -207,10 +207,25 @@ class GraphViewController: NSViewController {
                                 var newProgram = NSEntityDescription.insertNewObjectForEntityForName("Program", inManagedObjectContext: managedObjectContext) as! Program
                                 newProgram.vertexShader = outputVertexShader
                                 newProgram.fragmentShader = inputFragmentShader
-                                newProgram.populate(nullNode!, context: managedObjectContext)
-                                for i in 0 ..< outputVertexShader.inputs.count {
-                                    nodeInputOutputTextField.nodeViewController.addInputOutputView((outputVertexShader.inputs[i] as! InputPort).title, input: true, index: i)
+                                let linkLog = newProgram.link()
+                                if let log = linkLog {
+                                    println("Could not link! Log:")
+                                    println(log)
+                                    return
                                 }
+
+                                newProgram.iterateOverAttributes({(index: GLuint, name: String, size: GLint, type: GLenum) in
+                                    let attributeInputPort = outputVertexShader.addPortToInputs(self.nullNode, context: self.managedObjectContext, name: name, entityName: "AttributeInputPort") as! AttributeInputPort;
+                                    attributeInputPort.glIndex = Int32(index)
+                                    nodeInputOutputTextField.nodeViewController.addInputOutputView(name, input: true)
+                                })
+
+                                newProgram.iterateOverUniforms({(index: GLuint, name: String) in
+                                    let uniformInputPort = outputVertexShader.addPortToInputs(self.nullNode, context: self.managedObjectContext, name: name, entityName: "UniformInputPort") as! UniformInputPort;
+                                    uniformInputPort.glIndex = Int32(index)
+                                    nodeInputOutputTextField.nodeViewController.addInputOutputView(name, input: true)
+                                })
+
                                 updateEdgeViews()
                             }
                         }

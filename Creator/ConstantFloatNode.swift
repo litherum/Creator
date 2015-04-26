@@ -14,6 +14,6 @@ class ConstantFloatNode: Node {
     @NSManaged var maxValue: Float
 
     override func populate(nullNode: NullNode, context: NSManagedObjectContext) {
-        addNodeToOutputs(nullNode, context: context, name: "value");
+        addPortToOutputs(nullNode, context: context, name: "value");
     }
 }

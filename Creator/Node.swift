@@ -19,9 +19,9 @@ class Node: NSManagedObject {
     func populate(nullNode: NullNode, context: NSManagedObjectContext) {
     }
 
-    func addNodeToInputs(nullNode: NullNode, context: NSManagedObjectContext, name: String) {
+    func addPortToInputs(nullNode: NullNode, context: NSManagedObjectContext, name: String, entityName: String = "InputPort") -> InputPort {
         var edge = NSEntityDescription.insertNewObjectForEntityForName("Edge", inManagedObjectContext: context) as! Edge
-        var inputPort = NSEntityDescription.insertNewObjectForEntityForName("InputPort", inManagedObjectContext: context) as! InputPort
+        var inputPort = NSEntityDescription.insertNewObjectForEntityForName(entityName, inManagedObjectContext: context) as! InputPort
         var outputPort = nullNode.addNullNodeOutputPort(context)
 
         inputPort.index = Int32(inputs.count)
@@ -31,13 +31,14 @@ class Node: NSManagedObject {
         edge.destination = outputPort
 
         mutableOrderedSetValueForKey("inputs").addObject(inputPort)
+
+        return inputPort
     }
 
-    // FIXME: Rename to addPortToOutputs
-    func addNodeToOutputs(nullNode: NullNode, context: NSManagedObjectContext, name: String) {
+    func addPortToOutputs(nullNode: NullNode, context: NSManagedObjectContext, name: String, entityName: String = "OutputPort") -> OutputPort {
         var edge = NSEntityDescription.insertNewObjectForEntityForName("Edge", inManagedObjectContext: context) as! Edge
         var inputPort = nullNode.addNullNodeInputPort(context)
-        var outputPort = NSEntityDescription.insertNewObjectForEntityForName("OutputPort", inManagedObjectContext: context) as! OutputPort
+        var outputPort = NSEntityDescription.insertNewObjectForEntityForName(entityName, inManagedObjectContext: context) as! OutputPort
 
         outputPort.index = Int32(outputs.count)
         outputPort.title = name
@@ -46,5 +47,7 @@ class Node: NSManagedObject {
         edge.destination = outputPort
 
         mutableOrderedSetValueForKey("outputs").addObject(outputPort)
+
+        return outputPort
     }
 }

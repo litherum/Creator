@@ -46,6 +46,8 @@
 		C2C5A13B1ADA012A001DFC56 /* NodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C2C5A13A1ADA012A001DFC56 /* NodeViewController.xib */; };
 		C2C5A13D1ADA0DCC001DFC56 /* NodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C5A13C1ADA0DCC001DFC56 /* NodeViewController.swift */; };
 		C2E6282E1AE890CA00C06ED4 /* Notes in Resources */ = {isa = PBXBuildFile; fileRef = C2E6282D1AE890CA00C06ED4 /* Notes */; };
+		C2FF16C71AED7EC700D83D31 /* AttributeInputPort.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FF16C61AED7EC700D83D31 /* AttributeInputPort.swift */; };
+		C2FF16C91AED7EC800D83D31 /* UniformInputPort.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2FF16C81AED7EC800D83D31 /* UniformInputPort.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -102,6 +104,8 @@
 		C2C5A13A1ADA012A001DFC56 /* NodeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NodeViewController.xib; sourceTree = "<group>"; };
 		C2C5A13C1ADA0DCC001DFC56 /* NodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NodeViewController.swift; sourceTree = "<group>"; };
 		C2E6282D1AE890CA00C06ED4 /* Notes */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Notes; sourceTree = "<group>"; };
+		C2FF16C61AED7EC700D83D31 /* AttributeInputPort.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttributeInputPort.swift; sourceTree = "<group>"; };
+		C2FF16C81AED7EC800D83D31 /* UniformInputPort.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniformInputPort.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -258,6 +262,8 @@
 				C2C5A12E1AD9A52A001DFC56 /* Frame.swift */,
 				C2BBF7A81AE2C72200A418B9 /* OutputPort.swift */,
 				C2BBF7A61AE2C72200A418B9 /* InputPort.swift */,
+				C2FF16C81AED7EC800D83D31 /* UniformInputPort.swift */,
+				C2FF16C61AED7EC700D83D31 /* AttributeInputPort.swift */,
 				C2BBF7AA1AE2D14F00A418B9 /* Port.swift */,
 				C28CFA6B1AE4273F004C7074 /* Program.swift */,
 			);
@@ -406,7 +412,9 @@
 				C2BBF7A71AE2C72200A418B9 /* InputPort.swift in Sources */,
 				C2BBF7AB1AE2D14F00A418B9 /* Port.swift in Sources */,
 				C2BBF7AD1AE30FCE00A418B9 /* ResultView.swift in Sources */,
+				C2FF16C91AED7EC800D83D31 /* UniformInputPort.swift in Sources */,
 				C2306C891AEC5BA80042A7AB /* FragmentShaderDetailsOutputRowViewController.swift in Sources */,
+				C2FF16C71AED7EC700D83D31 /* AttributeInputPort.swift in Sources */,
 				C21199221AE1E44D009ED4DE /* NodeInputOutputTextField.swift in Sources */,
 				C2BBF7A91AE2C72200A418B9 /* OutputPort.swift in Sources */,
 				C28602DE1AE7579B0074E66B /* VertexShaderDetailsViewController.swift in Sources */,

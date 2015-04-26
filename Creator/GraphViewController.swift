@@ -9,8 +9,8 @@
 import Cocoa
 
 class GraphViewController: NSViewController {
-    lazy var frame: Frame? = self.fetchFrame()
-    lazy var nullNode: NullNode? = self.fetchNullNode()
+    lazy var frame: Frame! = self.fetchFrame()
+    lazy var nullNode: NullNode! = self.fetchNullNode()
     var nodeViewControllerToNodeDictionary: [NodeViewController: Node] = [:]
     var nodeToNodeViewControllerDictionary: [Node: NodeViewController] = [:]
     var managedObjectContext: NSManagedObjectContext!
@@ -18,7 +18,7 @@ class GraphViewController: NSViewController {
 
     @IBOutlet var connectionsView: ConnectionsView!
 
-    var connectionInProgress: (Node, UInt)?
+    var connectionInProgress: (Node, Int)?
 
     func fetchFrame() -> Frame? {
         var frameRequest = managedObjectModel.fetchRequestFromTemplateWithName("FrameRequest", substitutionVariables: [:]) as NSFetchRequest!
@@ -94,6 +94,8 @@ class GraphViewController: NSViewController {
         newNode.positionY = 17
         newNode.title = "Constant Float"
         newNode.payload = 15
+        newNode.minValue = 0
+        newNode.maxValue = 100
         newNode.frame = frame!
         addNodeView(newNode)
     }
@@ -126,12 +128,14 @@ class GraphViewController: NSViewController {
             if edge.source.node.frame != frame || edge.destination.node.frame != frame || edge.source.node is NullNode || edge.destination.node is NullNode {
                 continue
             }
-            addEdgeView(nodeToNodeViewControllerDictionary[edge.source.node]!.inputsView.views[Int(edge.source.index)] as! NodeInputOutputTextField, outputTextField: nodeToNodeViewControllerDictionary[edge.destination.node]!.outputsView.views[Int(edge.destination.index)] as! NodeInputOutputTextField)
+            let inputTextField = nodeToNodeViewControllerDictionary[edge.source.node]!.inputsView.views[Int(edge.source.index)] as! NodeInputOutputTextField
+            let outputTextField = nodeToNodeViewControllerDictionary[edge.destination.node]!.outputsView.views[Int(edge.destination.index)] as! NodeInputOutputTextField
+            addEdgeView(inputTextField, outputTextField: outputTextField)
         }
     }
 
     func addNodeView(node: Node) {
-        let nodeViewController = NodeViewController(nibName: "NodeViewController", bundle: nil, node: node)!
+        let nodeViewController = NodeViewController(nibName: "NodeViewController", bundle: nil, node: node, nullNode: nullNode, managedObjectContext: managedObjectContext)!
         nodeViewController.graphViewController = self
         nodeViewControllerToNodeDictionary[nodeViewController] = node
         nodeToNodeViewControllerDictionary[node] = nodeViewController
@@ -146,10 +150,10 @@ class GraphViewController: NSViewController {
         nodeViewController.titleView.stringValue = node.title
 
         for i in 0 ..< node.inputs.count {
-            nodeViewController.addInputOutputView((node.inputs[i] as! InputPort).title, alignment: .LeftTextAlignment, input: true, index: UInt(i))
+            nodeViewController.addInputOutputView((node.inputs[i] as! InputPort).title, input: true, index: i)
         }
         for i in 0 ..< node.outputs.count {
-            nodeViewController.addInputOutputView((node.outputs[i] as! OutputPort).title, alignment: .RightTextAlignment, input: false, index: UInt(i))
+            nodeViewController.addInputOutputView((node.outputs[i] as! OutputPort).title, input: false, index: i)
         }
     }
 
@@ -158,21 +162,25 @@ class GraphViewController: NSViewController {
         let startPoint = connectionsView.convertPoint(NSMakePoint(0, (inputTextField.bounds.origin.y + inputTextField.bounds.maxY) / 2), fromView: inputTextField)
         let endPoint = connectionsView.convertPoint(NSMakePoint(outputTextField.bounds.maxX, (outputTextField.bounds.origin.y + outputTextField.bounds.maxY) / 2), fromView: outputTextField)
         connectionsView.connections.append(Connection(startPoint: startPoint, endPoint: endPoint))
+        redrawConnectionsView()
+    }
+
+    func redrawConnectionsView() {
         connectionsView.setNeedsDisplayInRect(connectionsView.bounds)
     }
 
-    func nodeInputOutputMouseDown(nodeViewController: NodeViewController, index: UInt) {
+    func nodeInputOutputMouseDown(nodeViewController: NodeViewController, index: Int) {
         connectionInProgress = (nodeViewControllerToNodeDictionary[nodeViewController]!, index)
     }
 
-    func nodeInputOutputMouseUp(nodeViewController: NodeViewController, index: UInt, mouseLocation: NSPoint) {
+    func nodeInputOutputMouseUp(nodeViewController: NodeViewController, index: Int, mouseLocation: NSPoint) {
         if let (let inputNode, let inputIndex) = connectionInProgress {
             if let hitView = view.hitTest(view.superview!.convertPoint(mouseLocation, fromView: nil)) {
                 if let nodeInputOutputTextField = hitView as? NodeInputOutputTextField {
                     let outputNode = nodeViewControllerToNodeDictionary[nodeInputOutputTextField.nodeViewController]!
                     let outputIndex = nodeInputOutputTextField.index
-                    let inputPort = inputNode.inputs[Int(inputIndex)] as! InputPort
-                    let outputPort = outputNode.outputs[Int(outputIndex)] as! OutputPort
+                    let inputPort = inputNode.inputs[inputIndex] as! InputPort
+                    let outputPort = outputNode.outputs[outputIndex] as! OutputPort
                     if inputPort.edge.destination.node is NullNode && outputPort.edge.source.node is NullNode {
                         let nullNodeInputPort = outputPort.edge.source
                         let nullNodeOutputPort = inputPort.edge.destination
@@ -192,7 +200,7 @@ class GraphViewController: NSViewController {
                         inputPort.edge = edge
                         outputPort.edge = edge
 
-                        addEdgeView(nodeToNodeViewControllerDictionary[inputNode]!.inputsView.views[Int(inputIndex)] as! NodeInputOutputTextField, outputTextField: nodeInputOutputTextField)
+                        addEdgeView(nodeToNodeViewControllerDictionary[inputNode]!.inputsView.views[inputIndex] as! NodeInputOutputTextField, outputTextField: nodeInputOutputTextField)
 
                         if let inputFragmentShader = inputNode as? FragmentShaderNode {
                             if let outputVertexShader = outputNode as? VertexShaderNode {
@@ -201,7 +209,7 @@ class GraphViewController: NSViewController {
                                 newProgram.fragmentShader = inputFragmentShader
                                 newProgram.populate(nullNode!, context: managedObjectContext)
                                 for i in 0 ..< outputVertexShader.inputs.count {
-                                    nodeInputOutputTextField.nodeViewController.addInputOutputView((outputVertexShader.inputs[i] as! InputPort).title, alignment: .LeftTextAlignment, input: true, index: UInt(i))
+                                    nodeInputOutputTextField.nodeViewController.addInputOutputView((outputVertexShader.inputs[i] as! InputPort).title, input: true, index: i)
                                 }
                                 updateEdgeViews()
                             }
@@ -222,7 +230,7 @@ class GraphViewController: NSViewController {
             if connectionsView.connectionInFlight != nil {
                 connectionsView.connectionInFlight!.endPoint = mouseLocation
             } else {
-                let inputView = nodeToNodeViewControllerDictionary[node]!.inputsView.views[Int(index)] as! NodeInputOutputTextField
+                let inputView = nodeToNodeViewControllerDictionary[node]!.inputsView.views[index] as! NodeInputOutputTextField
                 let startPoint = connectionsView.convertPoint(NSMakePoint(0, (inputView.bounds.origin.y + inputView.bounds.maxY) / 2), fromView: inputView)
                 connectionsView.connectionInFlight = Connection(startPoint: startPoint, endPoint: mouseLocation)
             }

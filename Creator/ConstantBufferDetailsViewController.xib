@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7702"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="ConstantBufferDetailsViewController" customModule="Creator" customModuleProvider="target">
+            <connections>
+                <outlet property="statusTextField" destination="16g-Bo-fzU" id="HyJ-dd-Kh5"/>
+                <outlet property="view" destination="c22-O7-iKe" id="0uG-FQ-oC4"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="c22-O7-iKe">
+            <rect key="frame" x="0.0" y="0.0" width="192" height="179"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xB9-m8-8zm">
+                    <rect key="frame" x="40" y="72" width="113" height="32"/>
+                    <buttonCell key="cell" type="push" title="Choose File" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="H7S-9a-8JT">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="chooseFile:" target="-2" id="mVj-2D-DWm"/>
+                    </connections>
+                </button>
+                <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="16g-Bo-fzU" userLabel="Status">
+                    <rect key="frame" x="78" y="54" width="37" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="IMB-qL-X0C">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstItem="16g-Bo-fzU" firstAttribute="top" secondItem="xB9-m8-8zm" secondAttribute="bottom" constant="8" symbolic="YES" id="5Qk-3U-fi9"/>
+                <constraint firstAttribute="centerX" secondItem="xB9-m8-8zm" secondAttribute="centerX" id="6hP-Gd-tPh"/>
+                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="16g-Bo-fzU" secondAttribute="bottom" id="8uU-Jj-iL9"/>
+                <constraint firstItem="16g-Bo-fzU" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="c22-O7-iKe" secondAttribute="leading" id="Bs5-wZ-aN7"/>
+                <constraint firstItem="xB9-m8-8zm" firstAttribute="top" relation="greaterThanOrEqual" secondItem="c22-O7-iKe" secondAttribute="top" id="R8c-hX-feH"/>
+                <constraint firstAttribute="centerY" secondItem="xB9-m8-8zm" secondAttribute="centerY" id="XFZ-a2-5TU"/>
+                <constraint firstItem="xB9-m8-8zm" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="c22-O7-iKe" secondAttribute="leading" id="a4O-7S-Se7"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="xB9-m8-8zm" secondAttribute="trailing" id="gWV-v7-Rwg"/>
+                <constraint firstItem="xB9-m8-8zm" firstAttribute="centerX" secondItem="16g-Bo-fzU" secondAttribute="centerX" id="nXu-Vm-ko0"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="16g-Bo-fzU" secondAttribute="trailing" id="rVP-ac-pst"/>
+            </constraints>
+            <point key="canvasLocation" x="626" y="481.5"/>
+        </customView>
+    </objects>
+</document>

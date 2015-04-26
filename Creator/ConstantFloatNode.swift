@@ -10,6 +10,8 @@ import CoreData
 
 class ConstantFloatNode: Node {
     @NSManaged var payload: Float
+    @NSManaged var minValue: Float
+    @NSManaged var maxValue: Float
 
     override func populate(nullNode: NullNode, context: NSManagedObjectContext) {
         addNodeToOutputs(nullNode, context: context, name: "value");

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7702"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="ConstantFloatDetailsViewController" customModule="Creator" customModuleProvider="target">
+            <connections>
+                <outlet property="maxTextField" destination="Pg0-Rr-Lnx" id="UTg-Qd-Oga"/>
+                <outlet property="minTextField" destination="jpw-fa-TNh" id="b7Y-Ah-SLb"/>
+                <outlet property="slider" destination="mgt-Af-fqa" id="Atl-rn-2r9"/>
+                <outlet property="view" destination="c22-O7-iKe" id="xeG-gA-wti"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="c22-O7-iKe">
+            <rect key="frame" x="0.0" y="0.0" width="245" height="289"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Pg0-Rr-Lnx">
+                    <rect key="frame" x="98" y="247" width="50" height="22"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="50" id="0qb-OI-5BN"/>
+                    </constraints>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="JdY-lo-0c1">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <action selector="maxValueSet:" target="-2" id="fYL-pi-2BA"/>
+                    </connections>
+                </textField>
+                <slider horizontalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mgt-Af-fqa">
+                    <rect key="frame" x="113" y="47" width="21" height="194"/>
+                    <sliderCell key="cell" alignment="left" maxValue="100" doubleValue="50" tickMarkPosition="right" sliderType="linear" id="00R-Hj-srw"/>
+                    <connections>
+                        <action selector="payloadSet:" target="-2" id="Gz3-SE-B9D"/>
+                    </connections>
+                </slider>
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jpw-fa-TNh">
+                    <rect key="frame" x="98" y="20" width="50" height="22"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="SfM-At-xy7">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <action selector="minValueSet:" target="-2" id="ESU-LX-uMe"/>
+                    </connections>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="jpw-fa-TNh" secondAttribute="bottom" constant="20" symbolic="YES" id="0UQ-A7-Rjy"/>
+                <constraint firstItem="Pg0-Rr-Lnx" firstAttribute="centerX" secondItem="jpw-fa-TNh" secondAttribute="centerX" id="64g-y2-f7g"/>
+                <constraint firstAttribute="centerX" secondItem="Pg0-Rr-Lnx" secondAttribute="centerX" id="BuA-Wm-es3"/>
+                <constraint firstItem="jpw-fa-TNh" firstAttribute="top" secondItem="mgt-Af-fqa" secondAttribute="bottom" constant="8" symbolic="YES" id="Hpb-xy-LJU"/>
+                <constraint firstItem="Pg0-Rr-Lnx" firstAttribute="centerX" secondItem="mgt-Af-fqa" secondAttribute="centerX" id="VGp-Nr-a2W"/>
+                <constraint firstItem="Pg0-Rr-Lnx" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="20" symbolic="YES" id="Y2x-vp-dRe"/>
+                <constraint firstItem="mgt-Af-fqa" firstAttribute="top" secondItem="Pg0-Rr-Lnx" secondAttribute="bottom" constant="8" symbolic="YES" id="v5z-n8-zBf"/>
+                <constraint firstItem="Pg0-Rr-Lnx" firstAttribute="width" secondItem="jpw-fa-TNh" secondAttribute="width" id="vS7-OC-CGI"/>
+            </constraints>
+            <point key="canvasLocation" x="549.5" y="563.5"/>
+        </customView>
+    </objects>
+</document>

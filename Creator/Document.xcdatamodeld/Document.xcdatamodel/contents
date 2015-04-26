@@ -4,6 +4,8 @@
         <attribute name="payload" attributeType="Binary" syncable="YES"/>
     </entity>
     <entity name="ConstantFloatNode" representedClassName="Creator.ConstantFloatNode" parentEntity="Node" syncable="YES">
+        <attribute name="maxValue" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="minValue" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="payload" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
     </entity>
     <entity name="Edge" representedClassName="Creator.Edge" syncable="YES">
@@ -52,7 +54,7 @@
     <fetchRequest name="NullNodeRequest" entity="NullNode"/>
     <elements>
         <element name="ConstantBufferNode" positionX="-236" positionY="153" width="128" height="60"/>
-        <element name="ConstantFloatNode" positionX="-99" positionY="153" width="128" height="60"/>
+        <element name="ConstantFloatNode" positionX="-99" positionY="153" width="128" height="90"/>
         <element name="Edge" positionX="-335" positionY="0" width="128" height="75"/>
         <element name="FragmentShaderNode" positionX="171" positionY="153" width="128" height="75"/>
         <element name="Frame" positionX="216" positionY="-18" width="128" height="60"/>
@@ -61,7 +63,7 @@
         <element name="NullNode" positionX="-371" positionY="153" width="128" height="45"/>
         <element name="OutputPort" positionX="-144" positionY="99" width="128" height="75"/>
         <element name="Port" positionX="-162" positionY="72" width="128" height="75"/>
-        <element name="VertexShaderNode" positionX="36" positionY="153" width="128" height="75"/>
         <element name="Program" positionX="-162" positionY="72" width="128" height="75"/>
+        <element name="VertexShaderNode" positionX="36" positionY="153" width="128" height="75"/>
     </elements>
 </model>

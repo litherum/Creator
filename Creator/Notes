@@ -1,2 +1,13 @@
 Invariants:
 - For all i, Node.inputs[i].index == i (and same for outputs)
+
+Things to do:
+- Delete connections
+- Delete nodes
+- Updating a shader's source automatically updates ports
+- Port info popover for vertex attributes
+- Codegen?
+- Create the rest of the node info popovers
+- Research if I need to move Node's generated properties into the data model
+- Dragged node's z-order should be moved to top when clicked on
+- Shader editor should constantly recompile while typing

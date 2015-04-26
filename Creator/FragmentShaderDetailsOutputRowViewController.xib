@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="7702"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="FragmentShaderDetailsOutputRowViewController" customModule="Creator" customModuleProvider="target">
+            <connections>
+                <outlet property="nameTextField" destination="M6Q-JN-gKv" id="tJW-do-Ffq"/>
+                <outlet property="view" destination="c22-O7-iKe" id="Dgv-d6-5ha"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView translatesAutoresizingMaskIntoConstraints="NO" id="c22-O7-iKe">
+            <rect key="frame" x="0.0" y="0.0" width="480" height="61"/>
+            <subviews>
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="M6Q-JN-gKv">
+                    <rect key="frame" x="98" y="20" width="362" height="22"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="oxP-IN-X2f">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <action selector="nameModified:" target="-2" id="jTz-ls-WjY"/>
+                    </connections>
+                </textField>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Vyb-Rv-pcP">
+                    <rect key="frame" x="14" y="13" width="82" height="32"/>
+                    <buttonCell key="cell" type="push" title="Delete" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="TfI-Ay-WJw">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="deleteRow:" target="-2" id="vjh-BV-Pm7"/>
+                    </connections>
+                </button>
+            </subviews>
+            <constraints>
+                <constraint firstItem="M6Q-JN-gKv" firstAttribute="leading" secondItem="Vyb-Rv-pcP" secondAttribute="trailing" constant="8" symbolic="YES" id="OcJ-ur-osB"/>
+                <constraint firstItem="Vyb-Rv-pcP" firstAttribute="baseline" secondItem="M6Q-JN-gKv" secondAttribute="baseline" constant="-1" id="Y3e-CC-JcU"/>
+                <constraint firstItem="Vyb-Rv-pcP" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="20" symbolic="YES" id="e04-ix-oS4"/>
+                <constraint firstAttribute="bottom" secondItem="Vyb-Rv-pcP" secondAttribute="bottom" constant="20" symbolic="YES" id="pDX-OU-aia"/>
+                <constraint firstAttribute="trailing" secondItem="M6Q-JN-gKv" secondAttribute="trailing" constant="20" symbolic="YES" id="qbY-c3-ni1"/>
+                <constraint firstItem="Vyb-Rv-pcP" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="20" symbolic="YES" id="zFW-aH-aDH"/>
+            </constraints>
+        </customView>
+    </objects>
+</document>

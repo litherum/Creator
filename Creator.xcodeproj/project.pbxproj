@@ -17,7 +17,14 @@
 		C21E618C1AD8BEFE000FC413 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C21E618B1AD8BEFE000FC413 /* Images.xcassets */; };
 		C21E618F1AD8BEFE000FC413 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = C21E618D1AD8BEFE000FC413 /* MainMenu.xib */; };
 		C21E619B1AD8BEFE000FC413 /* CreatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21E619A1AD8BEFE000FC413 /* CreatorTests.swift */; };
-		C28602D81AE7471A0074E66B /* NodeDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C28602D71AE7471A0074E66B /* NodeDetailsViewController.xib */; };
+		C2306C791AEC39D40042A7AB /* FragmentShaderDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C2306C781AEC39D40042A7AB /* FragmentShaderDetailsViewController.xib */; };
+		C2306C7B1AEC39EC0042A7AB /* FragmentShaderDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2306C7A1AEC39EC0042A7AB /* FragmentShaderDetailsViewController.swift */; };
+		C2306C7D1AEC3B690042A7AB /* ConstantFloatDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2306C7C1AEC3B690042A7AB /* ConstantFloatDetailsViewController.swift */; };
+		C2306C7F1AEC3B9D0042A7AB /* ConstantBufferDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2306C7E1AEC3B9D0042A7AB /* ConstantBufferDetailsViewController.swift */; };
+		C2306C811AEC3BC60042A7AB /* ConstantFloatDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C2306C801AEC3BC60042A7AB /* ConstantFloatDetailsViewController.xib */; };
+		C2306C831AEC3BE10042A7AB /* ConstantBufferDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C2306C821AEC3BE10042A7AB /* ConstantBufferDetailsViewController.xib */; };
+		C2306C851AEC59FD0042A7AB /* FragmentShaderDetailsOutputRowViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C2306C841AEC59FD0042A7AB /* FragmentShaderDetailsOutputRowViewController.xib */; };
+		C2306C891AEC5BA80042A7AB /* FragmentShaderDetailsOutputRowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2306C881AEC5BA80042A7AB /* FragmentShaderDetailsOutputRowViewController.swift */; };
 		C28602DC1AE755B60074E66B /* VertexShaderDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C28602DB1AE755B60074E66B /* VertexShaderDetailsViewController.xib */; };
 		C28602DE1AE7579B0074E66B /* VertexShaderDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28602DD1AE7579B0074E66B /* VertexShaderDetailsViewController.swift */; };
 		C28CFA681AE41F1E004C7074 /* DefaultVertexShader.vs in Resources */ = {isa = PBXBuildFile; fileRef = C28CFA671AE41F1E004C7074 /* DefaultVertexShader.vs */; };
@@ -66,7 +73,14 @@
 		C21E61941AD8BEFE000FC413 /* CreatorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CreatorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C21E61991AD8BEFE000FC413 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C21E619A1AD8BEFE000FC413 /* CreatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatorTests.swift; sourceTree = "<group>"; };
-		C28602D71AE7471A0074E66B /* NodeDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NodeDetailsViewController.xib; sourceTree = "<group>"; };
+		C2306C781AEC39D40042A7AB /* FragmentShaderDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FragmentShaderDetailsViewController.xib; sourceTree = "<group>"; };
+		C2306C7A1AEC39EC0042A7AB /* FragmentShaderDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FragmentShaderDetailsViewController.swift; sourceTree = "<group>"; };
+		C2306C7C1AEC3B690042A7AB /* ConstantFloatDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConstantFloatDetailsViewController.swift; sourceTree = "<group>"; };
+		C2306C7E1AEC3B9D0042A7AB /* ConstantBufferDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConstantBufferDetailsViewController.swift; sourceTree = "<group>"; };
+		C2306C801AEC3BC60042A7AB /* ConstantFloatDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConstantFloatDetailsViewController.xib; sourceTree = "<group>"; };
+		C2306C821AEC3BE10042A7AB /* ConstantBufferDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConstantBufferDetailsViewController.xib; sourceTree = "<group>"; };
+		C2306C841AEC59FD0042A7AB /* FragmentShaderDetailsOutputRowViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FragmentShaderDetailsOutputRowViewController.xib; sourceTree = "<group>"; };
+		C2306C881AEC5BA80042A7AB /* FragmentShaderDetailsOutputRowViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FragmentShaderDetailsOutputRowViewController.swift; sourceTree = "<group>"; };
 		C28602DB1AE755B60074E66B /* VertexShaderDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VertexShaderDetailsViewController.xib; sourceTree = "<group>"; };
 		C28602DD1AE7579B0074E66B /* VertexShaderDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VertexShaderDetailsViewController.swift; sourceTree = "<group>"; };
 		C28CFA671AE41F1E004C7074 /* DefaultVertexShader.vs */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = DefaultVertexShader.vs; sourceTree = "<group>"; };
@@ -176,6 +190,7 @@
 				C21E61851AD8BEFE000FC413 /* Document.xib */,
 				C2C5A13A1ADA012A001DFC56 /* NodeViewController.xib */,
 				C21E618D1AD8BEFE000FC413 /* MainMenu.xib */,
+				C2306C841AEC59FD0042A7AB /* FragmentShaderDetailsOutputRowViewController.xib */,
 			);
 			name = "Interface Builder";
 			sourceTree = "<group>";
@@ -183,8 +198,10 @@
 		C28602DA1AE755800074E66B /* Details Popovers */ = {
 			isa = PBXGroup;
 			children = (
-				C28602D71AE7471A0074E66B /* NodeDetailsViewController.xib */,
 				C28602DB1AE755B60074E66B /* VertexShaderDetailsViewController.xib */,
+				C2306C781AEC39D40042A7AB /* FragmentShaderDetailsViewController.xib */,
+				C2306C801AEC3BC60042A7AB /* ConstantFloatDetailsViewController.xib */,
+				C2306C821AEC3BE10042A7AB /* ConstantBufferDetailsViewController.xib */,
 			);
 			name = "Details Popovers";
 			sourceTree = "<group>";
@@ -195,6 +212,7 @@
 				C28602E01AE75CB60074E66B /* Details View Controllers */,
 				C2C5A13C1ADA0DCC001DFC56 /* NodeViewController.swift */,
 				C2C5A1341AD9C6FA001DFC56 /* GraphViewController.swift */,
+				C2306C881AEC5BA80042A7AB /* FragmentShaderDetailsOutputRowViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -203,6 +221,9 @@
 			isa = PBXGroup;
 			children = (
 				C28602DD1AE7579B0074E66B /* VertexShaderDetailsViewController.swift */,
+				C2306C7A1AEC39EC0042A7AB /* FragmentShaderDetailsViewController.swift */,
+				C2306C7C1AEC3B690042A7AB /* ConstantFloatDetailsViewController.swift */,
+				C2306C7E1AEC3B9D0042A7AB /* ConstantBufferDetailsViewController.swift */,
 			);
 			name = "Details View Controllers";
 			sourceTree = "<group>";
@@ -334,10 +355,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C2306C831AEC3BE10042A7AB /* ConstantBufferDetailsViewController.xib in Resources */,
+				C2306C851AEC59FD0042A7AB /* FragmentShaderDetailsOutputRowViewController.xib in Resources */,
 				C28602DC1AE755B60074E66B /* VertexShaderDetailsViewController.xib in Resources */,
+				C2306C791AEC39D40042A7AB /* FragmentShaderDetailsViewController.xib in Resources */,
 				C21E61871AD8BEFE000FC413 /* Document.xib in Resources */,
-				C28602D81AE7471A0074E66B /* NodeDetailsViewController.xib in Resources */,
 				C28CFA6A1AE41F54004C7074 /* DefaultFragmentShader.fs in Resources */,
+				C2306C811AEC3BC60042A7AB /* ConstantFloatDetailsViewController.xib in Resources */,
 				C21E618C1AD8BEFE000FC413 /* Images.xcassets in Resources */,
 				C28CFA681AE41F1E004C7074 /* DefaultVertexShader.vs in Resources */,
 				C2E6282E1AE890CA00C06ED4 /* Notes in Resources */,
@@ -360,6 +384,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C2306C7B1AEC39EC0042A7AB /* FragmentShaderDetailsViewController.swift in Sources */,
 				C2C5A1331AD9A52A001DFC56 /* FragmentShaderNode.swift in Sources */,
 				C2C5A1351AD9C6FA001DFC56 /* GraphViewController.swift in Sources */,
 				C2C5A1311AD9A52A001DFC56 /* ConstantFloatNode.swift in Sources */,
@@ -367,6 +392,7 @@
 				C28E86461ADE1693003CEA94 /* NullNode.swift in Sources */,
 				C2C5A12D1AD9A52A001DFC56 /* ConstantBufferNode.swift in Sources */,
 				C2A20BEA1ADCC59200DE369D /* ConnectionsView.swift in Sources */,
+				C2306C7D1AEC3B690042A7AB /* ConstantFloatDetailsViewController.swift in Sources */,
 				C21199261AE1EF70009ED4DE /* NodeTitleTextField.swift in Sources */,
 				C211992A1AE20791009ED4DE /* Edge.swift in Sources */,
 				C21E618A1AD8BEFE000FC413 /* Document.xcdatamodeld in Sources */,
@@ -376,9 +402,11 @@
 				C2BBF79E1AE2C29300A418B9 /* VertexShaderNode.swift in Sources */,
 				C21E61841AD8BEFE000FC413 /* Document.swift in Sources */,
 				C21E61821AD8BEFE000FC413 /* AppDelegate.swift in Sources */,
+				C2306C7F1AEC3B9D0042A7AB /* ConstantBufferDetailsViewController.swift in Sources */,
 				C2BBF7A71AE2C72200A418B9 /* InputPort.swift in Sources */,
 				C2BBF7AB1AE2D14F00A418B9 /* Port.swift in Sources */,
 				C2BBF7AD1AE30FCE00A418B9 /* ResultView.swift in Sources */,
+				C2306C891AEC5BA80042A7AB /* FragmentShaderDetailsOutputRowViewController.swift in Sources */,
 				C21199221AE1E44D009ED4DE /* NodeInputOutputTextField.swift in Sources */,
 				C2BBF7A91AE2C72200A418B9 /* OutputPort.swift in Sources */,
 				C28602DE1AE7579B0074E66B /* VertexShaderDetailsViewController.swift in Sources */,

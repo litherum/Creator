@@ -22,34 +22,29 @@ class Node: NSManagedObject {
     func addNodeToInputs(nullNode: NullNode, context: NSManagedObjectContext, name: String) {
         var edge = NSEntityDescription.insertNewObjectForEntityForName("Edge", inManagedObjectContext: context) as! Edge
         var inputPort = NSEntityDescription.insertNewObjectForEntityForName("InputPort", inManagedObjectContext: context) as! InputPort
-        var outputPort = NSEntityDescription.insertNewObjectForEntityForName("OutputPort", inManagedObjectContext: context) as! OutputPort
+        var outputPort = nullNode.addNullNodeOutputPort(context)
 
         inputPort.index = Int32(inputs.count)
         inputPort.title = name
-        outputPort.index = Int32(nullNode.outputs.count)
-        outputPort.title = ""
 
         edge.source = inputPort
         edge.destination = outputPort
 
         mutableOrderedSetValueForKey("inputs").addObject(inputPort)
-        nullNode.mutableOrderedSetValueForKey("outputs").addObject(outputPort)
     }
 
+    // FIXME: Rename to addPortToOutputs
     func addNodeToOutputs(nullNode: NullNode, context: NSManagedObjectContext, name: String) {
         var edge = NSEntityDescription.insertNewObjectForEntityForName("Edge", inManagedObjectContext: context) as! Edge
-        var inputPort = NSEntityDescription.insertNewObjectForEntityForName("InputPort", inManagedObjectContext: context) as! InputPort
+        var inputPort = nullNode.addNullNodeInputPort(context)
         var outputPort = NSEntityDescription.insertNewObjectForEntityForName("OutputPort", inManagedObjectContext: context) as! OutputPort
 
-        inputPort.index = Int32(nullNode.inputs.count)
-        inputPort.title = ""
         outputPort.index = Int32(outputs.count)
         outputPort.title = name
 
         edge.source = inputPort
         edge.destination = outputPort
 
-        nullNode.mutableOrderedSetValueForKey("inputs").addObject(inputPort)
         mutableOrderedSetValueForKey("outputs").addObject(outputPort)
     }
 }

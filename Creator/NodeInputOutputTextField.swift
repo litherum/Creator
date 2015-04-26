@@ -12,13 +12,13 @@ class NodeInputOutputTextField: NSTextField {
     weak var graphViewController: GraphViewController!
     weak var nodeViewController: NodeViewController!
     var input: Bool = true
-    var index: UInt = 0
+    var index: Int = 0
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
 
-    init(graphViewController: GraphViewController, nodeViewController: NodeViewController, input: Bool, index: UInt, alignment: NSTextAlignment, value: String) {
+    init(graphViewController: GraphViewController, nodeViewController: NodeViewController, input: Bool, index: Int, value: String) {
         super.init(frame: NSZeroRect)
         translatesAutoresizingMaskIntoConstraints = false
         selectable = false
@@ -28,7 +28,7 @@ class NodeInputOutputTextField: NSTextField {
         self.nodeViewController = nodeViewController
         self.input = input
         self.index = index
-        self.alignment = alignment
+        self.alignment = input ? .LeftTextAlignment : .RightTextAlignment
         self.stringValue = value
     }
 

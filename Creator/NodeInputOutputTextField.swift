@@ -9,6 +9,7 @@
 import Cocoa
 
 class NodeInputOutputTextField: NSTextField {
+    // FIXME: Go through NodeViewController for this, so we can remove this graphViewController variable
     weak var graphViewController: GraphViewController!
     weak var nodeViewController: NodeViewController!
     var input: Bool = true

@@ -35,6 +35,7 @@ class NodeViewController: NSViewController {
     override func viewDidLoad() {
         titleView.graphViewController = graphViewController
         titleView.nodeViewController = self
+        node.nodeViewController = self
     }
 
     func setShaderSource(source: String) {
@@ -64,13 +65,70 @@ class NodeViewController: NSViewController {
                 println(log)
             }
 
-            // FIXME: Compare these new attributes/uniforms to the existing vertex shader inputs and insert/delete inputs as necessary
+            // FIXME: This algorithm is very slow
+            var foundInputs: [InputPort] = []
             program.iterateOverAttributes({(index: GLuint, name: String, size: GLint, type: GLenum) in
-                println("Attribute: \(index) \(name) \(size) \(type)")
+                for input in program.vertexShader.inputs {
+                    if let input = input as? AttributeInputPort {
+                        if input.title == name && GLint(input.glSize) == size && GLenum(input.glType) == type {
+                            input.glIndex = Int32(index)
+                            foundInputs.append(input)
+                            break
+                        }
+                    }
+                }
             })
-
-            program.iterateOverUniforms({(index: GLuint, name: String) in
-                println("Uniform: \(index) \(name)")
+            program.iterateOverUniforms({(index: GLuint, name: String, size: GLint, type: GLenum) in
+                for input in program.vertexShader.inputs {
+                    if let input = input as? UniformInputPort {
+                        if input.title == name && GLint(input.glSize) == size && GLenum(input.glType) == type {
+                            input.glIndex = Int32(index)
+                            foundInputs.append(input)
+                            break
+                        }
+                    }
+                }
+            })
+            while true {
+                var exhausted = true
+                for i in 0 ..< program.vertexShader.inputs.count {
+                    if !contains(foundInputs, program.vertexShader.inputs[i] as! InputPort) {
+                        deleteInput(i)
+                        exhausted = false
+                        break
+                    }
+                }
+                if exhausted {
+                    break
+                }
+            }
+            program.iterateOverAttributes({(index: GLuint, name: String, size: GLint, type: GLenum) in
+                var found = false
+                for port in foundInputs {
+                    if let port = port as? AttributeInputPort {
+                        if port.glIndex == Int32(index) {
+                            found = true
+                            break
+                        }
+                    }
+                }
+                if !found {
+                    program.vertexShader.nodeViewController.addAttributeInput(index, name: name, size: size, type: type)
+                }
+            })
+            program.iterateOverUniforms({(index: GLuint, name: String, size: GLint, type: GLenum) in
+                var found = false
+                for port in foundInputs {
+                    if let port = port as? UniformInputPort {
+                        if port.glIndex == Int32(index) {
+                            found = true
+                            break
+                        }
+                    }
+                }
+                if !found {
+                    program.vertexShader.nodeViewController.addUniformInput(index, name: name, size: size, type: type)
+                }
             })
         }
     }
@@ -102,6 +160,43 @@ class NodeViewController: NSViewController {
 
     func nodeTitleMouseUp(mouseLocation: NSPoint) {
         draggingStartPoint = nil
+    }
+
+    func addAttributeInput(glIndex: GLuint, name: String, size: GLint, type: GLenum) {
+        let attributeInputPort = node.addPortToInputs(nullNode, context: managedObjectContext, name: name, entityName: "AttributeInputPort") as! AttributeInputPort;
+        attributeInputPort.glIndex = Int32(glIndex)
+        attributeInputPort.glSize = Int32(size)
+        attributeInputPort.glType = Int32(type)
+        addInputOutputView(name, input: true)
+    }
+
+    func addUniformInput(glIndex: GLuint, name: String, size: GLint, type: GLenum) {
+        let uniformInputPort = node.addPortToInputs(nullNode, context: managedObjectContext, name: name, entityName: "UniformInputPort") as! UniformInputPort;
+        uniformInputPort.glIndex = Int32(glIndex)
+        uniformInputPort.glSize = Int32(size)
+        uniformInputPort.glType = Int32(type)
+        addInputOutputView(name, input: true)
+    }
+
+    func addInput(name: String) {
+        addInputOutputView(name, input: true)
+        node.addPortToInputs(nullNode, context: managedObjectContext, name: name)
+    }
+
+    func deleteInput(index: Int) {
+        var inputsSet = node.mutableOrderedSetValueForKey("inputs")
+        for i in index ..< node.inputs.count {
+            (inputsSet[i] as! InputPort).index--
+        }
+
+        var inputPort = inputsSet[index] as! InputPort
+        // FIXME: Perhaps we should remove NullNode cycles
+        inputPort.edge.source = nullNode.addNullNodeInputPort(managedObjectContext)
+
+        managedObjectContext.deleteObject(inputPort)
+        inputsSet.removeObjectAtIndex(index)
+        inputsView.removeView(inputsView.views[index] as! NSView)
+        graphViewController.redrawConnectionsView()
     }
 
     func addOutput(name: String) {

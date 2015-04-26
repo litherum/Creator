@@ -214,16 +214,13 @@ class GraphViewController: NSViewController {
                                     return
                                 }
 
+                                // FIXME: Find a better way of getting the NodeViewController
                                 newProgram.iterateOverAttributes({(index: GLuint, name: String, size: GLint, type: GLenum) in
-                                    let attributeInputPort = outputVertexShader.addPortToInputs(self.nullNode, context: self.managedObjectContext, name: name, entityName: "AttributeInputPort") as! AttributeInputPort;
-                                    attributeInputPort.glIndex = Int32(index)
-                                    nodeInputOutputTextField.nodeViewController.addInputOutputView(name, input: true)
+                                    nodeInputOutputTextField.nodeViewController.addAttributeInput(index, name: name, size: size, type: type)
                                 })
 
-                                newProgram.iterateOverUniforms({(index: GLuint, name: String) in
-                                    let uniformInputPort = outputVertexShader.addPortToInputs(self.nullNode, context: self.managedObjectContext, name: name, entityName: "UniformInputPort") as! UniformInputPort;
-                                    uniformInputPort.glIndex = Int32(index)
-                                    nodeInputOutputTextField.nodeViewController.addInputOutputView(name, input: true)
+                                newProgram.iterateOverUniforms({(index: GLuint, name: String, size: GLint, type: GLenum) in
+                                    nodeInputOutputTextField.nodeViewController.addUniformInput(index, name: name, size: size, type: type)
                                 })
 
                                 updateEdgeViews()

@@ -9,6 +9,7 @@
 import CoreData
 
 class Node: NSManagedObject {
+    weak var nodeViewController: NodeViewController!
     @NSManaged var positionX: Float
     @NSManaged var positionY: Float
     @NSManaged var title: String

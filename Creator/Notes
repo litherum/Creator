@@ -1,5 +1,6 @@
 Invariants:
 - For all i, Node.inputs[i].index == i (and same for outputs)
+- vertex shader UniformInputPorts and AttributeInputPorts match the info of the compiled and linked program
 
 Things to do:
 - Delete connections

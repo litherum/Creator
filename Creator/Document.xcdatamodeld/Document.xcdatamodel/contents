@@ -2,6 +2,8 @@
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7549" systemVersion="14D136" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="AttributeInputPort" representedClassName="Creator.AttributeInputPort" parentEntity="InputPort" syncable="YES">
         <attribute name="glIndex" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="glSize" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="glType" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
     </entity>
     <entity name="ConstantBufferNode" representedClassName="Creator.ConstantBufferNode" parentEntity="Node" syncable="YES">
         <attribute name="payload" attributeType="Binary" syncable="YES"/>
@@ -49,6 +51,8 @@
     </entity>
     <entity name="UniformInputPort" representedClassName="Creator.UniformInputPort" parentEntity="InputPort" syncable="YES">
         <attribute name="glIndex" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="glSize" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="glType" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
     </entity>
     <entity name="VertexShaderNode" representedClassName="Creator.VertexShaderNode" parentEntity="Node" syncable="YES">
         <attribute name="source" attributeType="String" syncable="YES"/>
@@ -71,7 +75,7 @@
         <element name="Port" positionX="-162" positionY="72" width="128" height="75"/>
         <element name="Program" positionX="-162" positionY="72" width="128" height="75"/>
         <element name="VertexShaderNode" positionX="36" positionY="153" width="128" height="75"/>
-        <element name="AttributeInputPort" positionX="-162" positionY="90" width="128" height="60"/>
-        <element name="UniformInputPort" positionX="-153" positionY="99" width="128" height="60"/>
+        <element name="AttributeInputPort" positionX="-162" positionY="90" width="128" height="90"/>
+        <element name="UniformInputPort" positionX="-153" positionY="99" width="128" height="90"/>
     </elements>
 </model>

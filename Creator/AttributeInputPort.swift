@@ -10,4 +10,6 @@ import CoreData
 
 class AttributeInputPort: InputPort {
     @NSManaged var glIndex: Int32
+    @NSManaged var glSize: Int32
+    @NSManaged var glType: Int32
 }

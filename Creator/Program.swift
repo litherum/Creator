@@ -47,21 +47,22 @@ class Program: NSManagedObject {
             glGetActiveAttrib(handle, i, nameLength, &usedLength, &size, &type, &buffer)
             let name = NSString(data: NSData(bytes: &buffer, length: Int(usedLength)), encoding: NSUTF8StringEncoding)! as String
             callback(index: i, name: name, size: size, type: type)
-            GL_FLOAT
         }
     }
 
-    func iterateOverUniforms(callback: (index: GLuint, name: String) -> Void) {
+    func iterateOverUniforms(callback: (index: GLuint, name: String, size: GLint, type: GLenum) -> Void) {
         var nameLength: GLint = 0
         glGetProgramiv(handle, GLenum(GL_ACTIVE_UNIFORM_MAX_LENGTH), &nameLength)
         var buffer = Array<GLchar>(count: Int(nameLength), repeatedValue: GLchar(0))
-        var numAttributes: GLint = 0
-        glGetProgramiv(handle, GLenum(GL_ACTIVE_ATTRIBUTES), &numAttributes)
-        for i in 0 ..< GLuint(numAttributes) {
+        var numUniforms: GLint = 0
+        glGetProgramiv(handle, GLenum(GL_ACTIVE_UNIFORMS), &numUniforms)
+        for i in 0 ..< GLuint(numUniforms) {
             var usedLength: GLsizei = 0
-            glGetActiveUniformName(handle, i, nameLength, &usedLength, &buffer)
+            var size: GLint = 0
+            var type: GLenum = 0
+            glGetActiveUniform(handle, i, nameLength, &usedLength, &size, &type, &buffer)
             let name = NSString(data: NSData(bytes: &buffer, length: Int(usedLength)), encoding: NSUTF8StringEncoding)! as String
-            callback(index: i, name: name)
+            callback(index: i, name: name, size: size, type: type)
         }
     }
 

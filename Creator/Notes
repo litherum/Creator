@@ -12,3 +12,6 @@ Things to do:
 - Research if I need to move Node's generated properties into the data model
 - Dragged node's z-order should be moved to top when clicked on
 - Shader editor should constantly recompile while typing
+- Figure out how to model index buffers
+- Figure out how to model the arguments to glVertexAttribPointer()
+- Figure out how to specify glBindFragDataLocation() before linking

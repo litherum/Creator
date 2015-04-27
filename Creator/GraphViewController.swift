@@ -58,7 +58,7 @@ class GraphViewController: NSViewController {
         newNode.positionX = 13
         newNode.positionY = 17
         newNode.title = "Constant Buffer"
-        newNode.payload = "test".dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)!
+        newNode.payload = NSData()
         newNode.frame = frame!
         addNodeView(newNode)
     }
@@ -110,6 +110,10 @@ class GraphViewController: NSViewController {
         for node in nodes {
             if node.frame != frame || node is NullNode {
                 continue
+            }
+            // FIXME: Find a better way to factor this
+            if let constantBufferNode = node as? ConstantBufferNode {
+                constantBufferNode.upload()
             }
             addNodeView(node)
         }

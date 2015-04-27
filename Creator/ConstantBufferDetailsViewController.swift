@@ -41,6 +41,7 @@ class ConstantBufferDetailsViewController: NSViewController {
                 return
             }
             self.node.payload = data!
+            self.node.upload()
             self.statusTextField.stringValue = "Success"
         })
     }

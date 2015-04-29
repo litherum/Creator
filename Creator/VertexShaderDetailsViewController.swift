@@ -8,9 +8,10 @@
 
 import Cocoa
 
-class VertexShaderDetailsViewController: NSViewController {
+class VertexShaderDetailsViewController: NSViewController, NSTableViewDataSource, NSTableViewDelegate {
     weak var nodeViewController: NodeViewController!
     var node: VertexShaderNode!
+    @IBOutlet var vertexAttribTableView: NSTableView!
     @IBOutlet var textView: NSTextView!
 
     required init?(coder: NSCoder) {
@@ -25,11 +26,25 @@ class VertexShaderDetailsViewController: NSViewController {
 
     override func viewWillAppear() {
         textView.string = node.source
+        println("\(vertexAttribTableView.superview!.superview!.frame)")
     }
 
     override func viewWillDisappear() {
         if let s = textView.string {
             nodeViewController.setShaderSource(s)
         }
+    }
+
+    func numberOfRowsInTableView(tableView: NSTableView) -> Int {
+        return 5
+        /*if let program = node.program {
+            return program.attributeCount
+        } else {
+            return 0
+        }*/
+    }
+
+    func tableView(tableView: NSTableView, viewForTableColumn tableColumn: NSTableColumn?, row: Int) -> NSView? {
+        return tableView.makeViewWithIdentifier("Size", owner: self) as! NSView?
     }
 }

@@ -34,13 +34,27 @@ class Program: NSManagedObject {
         return NSString(data: NSData(bytes: &buffer, length: Int(logLength)), encoding: NSUTF8StringEncoding)! as String
     }
 
+    var attributeCount: Int {
+        get {
+            var numAttributes: GLint = 0
+            glGetProgramiv(handle, GLenum(GL_ACTIVE_ATTRIBUTES), &numAttributes)
+            return Int(numAttributes)
+        }
+    }
+
+    var uniformCount: Int {
+        get {
+            var numUniforms: GLint = 0
+            glGetProgramiv(handle, GLenum(GL_ACTIVE_UNIFORMS), &numUniforms)
+            return Int(numUniforms)
+        }
+    }
+
     func iterateOverAttributes(callback: (index: GLuint, name: String, size: GLint, type: GLenum) -> Void) {
         var nameLength: GLint = 0
         glGetProgramiv(handle, GLenum(GL_ACTIVE_ATTRIBUTE_MAX_LENGTH), &nameLength)
         var buffer = Array<GLchar>(count: Int(nameLength), repeatedValue: GLchar(0))
-        var numAttributes: GLint = 0
-        glGetProgramiv(handle, GLenum(GL_ACTIVE_ATTRIBUTES), &numAttributes)
-        for i in 0 ..< GLuint(numAttributes) {
+        for i in 0 ..< GLuint(attributeCount) {
             var usedLength: GLsizei = 0
             var size: GLint = 0
             var type: GLenum = 0
@@ -54,9 +68,7 @@ class Program: NSManagedObject {
         var nameLength: GLint = 0
         glGetProgramiv(handle, GLenum(GL_ACTIVE_UNIFORM_MAX_LENGTH), &nameLength)
         var buffer = Array<GLchar>(count: Int(nameLength), repeatedValue: GLchar(0))
-        var numUniforms: GLint = 0
-        glGetProgramiv(handle, GLenum(GL_ACTIVE_UNIFORMS), &numUniforms)
-        for i in 0 ..< GLuint(numUniforms) {
+        for i in 0 ..< GLuint(uniformCount) {
             var usedLength: GLsizei = 0
             var size: GLint = 0
             var type: GLenum = 0

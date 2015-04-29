@@ -59,4 +59,29 @@ class VertexShaderNode: Node {
             handle = 0
         }
     }
+
+    func attributeInputPort(index: Int) -> AttributeInputPort? {
+        var i = 0
+        for input in inputs {
+            if let input = input as? AttributeInputPort {
+                if i == index {
+                    return input
+                }
+                i++
+            }
+        }
+        return nil
+    }
+
+    var attributeInputPortCount: Int {
+        get {
+            var i = 0
+            for input in inputs {
+                if let input = input as? AttributeInputPort {
+                    i++
+                }
+            }
+            return i
+        }
+    }
 }

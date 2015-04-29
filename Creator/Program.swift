@@ -50,6 +50,17 @@ class Program: NSManagedObject {
         }
     }
 
+    func attributeName(index: GLuint) -> String {
+        var nameLength: GLint = 0
+        glGetProgramiv(handle, GLenum(GL_ACTIVE_ATTRIBUTE_MAX_LENGTH), &nameLength)
+        var buffer = Array<GLchar>(count: Int(nameLength), repeatedValue: GLchar(0))
+        var usedLength: GLsizei = 0
+        var size: GLint = 0
+        var type: GLenum = 0
+        glGetActiveAttrib(handle, index, nameLength, &usedLength, &size, &type, &buffer)
+        return NSString(data: NSData(bytes: &buffer, length: Int(usedLength)), encoding: NSUTF8StringEncoding)! as String
+    }
+
     func iterateOverAttributes(callback: (index: GLuint, name: String, size: GLint, type: GLenum) -> Void) {
         var nameLength: GLint = 0
         glGetProgramiv(handle, GLenum(GL_ACTIVE_ATTRIBUTE_MAX_LENGTH), &nameLength)

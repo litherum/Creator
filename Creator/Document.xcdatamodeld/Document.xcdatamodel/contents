@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7549" systemVersion="14D136" minimumToolsVersion="Automatic" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="AttributeInputPort" representedClassName="Creator.AttributeInputPort" parentEntity="InputPort" syncable="YES">
-        <attribute name="attributeNormalized" optional="YES" attributeType="Boolean" syncable="YES"/>
-        <attribute name="attributeOffset" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="attributeSize" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="attributeStride" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="attributeType" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
-        <attribute name="glIndex" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="glSize" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="glType" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="attributeNormalized" attributeType="Boolean" syncable="YES"/>
+        <attribute name="attributeOffset" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="attributeSize" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="attributeStride" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="attributeType" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="glIndex" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="glSize" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="glType" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
     </entity>
     <entity name="ConstantBufferNode" representedClassName="Creator.ConstantBufferNode" parentEntity="Node" syncable="YES">
         <attribute name="payload" attributeType="Binary" syncable="YES"/>
     </entity>
     <entity name="ConstantFloatNode" representedClassName="Creator.ConstantFloatNode" parentEntity="Node" syncable="YES">
-        <attribute name="maxValue" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="minValue" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="maxValue" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="minValue" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="payload" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
     </entity>
     <entity name="Edge" representedClassName="Creator.Edge" syncable="YES">
@@ -47,7 +47,7 @@
         <relationship name="node" maxCount="1" deletionRule="Nullify" destinationEntity="Node" inverseName="outputs" inverseEntity="Node" syncable="YES"/>
     </entity>
     <entity name="Port" representedClassName="Creator.Port" isAbstract="YES" syncable="YES">
-        <attribute name="index" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="index" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="title" attributeType="String" syncable="YES"/>
     </entity>
     <entity name="Program" representedClassName="Creator.Program" syncable="YES">
@@ -55,9 +55,9 @@
         <relationship name="vertexShader" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="VertexShaderNode" inverseName="program" inverseEntity="VertexShaderNode" syncable="YES"/>
     </entity>
     <entity name="UniformInputPort" representedClassName="Creator.UniformInputPort" parentEntity="InputPort" syncable="YES">
-        <attribute name="glIndex" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="glSize" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
-        <attribute name="glType" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="glIndex" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="glSize" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="glType" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
     </entity>
     <entity name="VertexShaderNode" representedClassName="Creator.VertexShaderNode" parentEntity="Node" syncable="YES">
         <attribute name="source" attributeType="String" syncable="YES"/>

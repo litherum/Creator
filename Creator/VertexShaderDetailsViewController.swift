@@ -40,7 +40,7 @@ class VertexShaderDetailsViewController: NSViewController, NSTableViewDataSource
 
     // FIXME: Populate this function
     @IBAction func selectedType(sender: NSPopUpButton) {
-        println("Selected type row \(vertexAttribTableView.rowForView(sender))!")
+        node.attributeInputPort(vertexAttribTableView.rowForView(sender))!.attributeType = typeIndexToType(sender.indexOfSelectedItem)
     }
 
     @IBAction func selectedNormalized(sender: NSButton) {
@@ -63,7 +63,42 @@ class VertexShaderDetailsViewController: NSViewController, NSTableViewDataSource
         }
     }
 
-    // FIXME: Set up initial values for these variables
+    // These need to be kept in sync with the .nib
+    func typeIndexToType(index: Int) -> Int32 {
+        return [GL_BYTE, GL_UNSIGNED_BYTE, GL_SHORT, GL_UNSIGNED_SHORT, GL_INT, GL_UNSIGNED_INT, GL_HALF_FLOAT, GL_FLOAT, GL_DOUBLE, GL_FIXED, GL_INT_2_10_10_10_REV, GL_UNSIGNED_INT_2_10_10_10_REV][index]
+    }
+
+    func typeToTypeIndex(type: Int32) -> Int {
+        switch type {
+            case GL_BYTE:
+                return 0
+            case GL_UNSIGNED_BYTE:
+                return 1
+            case GL_SHORT:
+                return 2
+            case GL_UNSIGNED_SHORT:
+                return 3
+            case GL_INT:
+                return 4
+            case GL_UNSIGNED_INT:
+                return 5
+            case GL_HALF_FLOAT:
+                return 6
+            case GL_FLOAT:
+                return 7
+            case GL_DOUBLE:
+                return 8
+            case GL_FIXED:
+                return 9
+            case GL_INT_2_10_10_10_REV:
+                return 10
+            case GL_UNSIGNED_INT_2_10_10_10_REV:
+                return 11
+            default:
+                return -1
+        }
+    }
+
     func tableView(tableView: NSTableView, viewForTableColumn tableColumn: NSTableColumn?, row: Int) -> NSView? {
         if let program = node.program {
             if tableColumn!.identifier ==  "NameColumn" {
@@ -75,8 +110,8 @@ class VertexShaderDetailsViewController: NSViewController, NSTableViewDataSource
                 view.selectItemAtIndex(Int(node.attributeInputPort(row)!.attributeSize - 1))
                 return view
             } else if tableColumn!.identifier ==  "TypeColumn" {
-                // FIXME: Populate this
                 var view = tableView.makeViewWithIdentifier("Type", owner: self) as! NSPopUpButton!
+                view.selectItemAtIndex(typeToTypeIndex(node.attributeInputPort(row)!.attributeType))
                 return view
             } else if tableColumn!.identifier ==  "NormalizedColumn" {
                 var view = tableView.makeViewWithIdentifier("Normalized", owner: self) as! NSButton!

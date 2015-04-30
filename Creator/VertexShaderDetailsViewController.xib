@@ -124,7 +124,7 @@
                                                     <popUpButton identifier="Type" verticalHuggingPriority="750" id="fx3-Lx-pEu">
                                                         <rect key="frame" x="125" y="20" width="112" height="26"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                        <popUpButtonCell key="cell" type="push" title="GL_FLOAT" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="7Zs-SG-9DX" id="bsY-oQ-zmp">
+                                                        <popUpButtonCell key="cell" type="push" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" id="bsY-oQ-zmp">
                                                             <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                                             <font key="font" metaFont="menu"/>
                                                             <menu key="menu" id="jjj-cV-VyS">
@@ -150,7 +150,7 @@
                                                                     <menuItem title="GL_HALF_FLOAT" id="Qy9-7n-2Og">
                                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                                     </menuItem>
-                                                                    <menuItem title="GL_FLOAT" state="on" id="7Zs-SG-9DX">
+                                                                    <menuItem title="GL_FLOAT" id="7Zs-SG-9DX">
                                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                                     </menuItem>
                                                                     <menuItem title="GL_DOUBLE" id="JWd-gW-e4a">
@@ -163,9 +163,6 @@
                                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                                     </menuItem>
                                                                     <menuItem title="GL_UNSIGNED_INT_2_10_10_10_REV" id="vIQ-ud-tV9">
-                                                                        <modifierMask key="keyEquivalentModifierMask"/>
-                                                                    </menuItem>
-                                                                    <menuItem title="GL_UNSIGNED_INT_10F_11F_11F_REV" id="nVd-1h-tPR">
                                                                         <modifierMask key="keyEquivalentModifierMask"/>
                                                                     </menuItem>
                                                                 </items>

@@ -5,13 +5,14 @@ Invariants:
 Things to do:
 - Delete connections
 - Delete nodes
-- Updating a shader's source automatically updates ports
-- Port info popover for vertex attributes
 - Codegen?
-- Create the rest of the node info popovers
 - Research if I need to move Node's generated properties into the data model
 - Dragged node's z-order should be moved to top when clicked on
 - Shader editor should constantly recompile while typing
 - Figure out how to model index buffers
-- Figure out how to model the arguments to glVertexAttribPointer()
 - Figure out how to specify glBindFragDataLocation() before linking
+- Make sure I'm on GL 4.1 or later
+
+Maybe should do:
+- Move glVertexAttribPointer info to a popover on the port
+- Use sheets instead of popovers (because they're resizable)

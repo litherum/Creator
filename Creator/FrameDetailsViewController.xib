@@ -6,6 +6,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="FrameDetailsViewController" customModule="Creator" customModuleProvider="target">
             <connections>
+                <outlet property="deleteButton" destination="E4t-XN-YQl" id="66N-RW-Gx9"/>
                 <outlet property="selectedInputPopup" destination="ViR-hB-FQj" id="dxd-IH-axD"/>
                 <outlet property="view" destination="c22-O7-iKe" id="vqh-E9-5k2"/>
             </connections>
@@ -39,7 +40,7 @@
                         </popUpButton>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="E4t-XN-YQl">
                             <rect key="frame" x="128" y="-6" width="173" height="32"/>
-                            <buttonCell key="cell" type="push" title="Delete Selected Input" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="2E4-va-oGB">
+                            <buttonCell key="cell" type="push" title="Delete Selected Input" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="2E4-va-oGB">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>

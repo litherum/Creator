@@ -12,6 +12,7 @@ class FrameDetailsViewController: NSViewController {
     weak var nodeViewController: NodeViewController!
     var node: Frame!
     @IBOutlet var selectedInputPopup: NSPopUpButton!
+    @IBOutlet var deleteButton: NSButton!
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -36,16 +37,19 @@ class FrameDetailsViewController: NSViewController {
         for i in selectedInput ..< selectedInputPopup.numberOfItems {
             selectedInputPopup.itemAtIndex(i)!.title = "\(i)"
         }
+        deleteButton.enabled = selectedInputPopup.numberOfItems > 0
     }
 
     func addPopupItem(index: Int) {
         // FIXME: Maybe we should be using NSArrayController instead?
         selectedInputPopup.addItemWithTitle("\(selectedInputPopup.numberOfItems)")
+        deleteButton.enabled = true
     }
 
     override func viewWillAppear() {
         for i in 0 ..< node.inputs.count {
             addPopupItem(i)
         }
+        deleteButton.enabled = selectedInputPopup.numberOfItems > 0
     }
 }

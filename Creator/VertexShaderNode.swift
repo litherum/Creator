@@ -63,7 +63,6 @@ class VertexShaderNode: Node {
     }
 
     override func execute() -> Value {
-        println("Error: \(glGetError())")
         if let program = program {
             if program.handle == 0 {
                 return .NullValue

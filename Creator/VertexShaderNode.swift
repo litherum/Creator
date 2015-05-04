@@ -23,9 +23,100 @@ class VertexShaderNode: Node {
         }
     }
 
+    func glTypeToAttribPointerSizeAndType(type: GLenum) -> (GLint, GLenum) {
+        switch type {
+            case GLenum(GL_FLOAT):
+                return (1, GLenum(GL_FLOAT))
+            case GLenum(GL_FLOAT_VEC2):
+                return (2, GLenum(GL_FLOAT))
+            case GLenum(GL_FLOAT_VEC3):
+                return (3, GLenum(GL_FLOAT))
+            case GLenum(GL_FLOAT_VEC4):
+                return (4, GLenum(GL_FLOAT))
+            case GLenum(GL_INT):
+                return (1, GLenum(GL_INT))
+            case GLenum(GL_INT_VEC2):
+                return (2, GLenum(GL_INT))
+            case GLenum(GL_INT_VEC3):
+                return (3, GLenum(GL_INT))
+            case GLenum(GL_INT_VEC4):
+                return (4, GLenum(GL_INT))
+            case GLenum(GL_UNSIGNED_INT):
+                return (1, GLenum(GL_UNSIGNED_INT))
+            case GLenum(GL_UNSIGNED_INT_VEC2):
+                return (2, GLenum(GL_UNSIGNED_INT))
+            case GLenum(GL_UNSIGNED_INT_VEC3):
+                return (3, GLenum(GL_UNSIGNED_INT))
+            case GLenum(GL_UNSIGNED_INT_VEC4):
+                return (4, GLenum(GL_UNSIGNED_INT))
+            case GLenum(GL_DOUBLE):
+                return (1, GLenum(GL_DOUBLE))
+            case GLenum(GL_DOUBLE_VEC2):
+                return (2, GLenum(GL_DOUBLE))
+            case GLenum(GL_DOUBLE_VEC3):
+                return (3, GLenum(GL_DOUBLE))
+            case GLenum(GL_DOUBLE_VEC4):
+                return (4, GLenum(GL_DOUBLE))
+            default:
+                return (0, 0)
+        }
+    }
+
     override func execute() -> Value {
-        // FIXME: Draw some stuff
-        return .NullValue
+        println("Error: \(glGetError())")
+        if let program = program {
+            if program.handle == 0 {
+                return .NullValue
+            }
+            // FIXME: Shadow this state so we don't have to specify it every frame
+            glUseProgram(program.handle)
+            // FIXME: Keep this VAO around for longer than a frame
+            var vertexArray: GLuint = 0
+            glGenVertexArrays(1, &vertexArray)
+            glBindVertexArray(vertexArray)
+            // FIXME: This is slow
+            for i in 0 ..< attributeInputPortCount {
+                var port = attributeInputPort(i)!
+                var index = GLuint(port.glIndex)
+                switch port.edge.destination.node.execute() {
+                    case .GLuintValue(let i):
+                        glBindBuffer(GLenum(GL_ARRAY_BUFFER), i)
+                        break
+                    default:
+                        println("Unexpected value from an attribute")
+                        glDeleteVertexArrays(1, &vertexArray)
+                        return .NullValue
+                }
+                glEnableVertexAttribArray(index)
+                if port.glSize != 1 {
+                    println("Don't know how to deal with attribute arrays")
+                    glDeleteVertexArrays(1, &vertexArray)
+                    return .NullValue
+                }
+                let (attribPointerSize, attribPointerType) = glTypeToAttribPointerSizeAndType(GLenum(port.glType))
+                glVertexAttribPointer(index, attribPointerSize, attribPointerType, GLboolean(port.attributeNormalized ? 1 : 0), GLsizei(port.attributeStride), UnsafePointer<Void>(COpaquePointer(bitPattern: Word(port.attributeOffset))))
+            }
+            for i in 0 ..< uniformInputPortCount {
+                var port = uniformInputPort(i)!
+                var index = GLuint(port.glIndex)
+                switch port.edge.destination.node.execute() {
+                    // FIXME: Support other types of uniforms
+                    case .FloatValue(let f):
+                        glUniform1f(program.uniformLocations[index]!, GLfloat(f))
+                        break
+                    default:
+                        println("Unexpected value from a uniform")
+                        glDeleteVertexArrays(1, &vertexArray)
+                        return .NullValue
+                }
+            }
+            // FIXME: Parameterize these values in the data model
+            glDrawArrays(GLenum(GL_TRIANGLES), 0, 3)
+            glDeleteVertexArrays(1, &vertexArray)
+            return .NullValue
+        } else {
+            return .NullValue
+        }
     }
 
     func compile() -> String? {
@@ -83,6 +174,31 @@ class VertexShaderNode: Node {
             var i = 0
             for input in inputs {
                 if let input = input as? AttributeInputPort {
+                    i++
+                }
+            }
+            return i
+        }
+    }
+
+    func uniformInputPort(index: Int) -> UniformInputPort? {
+        var i = 0
+        for input in inputs {
+            if let input = input as? UniformInputPort {
+                if i == index {
+                    return input
+                }
+                i++
+            }
+        }
+        return nil
+    }
+
+    var uniformInputPortCount: Int {
+        get {
+            var i = 0
+            for input in inputs {
+                if let input = input as? UniformInputPort {
                     i++
                 }
             }

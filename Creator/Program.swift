@@ -13,11 +13,24 @@ class Program: NSManagedObject {
     @NSManaged var vertexShader: VertexShaderNode
     @NSManaged var fragmentShader: FragmentShaderNode
     var handle: GLuint = 0
+    var attributeLocations: [GLuint : GLint] = [:]
+    var uniformLocations: [GLuint : GLint] = [:]
+
+    class func stringToGLCharArray(string: String) -> Array<GLchar> {
+        var result = Array<GLchar>()
+        for c in string.utf8 {
+            result.append(GLchar(c))
+        }
+        result.append(0)
+        return result
+    }
 
     func link() -> String? {
         if handle != 0 {
             glDeleteProgram(handle)
         }
+        attributeLocations = [:]
+        uniformLocations = [:]
         handle = glCreateProgram()
         glAttachShader(handle, vertexShader.handle)
         glAttachShader(handle, fragmentShader.handle)
@@ -25,6 +38,15 @@ class Program: NSManagedObject {
         var linkStatus = GL_FALSE
         glGetProgramiv(handle, GLenum(GL_LINK_STATUS), &linkStatus)
         if linkStatus == GL_TRUE {
+            // FIXME: Indices and locations may be the same thing
+            iterateOverAttributes({(index: GLuint, name: String, size: GLint, type: GLenum) in
+                var nameArray = Program.stringToGLCharArray(name)
+                self.attributeLocations[index] = glGetAttribLocation(self.handle, &nameArray)
+            })
+            iterateOverUniforms({(index: GLuint, name: String, size: GLint, type: GLenum) in
+                var nameArray = Program.stringToGLCharArray(name)
+                self.uniformLocations[index] = glGetUniformLocation(self.handle, &nameArray)
+            })
             return nil
         }
         var logLength: GLint = 0

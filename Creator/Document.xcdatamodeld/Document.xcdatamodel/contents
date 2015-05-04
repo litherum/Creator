@@ -64,6 +64,7 @@
     <fetchRequest name="FrameRequest" entity="Frame"/>
     <fetchRequest name="NodeRequest" entity="Node"/>
     <fetchRequest name="NullNodeRequest" entity="NullNode"/>
+    <fetchRequest name="ProgramRequest" entity="Program"/>
     <elements>
         <element name="AttributeInputPort" positionX="-162" positionY="90" width="128" height="165"/>
         <element name="ConstantBufferNode" positionX="-236" positionY="153" width="128" height="60"/>

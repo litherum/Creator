@@ -19,6 +19,8 @@ class Document: NSPersistentDocument {
     override func windowControllerDidLoadNib(aController: NSWindowController) {
         super.windowControllerDidLoadNib(aController)
 
+        graphViewController.document = self
+
         graphViewController.managedObjectContext = managedObjectContext
         graphViewController.managedObjectModel = managedObjectModel
         graphViewController.populate()
@@ -36,6 +38,10 @@ class Document: NSPersistentDocument {
 
     func execute() {
         graphViewController.frame.execute()
+    }
+
+    func modelChanged() {
+        resultView.setNeedsDisplayInRect(resultView.bounds)
     }
 
     @IBAction func createConstantBufferNode(sender: AnyObject?) {

@@ -9,6 +9,7 @@
 import Cocoa
 
 class GraphViewController: NSViewController {
+    weak var document: Document!
     var frame: Frame!
     lazy var nullNode: NullNode! = self.fetchNullNode()
     var nodeViewControllerToNodeDictionary: [NodeViewController: Node] = [:]
@@ -84,9 +85,7 @@ class GraphViewController: NSViewController {
         var nodeRequest = managedObjectModel.fetchRequestFromTemplateWithName("NodeRequest", substitutionVariables: [:]) as NSFetchRequest!
         var error: NSError?
         let nodes = managedObjectContext.executeFetchRequest(nodeRequest, error: &error) as! [Node]!
-        if error != nil {
-            return
-        }
+        assert(error == nil, "Node fetch request fail")
         for node in nodes {
             if node is NullNode {
                 continue
@@ -94,11 +93,22 @@ class GraphViewController: NSViewController {
             // FIXME: Find a better way to factor this
             if let constantBufferNode = node as? ConstantBufferNode {
                 constantBufferNode.upload()
-            }
-            if node is Frame {
-                frame = node as! Frame
+            } else if let vertexShaderNode = node as? VertexShaderNode {
+                vertexShaderNode.compile()
+            } else if let fragmentShaderNode = node as? FragmentShaderNode {
+                fragmentShaderNode.compile()
+            } else if let frameNode = node as? Frame {
+                frame = frameNode
             }
             addNodeView(node)
+        }
+        var programRequest = managedObjectModel.fetchRequestFromTemplateWithName("ProgramRequest", substitutionVariables: [:]) as NSFetchRequest!
+        let programs = managedObjectContext.executeFetchRequest(programRequest, error: &error) as! [Program]!
+        assert(error == nil, "Program fetch request fail")
+        for program in programs {
+            program.link()
+            // FIXME: Repopulate all the GL variables inside our local state
+            // Why are we saving these, anyway? They are transient
         }
         if frame == nil {
             frame = NSEntityDescription.insertNewObjectForEntityForName("Frame", inManagedObjectContext: managedObjectContext) as! Frame
@@ -108,6 +118,7 @@ class GraphViewController: NSViewController {
             addNodeView(frame)
         }
         updateEdgeViews()
+        modelChanged()
     }
 
     func updateEdgeViews() {
@@ -126,6 +137,11 @@ class GraphViewController: NSViewController {
             let outputTextField = nodeToNodeViewControllerDictionary[edge.destination.node]!.outputsView.views[Int(edge.destination.index)] as! NodeInputOutputTextField
             addEdgeView(inputTextField, outputTextField: outputTextField)
         }
+        modelChanged()
+    }
+
+    func modelChanged() {
+        document.modelChanged()
     }
 
     func addNodeView(node: Node) {
@@ -149,6 +165,7 @@ class GraphViewController: NSViewController {
         for i in 0 ..< node.outputs.count {
             nodeViewController.addInputOutputView((node.outputs[i] as! OutputPort).title, input: false)
         }
+        modelChanged()
     }
 
     func addEdgeView(inputTextField: NodeInputOutputTextField, outputTextField: NodeInputOutputTextField) {
@@ -157,10 +174,12 @@ class GraphViewController: NSViewController {
         let endPoint = connectionsView.convertPoint(NSMakePoint(outputTextField.bounds.maxX, (outputTextField.bounds.origin.y + outputTextField.bounds.maxY) / 2), fromView: outputTextField)
         connectionsView.connections.append(Connection(startPoint: startPoint, endPoint: endPoint))
         redrawConnectionsView()
+        modelChanged()
     }
 
     func redrawConnectionsView() {
         connectionsView.setNeedsDisplayInRect(connectionsView.bounds)
+        modelChanged()
     }
 
     func nodeInputOutputMouseDown(nodeViewController: NodeViewController, index: Int) {
@@ -220,6 +239,7 @@ class GraphViewController: NSViewController {
                                 updateEdgeViews()
                             }
                         }
+                        modelChanged()
                     }
                 }
             }

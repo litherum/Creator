@@ -16,4 +16,8 @@ class ConstantFloatNode: Node {
     override func populate(nullNode: NullNode, context: NSManagedObjectContext) {
         addPortToOutputs(nullNode, context: context, name: "value");
     }
+
+    override func execute() -> Value {
+        return .FloatValue(payload)
+    }
 }

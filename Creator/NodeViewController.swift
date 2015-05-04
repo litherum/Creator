@@ -233,6 +233,8 @@ class NodeViewController: NSViewController {
             detailsPopover.contentViewController = FragmentShaderDetailsViewController(nibName: "FragmentShaderDetailsViewController", bundle: nil, nodeViewController: self, node: fragmentShaderNode)!
         } else if let constantBufferNode = node as? ConstantBufferNode {
             detailsPopover.contentViewController = ConstantBufferDetailsViewController(nibName: "ConstantBufferDetailsViewController", bundle: nil, node: constantBufferNode)!
+        } else if let frameNode = node as? Frame {
+            detailsPopover.contentViewController = FrameDetailsViewController(nibName: "FrameDetailsViewController", bundle: nil, nodeViewController: self, node: frameNode)!
         } else {
             assert(false, "Unknown kind of node")
         }

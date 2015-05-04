@@ -8,10 +8,14 @@
 
 import CoreData
 
-class Frame: NSManagedObject {
-    @NSManaged var passes: NSOrderedSet
-
-    override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
-        super.init(entity: entity, insertIntoManagedObjectContext: context)
+class Frame: Node {
+    override func execute() -> Value {
+        for input in inputs {
+            if let fragmentShader = (input as! InputPort).edge.destination.node as? FragmentShaderNode {
+                // FIXME: Probably should do something to make sure the correct MRT output goes to the right place
+                fragmentShader.execute()
+            }
+        }
+        return .NullValue
     }
 }

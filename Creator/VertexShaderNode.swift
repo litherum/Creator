@@ -23,6 +23,11 @@ class VertexShaderNode: Node {
         }
     }
 
+    override func execute() -> Value {
+        // FIXME: Draw some stuff
+        return .NullValue
+    }
+
     func compile() -> String? {
         if handle != 0 {
             glDeleteShader(handle)

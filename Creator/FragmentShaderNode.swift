@@ -20,6 +20,15 @@ class FragmentShaderNode: Node {
         compile()
     }
 
+    override func execute() -> Value {
+        if let vertexShader = (inputs[0] as! InputPort).edge.destination.node as? VertexShaderNode {
+            vertexShader.execute()
+            return .NullValue
+        } else {
+            return .NullValue
+        }
+    }
+
     func compile() -> String? {
         if handle != 0 {
             glDeleteShader(handle)

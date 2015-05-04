@@ -9,7 +9,7 @@
 import Cocoa
 
 class GraphViewController: NSViewController {
-    lazy var frame: Frame! = self.fetchFrame()
+    var frame: Frame!
     lazy var nullNode: NullNode! = self.fetchNullNode()
     var nodeViewControllerToNodeDictionary: [NodeViewController: Node] = [:]
     var nodeToNodeViewControllerDictionary: [Node: NodeViewController] = [:]
@@ -20,21 +20,6 @@ class GraphViewController: NSViewController {
 
     var connectionInProgress: (Node, Int)?
 
-    func fetchFrame() -> Frame? {
-        var frameRequest = managedObjectModel.fetchRequestFromTemplateWithName("FrameRequest", substitutionVariables: [:]) as NSFetchRequest!
-        var error: NSError?
-        let frames = managedObjectContext.executeFetchRequest(frameRequest, error: &error) as! [Frame]!
-        if error != nil {
-            return nil
-        }
-        if frames.count == 0 {
-            let f = NSEntityDescription.insertNewObjectForEntityForName("Frame", inManagedObjectContext: managedObjectContext) as! Frame
-            return f
-        } else {
-            return frames[0]
-        }
-    }
-
     func fetchNullNode() -> NullNode? {
         var nullNodeRequest = managedObjectModel.fetchRequestFromTemplateWithName("NullNodeRequest", substitutionVariables: [:]) as NSFetchRequest!
         var error: NSError?
@@ -44,7 +29,6 @@ class GraphViewController: NSViewController {
         }
         if nullNodes.count == 0 {
             var node = NSEntityDescription.insertNewObjectForEntityForName("NullNode", inManagedObjectContext: managedObjectContext) as! NullNode
-            node.frame = frame!
             node.title = "NULL NODE"
             return node
         } else {
@@ -59,7 +43,6 @@ class GraphViewController: NSViewController {
         newNode.positionY = 17
         newNode.title = "Constant Buffer"
         newNode.payload = NSData()
-        newNode.frame = frame!
         addNodeView(newNode)
     }
 
@@ -71,7 +54,6 @@ class GraphViewController: NSViewController {
         newNode.positionX = 13
         newNode.positionY = 17
         newNode.title = "Vertex Shader"
-        newNode.frame = frame!
         addNodeView(newNode)
     }
 
@@ -83,7 +65,6 @@ class GraphViewController: NSViewController {
         newNode.positionX = 13
         newNode.positionY = 17
         newNode.title = "Fragment Shader"
-        newNode.frame = frame!
         addNodeView(newNode)
     }
 
@@ -96,7 +77,6 @@ class GraphViewController: NSViewController {
         newNode.payload = 15
         newNode.minValue = 0
         newNode.maxValue = 100
-        newNode.frame = frame!
         addNodeView(newNode)
     }
 
@@ -108,14 +88,24 @@ class GraphViewController: NSViewController {
             return
         }
         for node in nodes {
-            if node.frame != frame || node is NullNode {
+            if node is NullNode {
                 continue
             }
             // FIXME: Find a better way to factor this
             if let constantBufferNode = node as? ConstantBufferNode {
                 constantBufferNode.upload()
             }
+            if node is Frame {
+                frame = node as! Frame
+            }
             addNodeView(node)
+        }
+        if frame == nil {
+            frame = NSEntityDescription.insertNewObjectForEntityForName("Frame", inManagedObjectContext: managedObjectContext) as! Frame
+            frame.positionX = 13
+            frame.positionY = 17
+            frame.title = "Frame"
+            addNodeView(frame)
         }
         updateEdgeViews()
     }
@@ -129,7 +119,7 @@ class GraphViewController: NSViewController {
             return
         }
         for edge in edges {
-            if edge.source.node.frame != frame || edge.destination.node.frame != frame || edge.source.node is NullNode || edge.destination.node is NullNode {
+            if edge.source.node is NullNode || edge.destination.node is NullNode {
                 continue
             }
             let inputTextField = nodeToNodeViewControllerDictionary[edge.source.node]!.inputsView.views[Int(edge.source.index)] as! NodeInputOutputTextField

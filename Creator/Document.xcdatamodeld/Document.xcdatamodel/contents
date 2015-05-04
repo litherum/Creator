@@ -26,9 +26,7 @@
         <attribute name="source" attributeType="String" syncable="YES"/>
         <relationship name="program" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Program" inverseName="fragmentShader" inverseEntity="Program" syncable="YES"/>
     </entity>
-    <entity name="Frame" representedClassName="Creator.Frame" syncable="YES">
-        <relationship name="passes" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Node" inverseName="frame" inverseEntity="Node" syncable="YES"/>
-    </entity>
+    <entity name="Frame" representedClassName="Creator.Frame" parentEntity="Node" syncable="YES"/>
     <entity name="InputPort" representedClassName="Creator.InputPort" parentEntity="Port" syncable="YES">
         <relationship name="edge" maxCount="1" deletionRule="Nullify" destinationEntity="Edge" inverseName="source" inverseEntity="Edge" syncable="YES"/>
         <relationship name="node" maxCount="1" deletionRule="Nullify" destinationEntity="Node" inverseName="inputs" inverseEntity="Node" syncable="YES"/>
@@ -37,7 +35,6 @@
         <attribute name="positionX" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="positionY" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="title" attributeType="String" syncable="YES"/>
-        <relationship name="frame" maxCount="1" deletionRule="Nullify" destinationEntity="Frame" inverseName="passes" inverseEntity="Frame" syncable="YES"/>
         <relationship name="inputs" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="InputPort" inverseName="node" inverseEntity="InputPort" syncable="YES"/>
         <relationship name="outputs" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="OutputPort" inverseName="node" inverseEntity="OutputPort" syncable="YES"/>
     </entity>
@@ -73,9 +70,9 @@
         <element name="ConstantFloatNode" positionX="-99" positionY="153" width="128" height="90"/>
         <element name="Edge" positionX="-335" positionY="0" width="128" height="75"/>
         <element name="FragmentShaderNode" positionX="171" positionY="153" width="128" height="75"/>
-        <element name="Frame" positionX="216" positionY="-18" width="128" height="60"/>
+        <element name="Frame" positionX="216" positionY="-18" width="128" height="45"/>
         <element name="InputPort" positionX="-153" positionY="81" width="128" height="75"/>
-        <element name="Node" positionX="-63" positionY="-18" width="128" height="135"/>
+        <element name="Node" positionX="-63" positionY="-18" width="128" height="120"/>
         <element name="NullNode" positionX="-371" positionY="153" width="128" height="45"/>
         <element name="OutputPort" positionX="-144" positionY="99" width="128" height="75"/>
         <element name="Port" positionX="-162" positionY="72" width="128" height="75"/>

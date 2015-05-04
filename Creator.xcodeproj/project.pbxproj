@@ -32,6 +32,9 @@
 		C28CFA6C1AE4273F004C7074 /* Program.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28CFA6B1AE4273F004C7074 /* Program.swift */; };
 		C28E86461ADE1693003CEA94 /* NullNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C28E86451ADE1693003CEA94 /* NullNode.swift */; };
 		C2A20BEA1ADCC59200DE369D /* ConnectionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A20BE91ADCC59200DE369D /* ConnectionsView.swift */; };
+		C2B145B21AF6EEA500996858 /* Value.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B145B11AF6EEA500996858 /* Value.swift */; };
+		C2B145B41AF6F61600996858 /* FrameDetailsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C2B145B31AF6F61600996858 /* FrameDetailsViewController.xib */; };
+		C2B145B61AF6F69100996858 /* FrameDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2B145B51AF6F69100996858 /* FrameDetailsViewController.swift */; };
 		C2BBF79E1AE2C29300A418B9 /* VertexShaderNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BBF79D1AE2C29300A418B9 /* VertexShaderNode.swift */; };
 		C2BBF7A01AE2C2B800A418B9 /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BBF79F1AE2C2B800A418B9 /* Node.swift */; };
 		C2BBF7A71AE2C72200A418B9 /* InputPort.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2BBF7A61AE2C72200A418B9 /* InputPort.swift */; };
@@ -90,6 +93,9 @@
 		C28CFA6B1AE4273F004C7074 /* Program.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Program.swift; sourceTree = "<group>"; };
 		C28E86451ADE1693003CEA94 /* NullNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NullNode.swift; sourceTree = "<group>"; };
 		C2A20BE91ADCC59200DE369D /* ConnectionsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionsView.swift; sourceTree = "<group>"; };
+		C2B145B11AF6EEA500996858 /* Value.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Value.swift; sourceTree = "<group>"; };
+		C2B145B31AF6F61600996858 /* FrameDetailsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FrameDetailsViewController.xib; sourceTree = "<group>"; };
+		C2B145B51AF6F69100996858 /* FrameDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrameDetailsViewController.swift; sourceTree = "<group>"; };
 		C2BBF79D1AE2C29300A418B9 /* VertexShaderNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VertexShaderNode.swift; sourceTree = "<group>"; };
 		C2BBF79F1AE2C2B800A418B9 /* Node.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
 		C2BBF7A61AE2C72200A418B9 /* InputPort.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InputPort.swift; sourceTree = "<group>"; };
@@ -129,6 +135,7 @@
 		C21E61731AD8BEFE000FC413 = {
 			isa = PBXGroup;
 			children = (
+				C2B145AE1AF6EE8500996858 /* Execution */,
 				C21E617E1AD8BEFE000FC413 /* Creator */,
 				C21E61971AD8BEFE000FC413 /* CreatorTests */,
 				C21E617D1AD8BEFE000FC413 /* Products */,
@@ -206,6 +213,7 @@
 				C2306C781AEC39D40042A7AB /* FragmentShaderDetailsViewController.xib */,
 				C2306C801AEC3BC60042A7AB /* ConstantFloatDetailsViewController.xib */,
 				C2306C821AEC3BE10042A7AB /* ConstantBufferDetailsViewController.xib */,
+				C2B145B31AF6F61600996858 /* FrameDetailsViewController.xib */,
 			);
 			name = "Details Popovers";
 			sourceTree = "<group>";
@@ -228,6 +236,7 @@
 				C2306C7A1AEC39EC0042A7AB /* FragmentShaderDetailsViewController.swift */,
 				C2306C7C1AEC3B690042A7AB /* ConstantFloatDetailsViewController.swift */,
 				C2306C7E1AEC3B9D0042A7AB /* ConstantBufferDetailsViewController.swift */,
+				C2B145B51AF6F69100996858 /* FrameDetailsViewController.swift */,
 			);
 			name = "Details View Controllers";
 			sourceTree = "<group>";
@@ -241,6 +250,14 @@
 			name = Resources;
 			sourceTree = "<group>";
 		};
+		C2B145AE1AF6EE8500996858 /* Execution */ = {
+			isa = PBXGroup;
+			children = (
+				C2B145B11AF6EEA500996858 /* Value.swift */,
+			);
+			name = Execution;
+			sourceTree = "<group>";
+		};
 		C2BBF7A11AE2C2E600A418B9 /* Nodes */ = {
 			isa = PBXGroup;
 			children = (
@@ -250,6 +267,7 @@
 				C2C5A1321AD9A52A001DFC56 /* FragmentShaderNode.swift */,
 				C2BBF79F1AE2C2B800A418B9 /* Node.swift */,
 				C28E86451ADE1693003CEA94 /* NullNode.swift */,
+				C2C5A12E1AD9A52A001DFC56 /* Frame.swift */,
 			);
 			name = Nodes;
 			sourceTree = "<group>";
@@ -259,7 +277,6 @@
 			children = (
 				C2BBF7A11AE2C2E600A418B9 /* Nodes */,
 				C21199291AE20791009ED4DE /* Edge.swift */,
-				C2C5A12E1AD9A52A001DFC56 /* Frame.swift */,
 				C2BBF7A81AE2C72200A418B9 /* OutputPort.swift */,
 				C2BBF7A61AE2C72200A418B9 /* InputPort.swift */,
 				C2FF16C81AED7EC800D83D31 /* UniformInputPort.swift */,
@@ -369,6 +386,7 @@
 				C28CFA6A1AE41F54004C7074 /* DefaultFragmentShader.fs in Resources */,
 				C2306C811AEC3BC60042A7AB /* ConstantFloatDetailsViewController.xib in Resources */,
 				C21E618C1AD8BEFE000FC413 /* Images.xcassets in Resources */,
+				C2B145B41AF6F61600996858 /* FrameDetailsViewController.xib in Resources */,
 				C28CFA681AE41F1E004C7074 /* DefaultVertexShader.vs in Resources */,
 				C2E6282E1AE890CA00C06ED4 /* Notes in Resources */,
 				C2C5A13B1ADA012A001DFC56 /* NodeViewController.xib in Resources */,
@@ -398,6 +416,7 @@
 				C28E86461ADE1693003CEA94 /* NullNode.swift in Sources */,
 				C2C5A12D1AD9A52A001DFC56 /* ConstantBufferNode.swift in Sources */,
 				C2A20BEA1ADCC59200DE369D /* ConnectionsView.swift in Sources */,
+				C2B145B61AF6F69100996858 /* FrameDetailsViewController.swift in Sources */,
 				C2306C7D1AEC3B690042A7AB /* ConstantFloatDetailsViewController.swift in Sources */,
 				C21199261AE1EF70009ED4DE /* NodeTitleTextField.swift in Sources */,
 				C211992A1AE20791009ED4DE /* Edge.swift in Sources */,
@@ -416,6 +435,7 @@
 				C2306C891AEC5BA80042A7AB /* FragmentShaderDetailsOutputRowViewController.swift in Sources */,
 				C2FF16C71AED7EC700D83D31 /* AttributeInputPort.swift in Sources */,
 				C21199221AE1E44D009ED4DE /* NodeInputOutputTextField.swift in Sources */,
+				C2B145B21AF6EEA500996858 /* Value.swift in Sources */,
 				C2BBF7A91AE2C72200A418B9 /* OutputPort.swift in Sources */,
 				C28602DE1AE7579B0074E66B /* VertexShaderDetailsViewController.swift in Sources */,
 			);

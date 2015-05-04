@@ -14,11 +14,14 @@ class Node: NSManagedObject {
     @NSManaged var positionX: Float
     @NSManaged var positionY: Float
     @NSManaged var title: String
-    @NSManaged var frame: Frame
     @NSManaged var inputs: NSOrderedSet
     @NSManaged var outputs: NSOrderedSet
 
     func populate(nullNode: NullNode, context: NSManagedObjectContext) {
+    }
+
+    func execute() -> Value {
+        return .NullValue
     }
 
     func addPortToInputs(nullNode: NullNode, context: NSManagedObjectContext, name: String, entityName: String = "InputPort") -> InputPort {

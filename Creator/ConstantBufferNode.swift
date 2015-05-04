@@ -17,6 +17,10 @@ class ConstantBufferNode: Node {
         addPortToOutputs(nullNode, context: context, name: "payload");
     }
 
+    override func execute() -> Value {
+        return .GLuintValue(handle)
+    }
+
     func upload() {
         if handle != 0 {
             glDeleteBuffers(1, &handle)

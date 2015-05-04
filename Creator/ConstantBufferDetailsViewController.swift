@@ -27,10 +27,10 @@ class ConstantBufferDetailsViewController: NSViewController {
         openPanel.canChooseDirectories = false
         openPanel.allowsMultipleSelection = false
         openPanel.beginSheetModalForWindow(view.window!, completionHandler: { (result: Int) in
-            self.statusTextField.hidden = false
             if result == NSFileHandlingPanelCancelButton {
                 return
             }
+            self.statusTextField.hidden = false
             if openPanel.URLs.count != 1 {
                 self.statusTextField.stringValue = "Should select exactly one file"
                 return

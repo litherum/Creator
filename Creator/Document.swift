@@ -10,6 +10,7 @@ import Cocoa
 
 class Document: NSPersistentDocument {
     @IBOutlet var graphViewController: GraphViewController!
+    @IBOutlet var resultView: ResultView!
 
     override init() {
         super.init()
@@ -21,6 +22,8 @@ class Document: NSPersistentDocument {
         graphViewController.managedObjectContext = managedObjectContext
         graphViewController.managedObjectModel = managedObjectModel
         graphViewController.populate()
+
+        resultView.document = self
     }
 
     override class func autosavesInPlace() -> Bool {
@@ -29,6 +32,10 @@ class Document: NSPersistentDocument {
 
     override var windowNibName: String? {
         return "Document"
+    }
+
+    func execute() {
+        graphViewController.frame.execute()
     }
 
     @IBAction func createConstantBufferNode(sender: AnyObject?) {

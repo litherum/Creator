@@ -10,6 +10,8 @@ import Cocoa
 import GLKit
 
 class ResultView: NSOpenGLView {
+    weak var document: Document!
+
     override func awakeFromNib() {
         var attributes: [NSOpenGLPixelFormatAttribute] = [UInt32(NSOpenGLPFADoubleBuffer), UInt32(NSOpenGLPFADepthSize), 24, UInt32(NSOpenGLPFAOpenGLProfile), UInt32(NSOpenGLProfileVersion3_2Core), 0]
         pixelFormat = NSOpenGLPixelFormat(attributes: &attributes)
@@ -41,6 +43,7 @@ class ResultView: NSOpenGLView {
 
     override func drawRect(dirtyRect: NSRect) {
         glClear(GLbitfield(GL_COLOR_BUFFER_BIT))
+        document.execute()
         openGLContext.flushBuffer()
     }
 }

@@ -135,7 +135,6 @@
 		C21E61731AD8BEFE000FC413 = {
 			isa = PBXGroup;
 			children = (
-				C2B145AE1AF6EE8500996858 /* Execution */,
 				C21E617E1AD8BEFE000FC413 /* Creator */,
 				C21E61971AD8BEFE000FC413 /* CreatorTests */,
 				C21E617D1AD8BEFE000FC413 /* Products */,
@@ -154,6 +153,7 @@
 		C21E617E1AD8BEFE000FC413 /* Creator */ = {
 			isa = PBXGroup;
 			children = (
+				C226CA1E1B05C32D00F1A6B3 /* Execution */,
 				C28CFA661AE41EE2004C7074 /* Resources */,
 				C2BBF7A21AE2C32000A418B9 /* Model */,
 				C2BBF7A31AE2C34D00A418B9 /* Views */,
@@ -192,6 +192,14 @@
 				C21E61991AD8BEFE000FC413 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		C226CA1E1B05C32D00F1A6B3 /* Execution */ = {
+			isa = PBXGroup;
+			children = (
+				C2B145B11AF6EEA500996858 /* Value.swift */,
+			);
+			name = Execution;
 			sourceTree = "<group>";
 		};
 		C28602D91AE7552E0074E66B /* Interface Builder */ = {
@@ -248,14 +256,6 @@
 				C28CFA691AE41F54004C7074 /* DefaultFragmentShader.fs */,
 			);
 			name = Resources;
-			sourceTree = "<group>";
-		};
-		C2B145AE1AF6EE8500996858 /* Execution */ = {
-			isa = PBXGroup;
-			children = (
-				C2B145B11AF6EEA500996858 /* Value.swift */,
-			);
-			name = Execution;
 			sourceTree = "<group>";
 		};
 		C2BBF7A11AE2C2E600A418B9 /* Nodes */ = {
